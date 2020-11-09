@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Business.Service.Infrastructure/1.0.0": {
+        "dependencies": {
+          "ViewModel.Views": "1.0.0"
+        },
+        "runtime": {
+          "Business.Service.Infrastructure.dll": {}
+        }
+      },
+      "ViewModel.Views/1.0.0": {
+        "runtime": {
+          "ViewModel.Views.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Business.Service.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ViewModel.Views/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

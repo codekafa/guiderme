@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Core.Locator/1.0.0": {
+        "dependencies": {
+          "Core.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "Core.Locator.dll": {}
+        }
+      },
+      "Core.Infrastructure/1.0.0": {
+        "dependencies": {
+          "ViewModel.Core": "1.0.0"
+        },
+        "runtime": {
+          "Core.Infrastructure.dll": {}
+        }
+      },
+      "ViewModel.Core/1.0.0": {
+        "runtime": {
+          "ViewModel.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Core.Locator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Core.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ViewModel.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

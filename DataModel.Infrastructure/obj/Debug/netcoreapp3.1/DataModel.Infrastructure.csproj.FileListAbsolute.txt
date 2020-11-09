@@ -1,0 +1,8 @@
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.deps.json
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\obj\Debug\netcoreapp3.1\DataModel.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\obj\Debug\netcoreapp3.1\DataModel.Infrastructure.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\obj\Debug\netcoreapp3.1\DataModel.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\obj\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\DataModel.Infrastructure\obj\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
