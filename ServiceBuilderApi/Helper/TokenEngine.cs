@@ -2,14 +2,10 @@
 using DataModel.BaseEntities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ServiceBuilderApi.Model;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using ViewModel.Views;
 using ViewModel.Views.Security;
 

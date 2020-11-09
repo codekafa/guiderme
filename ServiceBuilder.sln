@@ -45,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Locator", "Core.Locato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.Core", "ViewModel.Core\ViewModel.Core.csproj", "{4FF1B0D1-4EF6-4D30-9F46-559056F2E0B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBuilderApi", "ServiceBuilderApi\ServiceBuilderApi.csproj", "{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBuilderApi", "ServiceBuilderApi\ServiceBuilderApi.csproj", "{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBuilderPanel", "ServiceBuilderPanel\ServiceBuilderPanel.csproj", "{4E722854-03C7-480D-BDCA-5A58B668303C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,10 @@ Global
 		{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E722854-03C7-480D-BDCA-5A58B668303C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E722854-03C7-480D-BDCA-5A58B668303C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E722854-03C7-480D-BDCA-5A58B668303C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E722854-03C7-480D-BDCA-5A58B668303C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +134,7 @@ Global
 		{4C9B798B-7733-4C05-B403-9B886C612501} = {3EEE5397-1FB7-46C0-BF87-F5135AD0AAF7}
 		{4FF1B0D1-4EF6-4D30-9F46-559056F2E0B7} = {9E273562-E2F4-43BC-BB91-F146C3D43F25}
 		{A711BCA4-8F03-40C4-A0E9-BE8A02C0A6BF} = {DA0D9A50-C704-4292-98B9-E5049764498D}
+		{4E722854-03C7-480D-BDCA-5A58B668303C} = {DA0D9A50-C704-4292-98B9-E5049764498D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11EBD8C7-C857-4816-8912-6A0B9BC00C46}

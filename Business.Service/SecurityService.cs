@@ -29,7 +29,7 @@ namespace Business.Service
             if (!existUser.IsMobileActivated)
                 return new CommonResultHelper(_lexRepo).GetAlertResult(false, "_user_not_active_for_mobile", request.CultureCode);
 
-            return new CommonResult { Data = existUser };
+            return new CommonResult { Data = existUser, IsSuccess = true };
         }
     }
 }
