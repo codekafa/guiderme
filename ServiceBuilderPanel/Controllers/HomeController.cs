@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceBuilderPanel.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -19,5 +19,6 @@ namespace ServiceBuilderPanel.Controllers
 
             return View();
         }
+
     }
 }
