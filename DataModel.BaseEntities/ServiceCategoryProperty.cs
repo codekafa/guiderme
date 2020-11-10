@@ -9,6 +9,7 @@ namespace DataModel.BaseEntities
     {
         public string Name { get; set; }
 
+        public long ServiceCategoryID { get; set; }
         public ServiceCategory ServiceCategory { get; set; }
     }
 }

@@ -26,5 +26,12 @@ namespace Common.Helpers
             RegisterOTP = 1,
             EmailOTP =2
         }
+
+        public enum FileTypes
+        {
+            ServiceCategoryFiles = 1,
+            ProfileFiles = 2,
+            ServiceFiles =3
+        }
     }
 }

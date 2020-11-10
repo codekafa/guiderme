@@ -57,11 +57,17 @@ namespace ServiceBuilderPanel
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
             services.AddScoped<ILexiconRepository, LexiconRepository>();
-
+            services.AddScoped<IServiceCategoryPropertyRepository, ServiceCategoryPropertyRepository>();
+            services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
+            services.AddScoped<IServicePhotoRepository, ServicePhotoRepository>();
+            services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
+            services.AddScoped<IOtpTransactionRepository, OtpTransactionRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

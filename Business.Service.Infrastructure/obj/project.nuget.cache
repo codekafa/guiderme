@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "kmxuObwg1aeNRaghRAY2Hcfg8drxc8h0UqfHbWrv+viYbEUu2+cqx5aK9RPz1LGHsEY5uYfKFQR+Ovtu4yhxKQ==",
+  "dgSpecHash": "jZ42qBWShCMm5ixtmMxHi8kmomsomcooXia19RS5eRYjkgOnzAMI9dtF2oRqpJjkzN6hPAr3eyw4C/Vy1ERXLA==",
   "success": true,
   "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Business.Service.Infrastructure\\Business.Service.Infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.0\\microsoft.aspnetcore.http.features.5.0.0.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\system.io.pipelines\\5.0.0\\system.io.pipelines.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

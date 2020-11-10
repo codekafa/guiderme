@@ -32,6 +32,12 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
+              "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj": {
+                "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj"
+              },
+              "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj": {
+                "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj"
+              },
               "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj": {
                 "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj"
               }
@@ -116,6 +122,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -771,6 +783,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -17,6 +17,29 @@ namespace Data.BaseContext.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("DataModel.BaseEntities.ExceptionLog", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ExceptionResult")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ExceptionLog");
+                });
+
             modelBuilder.Entity("DataModel.BaseEntities.Lexicon", b =>
                 {
                     b.Property<long>("ID")
@@ -123,6 +146,9 @@ namespace Data.BaseContext.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    b.Property<string>("CategoryPhoto")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime(6)");

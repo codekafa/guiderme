@@ -14,6 +14,7 @@ namespace DataModel.BaseEntities
 
         public string CategoryPhoto { get; set; }
 
+        public long? ParentServiceCategoryID { get; set; }
         public ServiceCategory ParentServiceCategory { get; set; }
 
         public List<ServiceCategoryProperty> ServiceCategoryProperty { get; set; }

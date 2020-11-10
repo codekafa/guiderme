@@ -1,6 +1,39 @@
-﻿
+﻿@model ViewModel.Views.CommonResult
 @{
     ViewData["Title"] = "Categories";
 }
 
 
+@{ 
+
+    var resultList = Model.Data as List<ViewModel.Views.Content.ServiceCategory.CategoryListModel>;
+
+}
+
+<a href="~/Definition/CategoryDetail"  class="btn btn-primary">Add New Category</a>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">CategoryName</th>
+                <th scope="col">CategoryUrl</th>
+                <th scope="col">ParentCategoryName</th>
+                <th scope="col">ParentCategoryUrl</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+         @foreach (var item in resultList)
+         {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Url</td>
+                <td>@item.ParentCategoryName</td>
+                <td>@item.ParentCategoryUrl</td>
+                <td><a href="~/Definition/CategoryDetail?category_id=@item.ID"><i class="fa fa-edit"></i></a></td>
+            </tr>
+         }
+        </tbody>
+    </table>

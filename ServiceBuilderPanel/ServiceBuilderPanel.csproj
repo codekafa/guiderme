@@ -18,4 +18,9 @@
     <ProjectReference Include="..\ViewModel.Views\ViewModel.Views.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\ProfileFiles\" />
+    <Folder Include="wwwroot\images\ServiceFiles\" />
+  </ItemGroup>
+
 </Project>

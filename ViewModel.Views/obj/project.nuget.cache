@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "H3i6jU0dyhAYWjEL3g8XfeInSlV44DvAlPQmKFVFL6tdbvt/9HYyUy5SfObKqB0vBZBH/EGHdwPcQKrhXfXlgA==",
+  "dgSpecHash": "x8oZ+TuGCuybPb1WO7jWGVtRV3NJ+q7/kZdL7vcQY8agun8aFFqnPrErrYDIS1e4bNzoL6pzuOC8FfaChMx4IQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.0\\microsoft.aspnetcore.http.features.5.0.0.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\system.io.pipelines\\5.0.0\\system.io.pipelines.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

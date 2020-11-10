@@ -66,7 +66,6 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Http.Connections.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Http.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Http.Extensions.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.HttpOverrides.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.HttpsPolicy.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Identity.dll
@@ -195,7 +194,6 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.FileSystem.Watcher.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.IsolatedStorage.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.MemoryMappedFiles.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.Pipelines.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.Pipes.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.IO.UnmanagedMemoryStream.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\refs\System.Linq.dll
@@ -443,3 +441,7 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Definition\Categories.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Definition\CategoryProperties.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginLayout.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\User\List.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Definition\CategoryDetail.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
