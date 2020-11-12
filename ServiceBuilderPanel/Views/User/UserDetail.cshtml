@@ -1,0 +1,191 @@
+﻿@model ViewModel.Views.User.AddOrEditUserModel
+@{
+
+    if (Model.ID > 0)
+    {
+        ViewData["Title"] = "Update User";
+    }
+    else
+    {
+        ViewData["Title"] = "Add User";
+    }
+
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            @if (ViewBag.Result != null)
+            {
+
+                if (ViewBag.Result.IsSuccess == false)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>@ViewBag.Result.Message</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Operation is OK!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+            }
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">User Form<small></small></h3>
+                </div>
+                <form role="form" id="userForm" action="UserDetail" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                    <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+                    <input type="hidden" id="PhotoUrl" name="PhotoUrl" value="@Model.PhotoUrl" />
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="FirstName">First Name</label>
+                            <input type="text" name="FirstName" class="form-control" id="FirstName" placeholder="Enter first name" value="@Model.FirstName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="LastName">Last Name</label>
+                            <input type="text" name="LastName" class="form-control" id="LastName" placeholder="Enter last anme" value="@Model.LastName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="EMail">Email address</label>
+                            <input type="email" name="EMail" class="form-control" id="EMail" placeholder="Enter email" value="@Model.Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Password</label>
+                            <input type="password" name="Password" value="@Model.Password" class="form-control" id="Password" placeholder="Password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Phone</label>
+                            <input type="text" name="Phone" value="@Model.Phone" class="form-control" id="Phone" placeholder="Mobile number" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Is Mail Active</label>
+                            <select class="form-control" id="IsMailActivated" name="IsMailActivated">
+                                @if (Model.IsMailActivated)
+                                {
+                                    <option value="True" selected="selected">Active</option>
+                                    <option value="False">Pasive</option>
+                                }
+                                else
+                                {
+                                    <option value="True">Active</option>
+                                    <option value="False" selected="selected">Pasive</option>
+                                }
+
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Is Mobile Active</label>
+                            <select class="form-control" id="IsMobileActivated" name="IsMobileActivated">
+                                @if (Model.IsMobileActivated)
+                                {
+                                    <option value="True" selected="selected">Active</option>
+                                    <option value="False">Pasive</option>
+                                }
+                                else
+                                {
+                                    <option value="True">Active</option>
+                                    <option value="False" selected="selected">Pasive</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+
+                            @if (Model.PhotoUrl != null)
+                            {
+                                <img class="profile-user-img img-fluid img-circle" src="~/@Model.PhotoUrl" alt="User profile picture">
+                            }
+
+
+                            <label for="Photo">Profile Photo</label>
+                            <input type="file" Name="Photo" class="form-control" id="Photo" />
+
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.validator.setDefaults({
+                submitHandler: function () {
+                    $('#userForm').submit();
+                }
+            });
+            $('#userForm').validate({
+                rules: {
+                    EMail: {
+                        required: true,
+                        email: true,
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 5
+                    },
+                    FirstName: {
+                        required: true
+                    },
+                    LastName: {
+                        required: true
+                    }
+                },
+                messages: {
+                    EMail: {
+                        required: "Please enter a email address",
+                        email: "Please enter a vaild email address"
+                    },
+                    Password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 5 characters long"
+                    },
+                    FirstName: {
+                        required: "Please provide a first name"
+                    },
+                    LastName: {
+                        required: "Please provide a last name"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+}

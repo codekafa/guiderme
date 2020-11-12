@@ -506,6 +506,9 @@
               },
               "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
                 "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj"
+              },
+              "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj": {
+                "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj"
               }
             }
           }
@@ -518,6 +521,20 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.35, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[3.2.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

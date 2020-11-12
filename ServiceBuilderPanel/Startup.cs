@@ -53,6 +53,7 @@ namespace ServiceBuilderPanel
 
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
+            services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
 
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();

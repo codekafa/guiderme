@@ -4,13 +4,15 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\n
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\Data.BaseContext.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Views.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\Data.BaseContext.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Views.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.AssemblyInfo.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CoreCompileInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CopyComplete
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CoreCompileInputs.cache

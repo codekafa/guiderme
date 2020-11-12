@@ -5,10 +5,12 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\Repository.Infrastructure.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\ViewModel.Views.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\Repository.Infrastructure.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\Data.BaseContext.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\bin\Debug\netcoreapp3.1\ViewModel.Views.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\obj\Debug\netcoreapp3.1\Repository.Base.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\obj\Debug\netcoreapp3.1\Repository.Base.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Base\obj\Debug\netcoreapp3.1\Repository.Base.AssemblyInfo.cs

@@ -1,8 +1,14 @@
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Business.Service.Infrastructure.deps.json
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Business.Service.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Business.Service.Infrastructure.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Common.Helpers.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Views.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Common.Helpers.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Views.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.AssemblyInfo.cs
@@ -10,9 +16,3 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\D
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.csproj.CopyComplete
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\obj\Debug\netcoreapp3.1\Business.Service.Infrastructure.pdb
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.BaseEntities.pdb
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\DataModel.Infrastructure.pdb
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Common.Helpers.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Infrastructure\bin\Debug\netcoreapp3.1\Common.Helpers.pdb
