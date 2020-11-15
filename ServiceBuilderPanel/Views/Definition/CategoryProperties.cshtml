@@ -1,7 +1,111 @@
 ﻿
 @{
-    ViewData["Title"] = "CategoryProperties";
+    ViewData["Title"] = "Category Property Template";
 }
 
+<input type="hidden" class="form-control"  id="ServiceCategoryID" name="ServiceCategoryID" value="@ViewBag.Category.ID">
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Category Name : @ViewBag.Category.Name</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" class="form-control"  id="ID" name="ID" value="">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Property name" id="Name" name="Name" value="">
+                </div>
+            </div>
 
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <button type="button" id="btnAddOrEdit" onclick="addOrEditProperty()" class="btn btn-primary btn-sm">Add or Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">CreateDate</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.CategroyProperties)
+        {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.CreateDate.ToString("dd.MM.yyyy HH:mm")</td>
+            <td>@item.Name</td>
+            <td>
+                <button class="btn btn-info btn-xs" onclick="editProperty('@item.ID','@item.Name')"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-danger btn-xs" onclick="removeProperty('@item.ID','@item.Name')"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+@section Scripts{ 
+
+ <script>
+
+     function addOrEditProperty() {
+
+         var prop = new Object();
+         prop.ID = $('#ID').val();
+         prop.Name = $('#Name').val();
+         prop.ServiceCategoryID = $('#ServiceCategoryID').val();
+
+         if (prop.ID != null && prop.ID > 0) {
+             $.ajax({
+                 url: "UpdateCategoryProperty",
+                 type: "POST",
+                 data: prop,
+                 success: function (data) {
+                     location.reload();
+                 }
+             });
+         } else {
+             $.ajax({
+                 url: "AddCategoryProperty",
+                 type: "POST",
+                 data: prop,
+                 success: function (data) {
+                     location.reload();
+                 }
+             });
+         }        
+     }
+
+     function editProperty(id,name) {
+         $('#ID').val(id);
+         $('#Name').val(name);
+     }
+
+     function removeProperty(id) {
+
+         $.ajax({
+             url: "RemoveCategoryProperty?property_id="+id,
+             type: "POST",
+             success: function (data) {
+                 location.reload();
+             }
+         });
+         
+     }
+
+     </script>
+
+}
 

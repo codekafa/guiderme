@@ -59,6 +59,10 @@ namespace ServiceBuilderPanel
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ILexiconService, LexiconService>();
+            services.AddScoped<IOtpService, OtpService>();
+            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<ISmsService, SmsService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();

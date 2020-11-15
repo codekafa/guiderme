@@ -10,15 +10,15 @@ using ViewModel.Views.Security;
 
 namespace Business.Service.Common
 {
-    public class TokenEngine : ITokenEngine
+    public class TokenService : ITokenEngine
     {
         ISecurityService _securService;
-        public TokenEngine(ISecurityService securService)
+        public TokenService(ISecurityService securService)
         {
             _securService = securService;
         }
 
-        public TokenEngine()
+        public TokenService()
         {
         }
 

@@ -11,7 +11,7 @@ namespace ViewModel.Views
         public int PageIndex { get; set; }
         public string CultureCode { get; set; }
         public string Token { get; set; }
-        public string CurrentUserId { get; set; }
+        public long CurrentUserId { get; set; }
 
     }
 }

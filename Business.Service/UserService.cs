@@ -5,6 +5,7 @@ using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
 using ViewModel.Views;
+using ViewModel.Views.Otp;
 using ViewModel.Views.Security;
 using ViewModel.Views.User;
 using static Common.Helpers.Enum;
@@ -18,12 +19,17 @@ namespace Business.Service
         IUserAddressRepository _userAddressRepo;
         IQuerableRepository _queryRepo;
         IFileService _fileService;
-        public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService)
+        ILexiconService _lexService;
+        IOtpService _otpService;
+        CommonResultHelper _helper;
+        public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce)
         {
             _userRepo = userRepo;
             _userAddressRepo = userAddressRepo;
             _queryRepo = queryRepo;
             _fileService = fileService;
+            _lexService = lexService;
+            _otpService = otpServicce;
         }
 
         public AddOrEditUserModel GetUserViewModel(long user_id)
@@ -123,7 +129,6 @@ namespace Business.Service
 
             return count;
         }
-
         public bool IsExistMobileNumber(CheckUserModel checkModel)
         {
             int count = _queryRepo.GetSingle<int>(@"select COUNT(*) from users
@@ -132,6 +137,113 @@ namespace Business.Service
                                                         OR (@Mobile is null or Phone = @Mobile))", checkModel);
 
             return count > 0;
+        }
+        public CommonResult RegisterNewUser(RegisterNewUserModel newUser)
+        {
+            CommonResult result = new CommonResult();
+            try
+            {
+                result = RegisterUserValidate(newUser);
+
+                if (!result.IsSuccess)
+                    return result;
+
+                var addUser = _userRepo.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password });
+
+                var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = addUser.ID, EmailOrPhone = addUser.Email, OtpType = (int)OtpTypes.Email });
+
+                result.IsSuccess = true;
+                result.Data = otpResult.Data.ToString();
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Data = ex;
+            }
+            return result;
+        }
+        public CommonResult RegisterUserValidate(RegisterNewUserModel newUser)
+        {
+            CommonResult result = new CommonResult();
+
+            if (string.IsNullOrWhiteSpace(newUser.Email))
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_email_is_reqired", newUser.CultureCode);
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(newUser.Phone))
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_mobile_phone_is_reqired", newUser.CultureCode);
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(newUser.Password))
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_password_is_reqired", newUser.CultureCode);
+                return result;
+            }
+
+            if (string.IsNullOrWhiteSpace(newUser.PasswordAgain))
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_password_again_is_reqired", newUser.CultureCode);
+                return result;
+            }
+
+            bool check = IsExistMobileNumber(new CheckUserModel { Email = newUser.Email, Mobile = newUser.Phone });
+
+            if (check)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_already_exist_this_email_or_phone_user", newUser.CultureCode);
+                return result;
+            }
+
+
+            if (newUser.Password != newUser.PasswordAgain)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_passwords_not_correct", newUser.CultureCode);
+                return result;
+            }
+
+            result.IsSuccess = true;
+            return result;
+        }
+
+
+        public CommonResult ApproveMailOtp(CheckOtpCode request)
+        {
+            var result = _otpService.ApproveOtp(request);
+
+            var otp = result.Data as OtpTransaction;
+
+            if (!result.IsSuccess)
+                return result;
+
+
+            var user = _userRepo.Get(x => x.ID == otp.UserID);
+            user.IsMailActivated = true;
+            _userRepo.Update(user);
+            return result;
+        }
+
+        public CommonResult ApproveSmsOtp(CheckOtpCode request)
+        {
+            var result = _otpService.ApproveOtp(request);
+
+            var otp = result.Data as OtpTransaction;
+
+            if (!result.IsSuccess)
+                return result;
+
+
+            var user = _userRepo.Get(x => x.ID == otp.UserID);
+            user.IsMobileActivated = true;
+            _userRepo.Update(user);
+            return result;
         }
 
     }

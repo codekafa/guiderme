@@ -33,5 +33,11 @@ namespace Common.Helpers
             ProfileFiles = 2,
             ServiceFiles =3
         }
+
+        public enum OtpTypes
+        {
+            Sms = 1,
+            Email = 2
+        }
     }
 }

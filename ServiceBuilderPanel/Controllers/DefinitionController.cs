@@ -52,8 +52,41 @@ namespace ServiceBuilderPanel.Controllers
         }
         public IActionResult CategoryProperties(long category_id)
         {
-            var list = _cService.GetCategoryPropertyList(category_id);
-            return View(list);
+            AddOrEditCategoryModel result = new AddOrEditCategoryModel();
+            var commonResult = _cService.GetCategory(category_id);
+            var category = commonResult.Data as ServiceCategory;
+            result.ID = category.ID;
+            result.Name = category.Name;
+            result.Url = category.Url;
+            result.PhotoUrl = category.CategoryPhoto;
+            result.ParentCategoryID = category.ParentServiceCategoryID;
+            ViewBag.Category = result;
+
+            var propertyListResult = _cService.GetCategoryPropertyList(category_id);
+            ViewBag.CategroyProperties = propertyListResult.Data;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCategoryProperty(ServiceCategoryProperty prop)
+        {
+            var result = _cService.UpdateCategoryProperty(prop);
+            return Json(result);
+        }
+        [HttpPost]
+        public IActionResult AddCategoryProperty(ServiceCategoryProperty prop)
+        {
+            var result = _cService.AddCategoryProperty(prop);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveCategoryProperty(long property_id)
+        {
+
+            var result = _cService.RemoveCategoryProperty(property_id);
+            return Json(result);
+
         }
 
     }

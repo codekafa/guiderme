@@ -33,6 +33,7 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
+            item.IsActive = true;
             result.Data = _scpRepo.Add(item);
             return result;
         }
@@ -95,13 +96,13 @@ namespace Business.Service
             result.Data = item;
             return result;
         }
-        public CommonResult RemoveICategoryProperty(ServiceCategoryProperty item)
+        public CommonResult RemoveCategoryProperty(long item_id)
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-            item.IsActive = false;
-            _scpRepo.Update(item);
-            result.Data = item;
+            var exist = _scpRepo.Get(x => x.ID == item_id);
+            exist.IsActive = false;
+            result.Data = _scpRepo.Update(exist);
             return result;
         }
         public CommonResult AddOrEditCategory(AddOrEditCategoryModel category)
@@ -152,7 +153,10 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             item.IsActive = true;
-            result.Data = _scpRepo.Update(item);
+            var exist = _scpRepo.Get(x=>x.ID == item.ID);
+            exist.Name = item.Name;
+            exist.IsActive = true;
+            result.Data = _scpRepo.Update(exist);
             return result;
         }
     }

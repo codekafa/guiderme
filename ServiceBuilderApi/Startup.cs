@@ -102,11 +102,17 @@ namespace ServiceBuilderApi
 
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
-
             services.AddTransient<ITokenEngine, TokenEngine>();
+            services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
+
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ILexiconService, LexiconService>();
+            services.AddScoped<IOtpService, OtpService>();
+            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<ISmsService, SmsService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -117,6 +123,11 @@ namespace ServiceBuilderApi
             services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
             services.AddScoped<IOtpTransactionRepository, OtpTransactionRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
+
+
+
+   
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -49,7 +49,7 @@ namespace ServiceBuilderApi.Helper
             var token = tokenHandler.CreateToken(tokenDescriptor);
             result.Token = tokenHandler.WriteToken(token);
             result.FullName = tokenResult.FirstName.ToString() + " " + tokenResult.LastName;
-            return new CommonResult { IsSuccess = false, Data = tokenResult };
+            return new CommonResult { IsSuccess = false, Data = result };
         }
 
     }

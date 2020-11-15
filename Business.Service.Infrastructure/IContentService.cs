@@ -27,7 +27,7 @@ namespace Business.Service.Infrastructure
 
         CommonResult UpdateCategoryProperty(ServiceCategoryProperty item);
 
-        CommonResult RemoveICategoryProperty(ServiceCategoryProperty item);
+        CommonResult RemoveCategoryProperty(long item_id);
 
         CommonResult AddOrEditCategory(AddOrEditCategoryModel category);
 

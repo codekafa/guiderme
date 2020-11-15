@@ -9,14 +9,13 @@ namespace DataModel.BaseEntities
     {
 
         public string Name { get; set; }
-
         public string Url { get; set; }
-
+        public string MetaTitle { get; set; }
+        public string MetaDescription { get; set; }
+        public string CategoryPhotoAltTag { get; set; }
         public string CategoryPhoto { get; set; }
-
         public long? ParentServiceCategoryID { get; set; }
         public ServiceCategory ParentServiceCategory { get; set; }
-
         public List<ServiceCategoryProperty> ServiceCategoryProperty { get; set; }
     }
 }

@@ -8,26 +8,39 @@ namespace Business.Service
     public class SecurityService : ISecurityService
     {
         IUserRepository _userRepo;
-        ILexiconRepository _lexRepo;
-        public SecurityService(IUserRepository userRepo, ILexiconRepository lexRepo)
+        ILexiconService _lexService;
+        public SecurityService(IUserRepository userRepo, ILexiconService lexService)
         {
             _userRepo = userRepo;
-            _lexRepo = lexRepo;
+            _lexService = lexService;
         }
 
         public CommonResult GetLoginUser(LoginUserModel request)
         {
+            CommonResult result = new CommonResult();
 
             var existUser = _userRepo.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone) && x.Password == request.Password);
 
             if (existUser == null)
-                return new CommonResultHelper(_lexRepo).GetAlertResult(false, "_user_not_found", request.CultureCode);
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_not_found_for_login", request.CultureCode);
+                return result;
+            }
 
             if (!existUser.IsActive)
-                return new CommonResultHelper(_lexRepo).GetAlertResult(false, "_user_passive", request.CultureCode);
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_passive_for_login", request.CultureCode);
+                return result;
+            }
 
             if (!existUser.IsMobileActivated)
-                return new CommonResultHelper(_lexRepo).GetAlertResult(false, "_user_not_active_for_mobile", request.CultureCode);
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_not_active_for_mobile_phonee_for_login", request.CultureCode);
+                return result;
+            }
 
             return new CommonResult { Data = existUser, IsSuccess = true };
         }

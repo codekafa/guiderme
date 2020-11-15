@@ -10,6 +10,7 @@ namespace DataModel.BaseEntities
         public bool IsUsed { get; set; }
         public DateTime ExpireDate { get; set; }
 
+        public long UserID { get; set; }
         public User User { get; set; }
     }
 }

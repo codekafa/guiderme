@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ViewModel.Views;
+using ViewModel.Views.Otp;
 using ViewModel.Views.Security;
 using ViewModel.Views.User;
 
@@ -21,5 +22,10 @@ namespace Business.Service.Infrastructure
         CommonResult AddUser(User user);
 
         AddOrEditUserModel GetUserViewModel(long user_id);
+        CommonResult RegisterNewUser(RegisterNewUserModel newUser);
+
+        CommonResult ApproveMailOtp(CheckOtpCode request);
+
+        CommonResult ApproveSmsOtp(CheckOtpCode request);
     }
 }
