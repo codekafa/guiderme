@@ -37,6 +37,9 @@ namespace ServiceBuilderPanel.Controllers
                 result.Url = category.Url;
                 result.PhotoUrl = category.CategoryPhoto;
                 result.ParentCategoryID = category.ParentServiceCategoryID;
+                result.MetaDescription = category.MetaDescription;
+                result.MetaTitle = category.MetaTitle;
+                result.PhotoAltTag = category.CategoryPhotoAltTag;
             }
 
             ViewData["ParentCategories"] = _cService.GetParentCategoryList().Data as List<CategoryListModel>;

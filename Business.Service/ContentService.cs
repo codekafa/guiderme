@@ -109,7 +109,7 @@ namespace Business.Service
         {
             var result = new CommonResult();
             var existSC = new ServiceCategory();
-           
+
 
             if (string.IsNullOrWhiteSpace(category.Name))
             {
@@ -130,8 +130,17 @@ namespace Business.Service
             {
                 existSC.CategoryPhoto = category.PhotoUrl;
             }
-            existSC.Url = HelperUtility.MakeUrlCompatible(category.Name).ToLower();
+
+            if (string.IsNullOrWhiteSpace(category.Url))
+                existSC.Url = HelperUtility.MakeUrlCompatible(category.Name).ToLower();
+            else
+                existSC.Url = category.Url;
+
             existSC.Name = category.Name;
+            existSC.MetaDescription = category.MetaDescription;
+            existSC.MetaTitle = category.MetaTitle;
+            existSC.CategoryPhotoAltTag = category.PhotoAltTag;
+            existSC.Description = category.Description;
             if (category.ID > 0)
                 result = UpdateCategory(existSC);
             else
@@ -153,7 +162,7 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             item.IsActive = true;
-            var exist = _scpRepo.Get(x=>x.ID == item.ID);
+            var exist = _scpRepo.Get(x => x.ID == item.ID);
             exist.Name = item.Name;
             exist.IsActive = true;
             result.Data = _scpRepo.Update(exist);
