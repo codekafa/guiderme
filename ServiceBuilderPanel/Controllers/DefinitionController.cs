@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Business.Service.Infrastructure;
 using DataModel.BaseEntities;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBuilderPanel.Models;
 using ViewModel.Views;
 using ViewModel.Views.Content;
 using ViewModel.Views.Content.ServiceCategory;
 
 namespace ServiceBuilderPanel.Controllers
 {
+    [AuthorizeCustom]
     public class DefinitionController : Controller
     {
         IContentService _cService;

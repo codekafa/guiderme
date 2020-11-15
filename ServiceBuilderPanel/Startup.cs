@@ -42,14 +42,17 @@ namespace ServiceBuilderPanel
                 maxRetryDelay: TimeSpan.FromSeconds(3),
                 errorNumbersToAdd: null);
             }));
-
+            services.AddMvc();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+
+    
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-     .AddCookie(options =>
-     {
-         options.LoginPath = "/Account/Login/";
-     });
+                                                             .AddCookie(options =>
+                                                             {
+                                                                 options.LoginPath = "/Account/Login/";
+                                                             });
 
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
@@ -92,7 +95,9 @@ namespace ServiceBuilderPanel
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

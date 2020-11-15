@@ -26,13 +26,18 @@ namespace ServiceBuilderPanel.Controllers
 
         public IActionResult Login()
         {
+
+            var claimId = Request.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
+
+            if (claimId != null)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserModel user)
         {
-
             var loginResult = _securityService.GetLoginUser(user);
 
             if (loginResult.IsSuccess)
@@ -44,19 +49,21 @@ namespace ServiceBuilderPanel.Controllers
                                         new Claim(ClaimTypes.NameIdentifier,userModel.ID.ToString())
                                     };
 
-                var userIdentity = new ClaimsIdentity(claims, "Cookies");
-
+                var userIdentity = new ClaimsIdentity(claims, "Bearer");
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
-
                 return RedirectToAction("Index", "Home");
             }
 
             return View();
         }
-        public IActionResult Logout()
+
+        [AuthorizeCustom]
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction("Login", "Account");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

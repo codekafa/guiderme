@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Service.Infrastructure;
 using DataModel.BaseEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.Views;
 using ViewModel.Views.User;
 
 namespace ServiceBuilderPanel.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         IUserService _userService;

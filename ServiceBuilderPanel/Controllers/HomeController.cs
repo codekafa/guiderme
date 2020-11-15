@@ -5,18 +5,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBuilderPanel.Models;
 
 namespace ServiceBuilderPanel.Controllers
 {
-    //[Authorize]
+    [AuthorizeCustom]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-
-            var id = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                 .Select(c => c.Value).SingleOrDefault();
-
             return View();
         }
 
