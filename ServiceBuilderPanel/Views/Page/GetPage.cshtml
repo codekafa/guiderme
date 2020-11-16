@@ -1,0 +1,78 @@
+﻿@model ViewModel.Views.CommonResult
+@{
+    ViewData["Title"] = "Edit Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var pageModel = Model.Data as DataModel.BaseEntities.Page;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-outline card-info">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <span>@pageModel.PageName</span>
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip"
+                            title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body pad">
+                <form role="form" id="pageForm" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="@pageModel.ID" name="ID" id="ID" />
+
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" name="PageName" class="form-control" id="PageName" value="@pageModel.PageName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Name">Description</label>
+                        <textarea class="form-control" id="PageDescription" maxlength="250" name="PageDescription" rows="5">@pageModel.PageDescription</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="hidden" id="Content" value="" name="Content" />
+                        <textarea class="textarea" placeholder="Place some text here"
+                                  style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">@pageModel.Content</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+
+
+
+        $(document).ready(function () {
+            $('#pageForm').on('submit', function () {
+                var markupStr = $('.textarea').summernote('code');
+                $('#Content').val(markupStr);
+            });
+        });
+
+        var content = "@Html.Raw(@pageModel.Content)";
+
+        $(function () {
+            $('.textarea').summernote('pasteHtml', content);
+        })
+
+
+
+    </script>
+
+}

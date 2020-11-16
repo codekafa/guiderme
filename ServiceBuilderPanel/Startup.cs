@@ -46,7 +46,7 @@ namespace ServiceBuilderPanel
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
-    
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                                                              .AddCookie(options =>
@@ -66,6 +66,8 @@ namespace ServiceBuilderPanel
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<IPageService, PageService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -76,6 +78,7 @@ namespace ServiceBuilderPanel
             services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
             services.AddScoped<IOtpTransactionRepository, OtpTransactionRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IPageRepository, PageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
