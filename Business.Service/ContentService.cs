@@ -2,6 +2,7 @@
 using Common.Helpers;
 using DataModel.BaseEntities;
 using Repository.Base;
+using Repository.Infrastructure.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using ViewModel.Views;
@@ -15,11 +16,17 @@ namespace Business.Service
         IServiceCategoryRepository _scRepo;
         IServiceCategoryPropertyRepository _scpRepo;
         IFileService _fileService;
-        public ContentService(IServiceCategoryPropertyRepository scpRepo, IServiceCategoryRepository scRepo, IFileService fileService)
+        ICountryRepository _countryRepo;
+        ICityRepository _cityRepo;
+        IQuerableRepository _queryRepo;
+        public ContentService(IServiceCategoryPropertyRepository scpRepo, IServiceCategoryRepository scRepo, IFileService fileService, ICountryRepository countryRepo, ICityRepository cityRepo, IQuerableRepository queryRepo)
         {
             _scRepo = scRepo;
             _scpRepo = scpRepo;
             _fileService = fileService;
+            _countryRepo = countryRepo;
+            _cityRepo = cityRepo;
+            _queryRepo = queryRepo;
         }
         public CommonResult AddCategory(ServiceCategory item)
         {
@@ -49,25 +56,31 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-            List<CategoryListModel> resultList = new List<CategoryListModel>();
-            var list = _scRepo.GetList(x => x.IsActive);
+
+            string query = @"select 
+                            se.ID,
+                            se.Name,
+                            se.Url,
+                            se.ParentServiceCategoryID as ParentCategoryID,
+                            (select COUNT(s.ID) from services s where  s.ServiceCategoryID = se.ID ) as ServiceCount
+                             from servicecategories se 
+                             where se.IsActive = 1";
+
+            var list = _queryRepo.GetList<CategoryListModel>(query, null);
+
 
             foreach (var item in list)
             {
-                CategoryListModel addItem = new CategoryListModel();
-                addItem.ID = item.ID;
-                addItem.Name = item.Name;
-                addItem.Url = item.Url;
 
-                if (item.ParentServiceCategory != null)
+                if (item.ParentCategoryID.HasValue)
                 {
-                    addItem.ParentCategoryID = item.ParentServiceCategory.ID;
-                    addItem.ParentCategoryName = item.ParentServiceCategory.Name;
-                    addItem.ParentCategoryUrl = item.ParentServiceCategory.Url;
+                    var parentItem = list.Where(x => x.ID == item.ParentCategoryID.Value).FirstOrDefault();
+                    item.ParentCategoryID = parentItem.ID;
+                    item.ParentCategoryName = parentItem.Name;
+                    item.ParentCategoryUrl = parentItem.Url;
                 }
-                resultList.Add(addItem);
             }
-            result.Data = resultList;
+            result.Data = list;
             return result;
         }
         public CommonResult GetParentCategoryList()
@@ -168,5 +181,20 @@ namespace Business.Service
             result.Data = _scpRepo.Update(exist);
             return result;
         }
+        public CommonResult GetCountries()
+        {
+            CommonResult result = new CommonResult();
+            result.Data = _countryRepo.GetList(x => x.IsActive == true);
+            result.IsSuccess = true;
+            return result;
+        }
+        public CommonResult GetCities(long country_id)
+        {
+            CommonResult result = new CommonResult();
+            result.Data = _cityRepo.GetList(x => x.IsActive == true && x.CountryID == country_id);
+            result.IsSuccess = true;
+            return result;
+        }
+
     }
 }

@@ -67,7 +67,8 @@ namespace ServiceBuilderPanel
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IPageService, PageService>();
-
+            services.AddScoped<IServiceService, ServiceService>();
+            
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -79,6 +80,8 @@ namespace ServiceBuilderPanel
             services.AddScoped<IOtpTransactionRepository, OtpTransactionRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IPageRepository, PageRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

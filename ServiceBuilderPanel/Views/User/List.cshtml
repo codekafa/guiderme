@@ -1,160 +1,124 @@
-﻿@model List<ViewModel.Views.User.UserListModel>
+﻿@model ViewModel.Views.User.UserSearchModel
 @{
     ViewData["Title"] = "User List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <form method="post">
-        <div class="card card-info">
-            <div class="card-header">
-                <h3 class="card-title">Filter</h3>
-                <div class="pull-right text-right">
-                    <a href="~/User/UserDetail" class="btn btn-primary ">Add New User</a>
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Filter</h3>
+        <div class="pull-right text-right">
+            <a href="~/User/UserDetail" class="btn btn-primary ">Add New User</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="hidden" id="PageIndex" name="PageIndex" value="0" />
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Email" id="Email" name="Email" value="@Model.Email">
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Email" id="Email" name="Email" value="@ViewBag.Email">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group mb-3">
-                            <select class="form-control" id="IsMailActivated" name="IsMailActivated">
-                                <option>Is Mail Activated</option>
-                                <option>All</option>
-                                @if (ViewBag.IsMail == true)
-                                {
-                                    <option value="False">Pasive</option>
-                                    <option value="True" selected="selected">Active</option>
-                                }
-                                else if (ViewBag.IsMail == false)
-                                {
-                                    <option value="False" selected="selected">Pasive</option>
-                                    <option value="True">Active</option>
-                                }
-                                else
-                                {
-                                    <option value="False">Pasive</option>
-                                    <option value="True">Active</option>
-                                }
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <select class="form-control" id="IsMailActivated" name="IsMailActivated">
+                        <option>Is Mail Activated</option>
+                        <option>All</option>
+                        @if (Model.IsMailActivated == true)
+                        {
+                            <option value="False">Pasive</option>
+                            <option value="True" selected="selected">Active</option>
+                        }
+                        else if (Model.IsMailActivated == false)
+                        {
+                            <option value="False" selected="selected">Pasive</option>
+                            <option value="True">Active</option>
+                        }
+                        else
+                        {
+                            <option value="False">Pasive</option>
+                            <option value="True">Active</option>
+                        }
 
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group mb-3">
-                            <select class="form-control" id="IsMobileActivated" name="IsMobileActivated">
-                                <option>Is Mobile Activated</option>
-                                <option>All</option>
-                                @if (ViewBag.IsMobile == true)
-                                {
-                                    <option value="False">Pasive</option>
-                                    <option value="True" selected="selected">Active</option>
-                                }
-                                else if (ViewBag.IsMobile == false)
-                                {
-                                    <option value="False" selected="selected">Pasive</option>
-                                    <option value="True">Active</option>
-                                }
-                                else
-                                {
-                                    <option value="False">Pasive</option>
-                                    <option value="True">Active</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group mb-3">
-                            <button type="submit" class="btn btn-primary btn-sm">Filter</button>
-                        </div>
-                    </div>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <select class="form-control" id="IsMobileActivated" name="IsMobileActivated">
+                        <option>Is Mobile Activated</option>
+                        <option>All</option>
+                        @if (Model.IsMobileActivated == true)
+                        {
+                            <option value="False">Pasive</option>
+                            <option value="True" selected="selected">Active</option>
+                        }
+                        else if (Model.IsMobileActivated == false)
+                        {
+                            <option value="False" selected="selected">Pasive</option>
+                            <option value="True">Active</option>
+                        }
+                        else
+                        {
+                            <option value="False">Pasive</option>
+                            <option value="True">Active</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <button type="button" onclick="filterUsers()" class="btn btn-primary btn-sm">Filter</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">CreateDate</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">FirstName</th>
-                    <th scope="col">LastName</th>
-                    <th scope="col">IsMailApprove</th>
-                    <th scope="col">IsMobileApprove</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>@item.ID</td>
-                    <td>@item.CreateDate.ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>@item.Email</td>
-                    <td>@item.Phone</td>
-                    <td>@item.FirstName</td>
-                    <td>@item.LastName</td>
-                    <td>@item.IsMailActivated</td>
-                    <td>@item.IsMobileActivated</td>
-                    <td><a href="~/User/UserDetail?user_id=@item.ID"><i class="fa fa-edit"></i></a></td>
-                </tr>
+
+
+
+<div id="tableContent"></div>
+
+
+@section scripts{
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            filterUsers();
+        });
+
+        function filterUsers(id) {
+
+
+            if (id != null || id != undefined) {
+                $('#PageIndex').val(id);
+            }
+
+            var search = new Object();
+            search.PageIndex = $('#PageIndex').val();
+            search.Email = $('#Email').val();
+            search.IsMailActivated = $('#IsMailActivated').val();
+            search.IsMobileActivated = $('#IsMobileActivated').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/User/GetUserList",
+                data: search,
+                success: function (e) {
+                    $('#tableContent').html(e);
                 }
-            </tbody>
-        </table>
-
-
-
-
-        @{
-
-            long count = ViewBag.Count;
-            long k = count % 10;
-
-            long paging = 0;
-
-            if (k > 0)
-            {
-                paging = (count / 20) + 1;
-            }
-            else
-            {
-                paging = count;
-            }
-
-            <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            @*<li class="page-item"><a class="page-link" href="#">«</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">»</a></li>*@
-                            @for (int i = 0; i < paging; i++)
-                            {
-                                if (ViewBag.Select == i)
-                                {
-                                    <li class="active page-item" ><input type="hidden" id="PageIndex_@i" name="PageIndex_@i" value="@i" /><a class="page-link" href="~/User/List?page_id=@i">@(i + 1)</a></li>
-                                }
-                                else
-                                {
-                                    <li class="page-item"><input type="hidden" id="PageIndex_@i" name="PageIndex_@i" value="@i" /><a class="page-link" href="~/User/List?page_id=@i">@(i + 1)</a></li>
-                                }
-                            }
-                        </ul>
-            </div>
-
-            <nav>
-                <ul class="list-inline">
-                 
-                </ul>
-            </nav>
-
-
+            });
         }
 
+    </script>
 
-    </form>
+
+
+}
+

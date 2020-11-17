@@ -1,0 +1,72 @@
+﻿@model ViewModel.Views.CommonResult;
+
+
+@{
+    var userList = Model.Data as List<ViewModel.Views.User.UserListModel>;
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">User  List - Total : @Model.DataCount</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">CreateDate</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">FirstName</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">IsMailApprove</th>
+                    <th scope="col">IsMobileApprove</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (userList != null && userList.Count > 0)
+                {
+                    @foreach (var item in userList)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.CreateDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.IsMailActivated</td>
+                            <td>@item.IsMobileActivated</td>
+                            <td><a href="~/User/UserDetail?user_id=@item.ID"><i class="fa fa-edit"></i></a></td>
+                        </tr>
+                    }
+
+                }
+                else
+                {
+                    <tr col="9">Data not found!</tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            @for (int i = 1; i < Model.PageCount.Value + 1; i++)
+            {
+                if (Model.SelectedPage == (i - 1))
+                {
+                    <li class="active page-item" onclick="filterUsers(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i)</a></li>
+                }
+                else
+                {
+                    <li class=" page-item" onclick="filterUsers(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i )</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+

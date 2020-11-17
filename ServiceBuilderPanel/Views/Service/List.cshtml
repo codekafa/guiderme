@@ -1,0 +1,143 @@
+﻿@model ViewModel.Views.Service.ServiceSearchModel
+@{
+    ViewData["Title"] = "Service List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Filter</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <input type="hidden" id="PageIndex" value="0" name="PageIndex">
+                    <select class="form-control" id="ServiceCategoryID" name="ServiceCategoryID">
+                        <option>Select Category</option>
+                        <option>All</option>
+
+                        @foreach (var item in ViewBag.Categories.Data)
+                        {
+                            if (Model.ServiceCategoryID == item.ID)
+                            {
+
+                                <option value="@item.ID" selected="selected">@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <select class="form-control" id="CountryID" name="CountryID">
+                        <option>Select Country</option>
+                        <option>All</option>
+
+                        @foreach (var item in ViewBag.Countries.Data)
+                        {
+
+                            if (Model.CountryID == item.ID)
+                            {
+
+                                <option value="@item.ID" selected="selected">@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <select class="form-control" id="CityID" name="CityID">
+                        <option>Select City</option>
+                        <option>All</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <button type="button" onclick="filterServices()" class="btn btn-primary btn-sm">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="tableContent">
+
+</div>
+
+
+
+
+@section scripts{
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            filterServices();
+
+            $('#CountryID').on("change", function () {
+
+                var id = $(this).val();
+
+                if (id > 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/service/getcities?country_id=" + id,
+                        success: function (e) {
+                            $.each(e.data, function (index, value) {
+                                var opt = "<option value='" + value.id + "'>" + value.name + "</option>";
+                                $('#CityID').append(opt);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        function filterServices(id) {
+
+
+            if (id != null || id != undefined) {
+                $('#PageIndex').val(id);
+            }
+
+            var search = new Object();
+
+            search.ServiceCategoryID = $('#ServiceCategoryID').val();
+            search.CountryID = $('#CountryID').val();
+            search.CityID = $('#CityID').val();
+            search.PageIndex = $('#PageIndex').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Service/GetServiceList",
+                data: search,
+                success: function (e) {
+                    $('#tableContent').html(e);
+                }
+            });
+        }
+
+    </script>
+
+
+
+}

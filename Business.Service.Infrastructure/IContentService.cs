@@ -29,6 +29,10 @@ namespace Business.Service.Infrastructure
 
         CommonResult RemoveCategoryProperty(long item_id);
 
+        CommonResult GetCountries();
+
+        CommonResult GetCities(long country_id);
+
         CommonResult AddOrEditCategory(AddOrEditCategoryModel category);
 
     }

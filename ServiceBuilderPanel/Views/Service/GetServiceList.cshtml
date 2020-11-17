@@ -1,0 +1,72 @@
+﻿@model ViewModel.Views.CommonResult;
+
+
+@{
+    var serviceList = Model.Data as List<ViewModel.Views.Service.ServiceListModel>;
+}
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Service  List - Total : @Model.DataCount</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CreateDate</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">ServiceCategory</th>
+                        <th scope="col">Country/City</th>
+                        <th scope="col">ServiceStartYear</th>
+                        <th scope="col">Longitude/Latitude</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (serviceList != null && serviceList.Count > 0)
+                    {
+                        foreach (var item in serviceList)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.CreateDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                <td>@item.Email</td>
+                                <td>@item.Name</td>
+                                <td>@item.ServiceCategory</td>
+                                <td>@item.Country/@item.City</td>
+                                <td>@item.ServiceStartYear</td>
+                                <td>@item.Longitude/@item.Latitude</td>
+                                <td><a href="~/Service/ServiceDetail?service_id=@item.ID"><i class="fa fa-edit"></i></a></td>
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr col="8">Data not found!</tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+                @for (int i = 1; i < Model.PageCount.Value + 1; i++)
+                {
+                    if (Model.SelectedPage == (i - 1))
+                    {
+                        <li class="active page-item" onclick="filterServices(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i)</a></li>
+                    }
+                    else
+                    {
+                        <li class=" page-item" onclick="filterServices(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i )</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+

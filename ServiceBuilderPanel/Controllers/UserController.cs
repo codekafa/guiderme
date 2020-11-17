@@ -19,31 +19,17 @@ namespace ServiceBuilderPanel.Controllers
         {
             _userService = userService;
         }
-        public IActionResult List(int? page_id)
+        public IActionResult List()
         {
-            var search = new UserSearchModel { TakeRow = 20, PageIndex = 0 };
-
-            if (page_id.HasValue)
-                search.PageIndex = page_id.Value;
-
-            var list = _userService.GetUserList(search);
-            var count = _userService.GetUserListCount(search);
-            ViewBag.Count = count;
-            ViewBag.Select = search.PageIndex;
-            return View(list);
+            var search = new UserSearchModel();
+            return View(search);
         }
-        [HttpPost]
-        public IActionResult List(UserSearchModel search)
+
+
+        public IActionResult GetUserList(UserSearchModel search)
         {
-            search.TakeRow = 20;
-            var list = _userService.GetUserList(search);
-            var count = _userService.GetUserListCount(search);
-            ViewBag.Count = count;
-            ViewBag.Select = search.PageIndex;
-            ViewBag.Email = search.Email;
-            ViewBag.IsMail = search.IsMailActivated;
-            ViewBag.IsMobile = search.IsMobileActivated;
-            return View(list);
+            var result = _userService.GetUserList(search);
+            return PartialView(result);
         }
 
         public IActionResult UserDetail(long? user_id)

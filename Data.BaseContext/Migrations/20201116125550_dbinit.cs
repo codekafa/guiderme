@@ -55,7 +55,9 @@ namespace Data.BaseContext.Migrations
                     PageName = table.Column<string>(nullable: true),
                     PageDescription = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: true),
+                    MetaTitle = table.Column<string>(nullable: true),
+                    MetaDescription = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,6 +75,10 @@ namespace Data.BaseContext.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true),
+                    MetaTitle = table.Column<string>(nullable: true),
+                    MetaDescription = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    CategoryPhotoAltTag = table.Column<string>(nullable: true),
                     CategoryPhoto = table.Column<string>(nullable: true),
                     ParentServiceCategoryID = table.Column<long>(nullable: true)
                 },
@@ -121,7 +127,7 @@ namespace Data.BaseContext.Migrations
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    ServiceCategoryID = table.Column<long>(nullable: true)
+                    ServiceCategoryID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +137,7 @@ namespace Data.BaseContext.Migrations
                         column: x => x.ServiceCategoryID,
                         principalTable: "ServiceCategories",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,7 +153,7 @@ namespace Data.BaseContext.Migrations
                     OTPCode = table.Column<string>(nullable: true),
                     IsUsed = table.Column<bool>(nullable: false),
                     ExpireDate = table.Column<DateTime>(nullable: false),
-                    UserID = table.Column<long>(nullable: true)
+                    UserID = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,7 +163,7 @@ namespace Data.BaseContext.Migrations
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

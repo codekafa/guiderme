@@ -9,6 +9,14 @@ namespace DataModel.BaseEntities
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
+        public long? ServiceStartYear { get; set; }
+        public long? CountryID { get; set; }
+        public long? CityID { get; set; }
+        public bool IsActive { get; set; }
+        public Country Country { get; set; }
+        public City City { get; set; }
         public ServiceCategory ServiceCategory { get; set; }
         public User User { get; set; }
         public List<ServicePhoto> ServicePhoto { get; set; }

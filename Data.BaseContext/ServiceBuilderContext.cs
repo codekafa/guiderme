@@ -21,6 +21,10 @@ namespace Data.BaseContext
         public DbSet<Page> Pages { get; set; }
         public DbSet<Lexicon> Lexicons { get; set; }
         public DbSet<ExceptionLog> ExceptionLog { get; set; }
+
+        public DbSet<Service> Sevices { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));

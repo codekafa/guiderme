@@ -108,20 +108,40 @@ namespace Business.Service
             result.IsSuccess = true;
             return result;
         }
-        public List<UserListModel> GetUserList(UserSearchModel search)
+        public CommonResult GetUserList(UserSearchModel search)
         {
-            var list = _queryRepo.GetList<UserListModel>(@"select * from users where
+            CommonResult result = new CommonResult();
+
+            string query = @"select * from users where
                                                                 IsActive = 1
                                                                 and(@IsMailActivated is null or IsMailActivated = @IsMailActivated)
                                                                 and(@IsMobileActivated is null or IsmobileActivated = @IsMobileActivated)
-                                                                and(@Email is null or Email = @Email)", search);
+                                                                and(@Email is null or Email = @Email)";
 
-            return list;
+            query += " LIMIT " + search.PageIndex * 20 + ",20";
+
+
+            var list = _queryRepo.GetList<UserListModel>(query, search);
+
+
+            result.IsSuccess = true;
+            result.Data = list;
+            result.DataCount = GetUserListCount(search);
+            result.SelectedPage = search.PageIndex;
+
+            long k = result.DataCount.Value % 10;
+
+            if (k > 0)
+                result.PageCount = (result.DataCount / 20) + 1;
+            else
+                result.PageCount = result.DataCount;
+
+            return result;
 
         }
         public long GetUserListCount(UserSearchModel search)
         {
-            var count = _queryRepo.GetSingle<long>(@"select COunt(*) from users where
+            var count = _queryRepo.GetSingle<long>(@"select COunt(ID) from users where
                                                                 IsActive = 1
                                                                 and(@IsMailActivated is null or IsMailActivated = @IsMailActivated)
                                                                 and(@IsMobileActivated is null or IsmobileActivated = @IsMobileActivated)

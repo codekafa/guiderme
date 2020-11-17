@@ -25,5 +25,8 @@ namespace ViewModel.Views
         public string Message { get; set; }
         public object Data { get; set; }
         public string ActionCode { get; set; }
+        public int SelectedPage { get; set; }
+        public long? DataCount { get; set; }
+        public long? PageCount { get; set; }
     }
 }

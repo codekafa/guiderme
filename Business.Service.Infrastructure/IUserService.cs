@@ -10,7 +10,7 @@ namespace Business.Service.Infrastructure
 {
     public interface IUserService
     {
-        List<UserListModel> GetUserList(UserSearchModel search);
+        CommonResult GetUserList(UserSearchModel search);
 
         long GetUserListCount(UserSearchModel search);
         CommonResult AddOrEditUserForAdmin(AddOrEditUserModel user);

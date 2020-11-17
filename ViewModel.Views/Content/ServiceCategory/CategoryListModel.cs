@@ -24,5 +24,8 @@ namespace ViewModel.Views.Content.ServiceCategory
 
         public string ParentCategoryUrl { get; set; }
 
+
+        public int ServiceCount { get; set; }
+
     }
 }

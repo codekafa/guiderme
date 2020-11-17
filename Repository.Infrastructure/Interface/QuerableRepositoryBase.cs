@@ -20,7 +20,7 @@ namespace Repository.Infrastructure.Interface
         {
             using (var connection = new MySqlConnectorAlias::MySql.Data.MySqlClient.MySqlConnection(_appSettings.DefaultConnection))
             {
-                return connection.Query<T>(query, prms).Skip(prms.TakeRow * prms.PageIndex).Take(prms.TakeRow).ToList();
+                return connection.Query<T>(query, prms).ToList();
             }
         }
 

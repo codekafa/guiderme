@@ -99,7 +99,7 @@ namespace Data.BaseContext.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<long?>("UserID")
+                    b.Property<long>("UserID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -123,6 +123,12 @@ namespace Data.BaseContext.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MetaTitle")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("PageDescription")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -150,11 +156,23 @@ namespace Data.BaseContext.Migrations
                     b.Property<string>("CategoryPhoto")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("CategoryPhotoAltTag")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("MetaTitle")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -190,7 +208,7 @@ namespace Data.BaseContext.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<long?>("ServiceCategoryID")
+                    b.Property<long>("ServiceCategoryID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -297,7 +315,9 @@ namespace Data.BaseContext.Migrations
                 {
                     b.HasOne("DataModel.BaseEntities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataModel.BaseEntities.ServiceCategory", b =>
@@ -311,7 +331,9 @@ namespace Data.BaseContext.Migrations
                 {
                     b.HasOne("DataModel.BaseEntities.ServiceCategory", "ServiceCategory")
                         .WithMany("ServiceCategoryProperty")
-                        .HasForeignKey("ServiceCategoryID");
+                        .HasForeignKey("ServiceCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataModel.BaseEntities.UserAddress", b =>
