@@ -178,6 +178,7 @@ namespace Business.Service
             var exist = _scpRepo.Get(x => x.ID == item.ID);
             exist.Name = item.Name;
             exist.IsActive = true;
+            exist.RowNumber = item.RowNumber;
             result.Data = _scpRepo.Update(exist);
             return result;
         }

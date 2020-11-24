@@ -12,7 +12,7 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\bin\Debug\n
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CoreCompileInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CopyComplete
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.pdb
-C:\Users\tayfu\source\repos\ServiceBuilder\Repository.Infrastructure\obj\Debug\netcoreapp3.1\Repository.Infrastructure.csproj.CoreCompileInputs.cache
