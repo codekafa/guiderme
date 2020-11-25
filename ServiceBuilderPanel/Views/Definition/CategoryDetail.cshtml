@@ -55,11 +55,21 @@
                             <label for="Name">Name</label>
                             <input type="text" name="Name" class="form-control" id="Name" value="@Model.Name">
                         </div>
-
+                        <div class="form-group">
+                            <label for="Name">Is Main Category</label>
+                            @Html.EditorFor(x => x.IsMainCategory)
+                        </div>
                         <div class="form-group">
                             <label for="Name">Description</label>
                             <textarea class="form-control" id="Description" maxlength="250" name="Description" rows="5">@Model.Description</textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label for="Name">Search keys(,)</label>
+                            <textarea class="form-control" id="SearchKeys" maxlength="500" name="SearchKeys" placeholder="key,key,key..." rows="5">@Model.SearchKeys</textarea>
+                        </div>
+
+
 
                         @if (string.IsNullOrWhiteSpace(Model.PhotoUrl))
                         {
@@ -73,7 +83,7 @@
                                 <div class="col-md-12">
                                     <input type="hidden" value="@Model.PhotoUrl" id="PhotoUrl" name="PhotoUrl" />
                                     <div class="col-md-4">
-                                        <img src="~/@Model.PhotoUrl" style="max-width : 100%" />@*<i class="fa fa-trash-alt" style=" position: absolute;color:red;cursor:pointer"> </i>*@
+                                        <img src="@Model.PhotoUrl" style=" max-width: 100%;max-width: 400px;max-height: 400px;" />
                                     </div>
                                     <div class="col-md-8">
                                         <label for="Photo">Photo</label>

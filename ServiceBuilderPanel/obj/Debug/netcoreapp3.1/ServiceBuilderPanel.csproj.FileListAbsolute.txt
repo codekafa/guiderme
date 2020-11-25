@@ -451,3 +451,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\List.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\GetServiceList.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\User\GetUserList.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll

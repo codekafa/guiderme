@@ -8,6 +8,8 @@ namespace DataModel.BaseEntities
     public class ServicePhoto : BaseEntity
     {
         public string PhotoUrl { get; set; }
+
+        public string PhotoName { get; set; }
         public Service Service { get; set; }
     }
 }

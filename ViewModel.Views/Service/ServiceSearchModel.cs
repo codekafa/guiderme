@@ -7,6 +7,7 @@ namespace ViewModel.Views.Service
     public class ServiceSearchModel : BaseParamModel
     {
 
+        public string CategoryUri { get; set; }
         public long? ServiceID { get; set; }
         public long? UserID { get; set; }
 

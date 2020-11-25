@@ -12,6 +12,7 @@ using Repository.Base;
 using Repository.ConCreate;
 using Repository.Infrastructure;
 using Repository.Infrastructure.Interface;
+using ServiceBuilderUI.Models;
 using System;
 using ViewModel.Views;
 
@@ -42,7 +43,7 @@ namespace ServiceBuilderUI
                 errorNumbersToAdd: null);
             }));
             services.AddMvc();
-            //services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
 
@@ -60,7 +61,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<IMailService, MailService>();

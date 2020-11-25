@@ -37,6 +37,7 @@ namespace ServiceBuilderPanel.Controllers
                 result.Url = category.Url;
                 result.PhotoUrl = category.CategoryPhoto;
                 result.ParentCategoryID = category.ParentServiceCategoryID;
+                result.IsMainCategory = category.IsMainCategory;
                 result.MetaDescription = category.MetaDescription;
                 result.MetaTitle = category.MetaTitle;
                 result.PhotoAltTag = category.CategoryPhotoAltTag;

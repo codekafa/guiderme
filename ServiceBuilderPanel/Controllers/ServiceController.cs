@@ -33,6 +33,7 @@ namespace ServiceBuilderPanel.Controllers
         [HttpPost]
         public IActionResult GetServiceList(ServiceSearchModel search)
         {
+            search.TakeRow = 20;
             var result = _serviceService.GetServiceList(search);
             return PartialView(result);
         }

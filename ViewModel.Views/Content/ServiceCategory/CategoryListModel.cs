@@ -27,5 +27,22 @@ namespace ViewModel.Views.Content.ServiceCategory
 
         public int ServiceCount { get; set; }
 
+        public string CategoryPhoto { get; set; }
+
+
+        public string GetFileNameFromUrl()
+        {
+            if (!string.IsNullOrWhiteSpace(CategoryPhoto))
+            {
+                Uri uri = new Uri(CategoryPhoto);
+                return System.IO.Path.GetFileName(uri.LocalPath);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
     }
 }

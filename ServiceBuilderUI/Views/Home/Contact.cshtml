@@ -1,0 +1,10 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_contact_page_title", 5);
+    ViewBag.ContactSelect = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Contact</h1>
+

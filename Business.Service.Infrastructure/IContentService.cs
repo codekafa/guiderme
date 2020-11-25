@@ -35,5 +35,11 @@ namespace Business.Service.Infrastructure
 
         CommonResult AddOrEditCategory(AddOrEditCategoryModel category);
 
+
+        CommonResult GetCategoryList(CategorySearchModel search);
+
+
+        List<CategoryAutoCompleteModel> GetCategoryAutoCompleteList(string keys);
+
     }
 }

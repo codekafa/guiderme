@@ -9,5 +9,6 @@ namespace Business.Service.Infrastructure
     {
         string GetAlertSring(string key, string culture);
 
+        string GetTextValue(string key, int page_code);
     }
 }

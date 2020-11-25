@@ -9,6 +9,8 @@ namespace ViewModel.Views
         public Logging Logging { get; set; }
 
         public EmailSettings EmailSettings { get; set; }
+
+        public CloudinarySettings CloudinarySettings { get; set; }
         public string Secret { get; set; }
         public string AllowedHosts { get; set; }
 
@@ -36,6 +38,15 @@ namespace ViewModel.Views
         public string Password { get; set; }
         public int SmtpPost { get; set; }
         public string SmtpAddress { get; set; }
+
+    }
+
+    public class CloudinarySettings
+    {
+
+        public string CloudName { get; set; }
+        public string ApiKey { get; set; }
+        public string ApiSecret { get; set; }
 
     }
 }

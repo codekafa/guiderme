@@ -14,6 +14,10 @@ namespace ViewModel.Views.Content.ServiceCategory
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
         public string PhotoAltTag { get; set; }
+
+        public string SearchKeys { get; set; }
+
+        public bool IsMainCategory { get; set; }
         public IFormFile Photo { get; set; }
     }
 }

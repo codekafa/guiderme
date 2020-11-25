@@ -63,14 +63,18 @@ namespace Business.Service
                                     se.ServiceStartYear,
                                     se.CreateDate,
                                     se.Longitude,
-                                    se.Latitude
+                                    se.Latitude,
+                                    us.Phone
                                      from services se 
                                     INNER JOIN servicecategories sc on sc.ID = se.ServiceCategoryID
                                     INNER JOIN countries co on co.ID = se.CountryID
                                     INNER JOIN cities ci on ci.ID = se.CityID
                                     INNER JOIN users us on us.ID = se.UserID
-                                    WHERE se.IsACtive = 1";
+                                    WHERE se.IsACtive = 1 and us.IsActive = 1";
 
+
+            if (!string.IsNullOrWhiteSpace(search.CategoryUri))
+                query += " and sc.Url = @CategoryUri";
 
             if (search.ServiceCategoryID.HasValue)
                 query += "  and se.ServiceCategoryID = @ServiceCategoryID";
@@ -88,10 +92,9 @@ namespace Business.Service
                 query += " and  se.UserID = @UserID";
 
 
-            query += " LIMIT  " + search.PageIndex * 20 + " ,20;";
+            query += " LIMIT  " + search.PageIndex * search.TakeRow + "," + search.TakeRow;
 
             var list = _queryRepo.GetList<ServiceListModel>(query, search);
-
 
             string queryCount = @"select 
                                     COUNT(se.ID)
@@ -101,6 +104,9 @@ namespace Business.Service
                                     INNER JOIN cities ci on ci.ID = se.CityID
                                     INNER JOIN users us on us.ID = se.UserID
                                     WHERE se.IsACtive = 1";
+
+            if (!string.IsNullOrWhiteSpace(search.CategoryUri))
+                queryCount += " and sc.Url = @CategoryUri";
 
             if (search.ServiceCategoryID.HasValue)
                 queryCount += "  and se.ServiceCategoryID = @ServiceCategoryID";
@@ -133,5 +139,6 @@ namespace Business.Service
             result.SelectedPage = search.PageIndex;
             return result;
         }
+
     }
 }

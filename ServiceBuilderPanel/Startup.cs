@@ -62,7 +62,7 @@ namespace ServiceBuilderPanel
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<IMailService, MailService>();

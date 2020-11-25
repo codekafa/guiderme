@@ -1,7 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@{
+
+    ViewBag.Title = lexiconHelper.GetTextValue("_main_page_title",3);
+    ViewBag.MetaDescription = lexiconHelper.GetTextValue("_main_page_mte_description", 3);
+    ViewBag.HomeSelect = "active";
 }
-<!-- Hero Section -->
+
+
+@section Styles{ 
+    <link href="~/lib/autocomplete/styles.css" rel="stylesheet" />
+}
+
 <section class="hero-section">
     <div class="layer">
         <div class="home-banner"></div>
@@ -9,14 +18,14 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="section-search">
-                        <h3>World's Largest <span>Marketplace</span></h3>
-                        <p>Search From 150 Awesome Verified Ads!</p>
+                        <h3>@lexiconHelper.GetTextValue("world_s_largets",3)<span>@lexiconHelper.GetTextValue("_market_place", 3)</span></h3>
+                        <p>@lexiconHelper.GetTextValue("_search_from_text", 3)</p>
                         <div class="search-box">
                             <form action="search.html">
                                 <div class="search-input line">
                                     <i class="fas fa-tv bficon"></i>
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control" placeholder="What are you looking for?">
+                                        <input type="text" class="form-control" id="categorySearch" placeholder="@lexiconHelper.GetTextValue("_what_are_you_looking_for",3)">
                                     </div>
                                 </div>
                                 <div class="search-input">
@@ -27,13 +36,13 @@
                                     </div>
                                 </div>
                                 <div class="search-btn">
-                                    <button class="btn search_service" type="submit">Search</button>
+                                    <button class="btn search_service" type="submit">@lexiconHelper.GetTextValue("_search", 3)</button>
                                 </div>
                             </form>
                         </div>
                         <div class="search-cat">
                             <i class="fas fa-circle"></i>
-                            <span>Popular Searches</span>
+                            <span>@lexiconHelper.GetTextValue("_popular_searches", 3)</span>
                             <a href="search.html">Electrical  Works</a>
                             <a href="search.html">Cleaning</a>
                             <a href="search.html">AC Repair</a>
@@ -44,8 +53,8 @@
         </div>
     </div>
 </section>
-<!-- /Hero Section -->
-<!-- Category Section -->
+
+
 <section class="category-section">
     <div class="container">
         <div class="row">
@@ -53,14 +62,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="heading">
-                            <h2>Featured Categories</h2>
-                            <span>What do you need to find?</span>
+                            <h2>@lexiconHelper.GetTextValue("_featured_categories", 3)</h2>
+                            <span>@lexiconHelper.GetTextValue("_waht_do_you_find", 3)</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="viewall">
-                            <h4><a href="categories.html">View All <i class="fas fa-angle-right"></i></a></h4>
-                            <span>Featured Categories</span>
+                            <h4><a href="categories.html">@lexiconHelper.GetTextValue("_view_all", 3)<i class="fas fa-angle-right"></i></a></h4>
+                            <span>@lexiconHelper.GetTextValue("_featured_categories", 3)</span>
                         </div>
                     </div>
                 </div>
@@ -150,8 +159,7 @@
         </div>
     </div>
 </section>
-<!-- /Category Section -->
-<!-- Popular Servides -->
+
 <section class="popular-services">
     <div class="container">
         <div class="row">
@@ -159,14 +167,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="heading">
-                            <h2>Most Popular Services</h2>
-                            <span>Explore the greates our services. You won’t be disappointed</span>
+                            <h2>@lexiconHelper.GetTextValue("_most_popular_services", 3)</h2>
+                            <span>@lexiconHelper.GetTextValue("_most_popular_services_description", 3)</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="viewall">
-                            <h4><a href="categories.html">View All <i class="fas fa-angle-right"></i></a></h4>
-                            <span>Most Popular</span>
+                            <h4><a href="categories.html">@lexiconHelper.GetTextValue("_view_all", 3) <i class="fas fa-angle-right"></i></a></h4>
+                            <span>@lexiconHelper.GetTextValue("_most_popular", 3)</span>
                         </div>
                     </div>
                 </div>
@@ -564,15 +572,14 @@
         </div>
     </div>
 </section>
-<!-- /Popular Servides -->
-<!-- How It Works -->
+
 <section class="how-work">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="heading howitworks">
-                    <h2>How It Works</h2>
-                    <span>Aliquam lorem ante, dapibus in, viverra quis</span>
+                    <h2>@lexiconHelper.GetTextValue("_how_it_works", 3)</h2>
+                    <span>@lexiconHelper.GetTextValue("_how_it_works_description", 3)</span>
                 </div>
                 <div class="howworksec">
                     <div class="row">
@@ -582,8 +589,8 @@
                                     <div class="steps">01</div>
                                     <img src="~/img/icon-1.png" alt="">
                                 </div>
-                                <h3>Choose What To Do</h3>
-                                <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat Phasellus viverra nulla ut metus varius laoreet.</p>
+                                <h3>@lexiconHelper.GetTextValue("_how_it_works_section_1", 3)</h3>
+                                <p>@lexiconHelper.GetTextValue("_how_it_works_section_1_description", 3)</p>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -592,8 +599,8 @@
                                     <div class="steps">02</div>
                                     <img src="~/img/icon-2.png" alt="">
                                 </div>
-                                <h3>Find What You Want</h3>
-                                <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat Phasellus viverra nulla ut metus varius laoreet.</p>
+                                <h3>@lexiconHelper.GetTextValue("_how_it_works_section_2", 3)</h3>
+                                <p>@lexiconHelper.GetTextValue("_how_it_works_section_2_description", 3)</p>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -602,8 +609,8 @@
                                     <div class="steps">03</div>
                                     <img src="~/img/icon-3.png" alt="">
                                 </div>
-                                <h3>Amazing Places</h3>
-                                <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat Phasellus viverra nulla ut metus varius laoreet.</p>
+                                <h3>@lexiconHelper.GetTextValue("_how_it_works_section_3", 3)</h3>
+                                <p>@lexiconHelper.GetTextValue("_how_it_works_section_3_description", 3)</p>
                             </div>
                         </div>
                     </div>
@@ -612,3 +619,36 @@
         </div>
     </div>
 </section>
+
+
+@section Scripts{ 
+    <script src="~/lib/autocomplete/jquery.autocomplete.js"></script>
+
+    @*<script src="~/lib/autocomplete/jquery.autocomplete.min.js"></script>*@
+
+<script>
+
+    $('#categorySearch').autocomplete({
+        serviceUrl: '/content/AutoComplateCategroy',
+        //lookup: countriesArray,
+        lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+            var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+            return re.test(suggestion.value);
+        },
+        minChars:3,
+        onSelect: function (suggestion) {
+            $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        },
+        onHint: function (hint) {
+            $('#autocomplete-ajax-x').val(hint);
+        },
+        onInvalidateSelection: function () {
+            $('#selction-ajax').html('You selected: none');
+        }
+    });
+
+    
+
+    </script>
+
+}

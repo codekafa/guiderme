@@ -13,5 +13,7 @@ namespace DataModel.BaseEntities
         public string Content { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
+        public bool IsPage { get; set; }
+        public int PageCode { get; set; }
     }
 }

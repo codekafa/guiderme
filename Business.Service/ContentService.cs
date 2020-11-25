@@ -123,7 +123,6 @@ namespace Business.Service
             var result = new CommonResult();
             var existSC = new ServiceCategory();
 
-
             if (string.IsNullOrWhiteSpace(category.Name))
             {
                 result.IsSuccess = false;
@@ -154,6 +153,7 @@ namespace Business.Service
             existSC.MetaTitle = category.MetaTitle;
             existSC.CategoryPhotoAltTag = category.PhotoAltTag;
             existSC.Description = category.Description;
+            existSC.IsMainCategory = category.IsMainCategory;
             if (category.ID > 0)
                 result = UpdateCategory(existSC);
             else
@@ -196,6 +196,38 @@ namespace Business.Service
             result.IsSuccess = true;
             return result;
         }
+        public CommonResult GetCategoryList(CategorySearchModel search)
+        {
+            CommonResult result = new CommonResult();
+            result.IsSuccess = true;
 
+            string query = @"select 
+                            se.ID,
+                            se.Name,
+                            se.Url,
+                            se.CategoryPhoto,
+                            (select COUNT(s.ID) from services s where  s.ServiceCategoryID = se.ID and s.IsActive = 1 ) as ServiceCount
+                            from servicecategories se 
+                            where se.IsActive = 1";
+
+            query += " LIMIT " + search.PageIndex * search.TakeRow + "," + search.TakeRow;
+            var list = _queryRepo.GetList<CategoryListModel>(query, null);
+            result.Data = list;
+            result.DataCount = list.Count;
+            return result;
+        }
+
+        public List<CategoryAutoCompleteModel> GetCategoryAutoCompleteList(string keys)
+        {
+            List<CategoryAutoCompleteModel> result = new List<CategoryAutoCompleteModel>();
+
+            string like = "%" + keys + "%";
+
+            string query = @"select 
+                            Id as data,
+                            Name as value from servicecategories WHERE name like @Search";
+             result = _queryRepo.GetList<CategoryAutoCompleteModel>(query, new SearchAutoCmpleteModel { Search = like });
+            return result;
+        }
     }
 }

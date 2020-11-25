@@ -13,5 +13,7 @@ namespace DataModel.BaseEntities
         public string LaunguageCode { get; set; }
         public int Type { get; set; }
 
+        public int PageCode { get; set; }
+
     }
 }

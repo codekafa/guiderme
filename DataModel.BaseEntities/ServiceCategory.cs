@@ -16,6 +16,8 @@ namespace DataModel.BaseEntities
         public string CategoryPhotoAltTag { get; set; }
         public string CategoryPhoto { get; set; }
         public long? ParentServiceCategoryID { get; set; }
+        public string SearchKeys { get; set; }
+        public bool IsMainCategory { get; set; }
         public ServiceCategory ParentServiceCategory { get; set; }
         public List<ServiceCategoryProperty> ServiceCategoryProperty { get; set; }
     }
