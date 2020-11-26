@@ -1,7 +1,9 @@
 ﻿using Business.Service.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Repository.Base;
 using ViewModel.Views;
 using ViewModel.Views.Security;
+using ViewModel.Views.User;
 
 namespace Business.Service
 {
@@ -9,10 +11,12 @@ namespace Business.Service
     {
         IUserRepository _userRepo;
         ILexiconService _lexService;
-        public SecurityService(IUserRepository userRepo, ILexiconService lexService)
+        IHttpContextAccessor _contextAcc;
+        public SecurityService(IUserRepository userRepo, ILexiconService lexService, IHttpContextAccessor contextAccessor)
         {
             _userRepo = userRepo;
             _lexService = lexService;
+            _contextAcc = contextAccessor;
         }
 
         public CommonResult GetLoginUser(LoginUserModel request)
@@ -44,5 +48,26 @@ namespace Business.Service
 
             return new CommonResult { Data = existUser, IsSuccess = true };
         }
+
+        public CurrentUserModel GetCurrentUser()
+        {
+
+            if (_contextAcc.HttpContext.User != null)
+            {
+                string email = _contextAcc.HttpContext.User.Identity.Name;
+
+                var user = _userRepo.Get(x => x.IsActive == true && x.Email == email);
+
+                return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType };
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+
+
     }
 }

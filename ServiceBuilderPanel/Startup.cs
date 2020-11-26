@@ -65,11 +65,11 @@ namespace ServiceBuilderPanel
             services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
-            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IMailService, GodadyMailService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IServiceService, ServiceService>();
-            
+            services.AddScoped<IDocumentService, DocumentService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();

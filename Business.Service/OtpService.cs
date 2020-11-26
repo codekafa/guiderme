@@ -18,13 +18,15 @@ namespace Business.Service
         ISmsService _smsService;
         IQuerableRepository _queryRepo;
         ILexiconService _lexService;
-        public OtpService(IOtpTransactionRepository otpRepo, IMailService mailService, ISmsService smsService, IQuerableRepository queryRepo, ILexiconService lexService)
+        IDocumentService _documentService;
+        public OtpService(IOtpTransactionRepository otpRepo, IMailService mailService, ISmsService smsService, IQuerableRepository queryRepo, ILexiconService lexService, IDocumentService documentService)
         {
             _otpRepo = otpRepo;
             _mailService = mailService;
             _smsService = smsService;
             _queryRepo = queryRepo;
             _lexService = lexService;
+            _documentService = documentService;
         }
 
         public CommonResult CreateNewOtp(CreateOtpModel request)
@@ -34,6 +36,8 @@ namespace Business.Service
 
             string otp = GetOrpCode();
             var newOtp = _otpRepo.Add(new OtpTransaction { ExpireDate = DateTime.Now.AddDays(1), IsActive = true, IsUsed = false, OTPCode = otp, OTPType = request.OtpType, UserID = request.CurrentUserId });
+
+            request.OtpCode = otp;
 
             if (request.OtpType == (int)OtpTypes.Email)
                 otpResult = CreateEmailOtp(request);
@@ -69,13 +73,21 @@ namespace Business.Service
                 return otpvalue.ToString();
             }
         }
-
-
         CommonResult CreateEmailOtp(CreateOtpModel request)
         {
-            CommonResult result = new CommonResult();
-            //result = _mailService.Send(new ViewModel.Views.Mail.SendEmailModel { });
-            result.IsSuccess = true;
+            string htmlText = _documentService.GetStringDocument(@"Views\Template\EmailOtp.cshtml");
+            htmlText += htmlText.Replace("$$otp_ode$$", request.OtpCode);
+            htmlText += htmlText.Replace("$$register_dear$$", request.EmailOrPhone);
+            htmlText += htmlText.Replace("$$register_description$$", _lexService.GetTextValue("_otp_email_description", 12));
+            htmlText += htmlText.Replace("$$follow_us$$", _lexService.GetTextValue("_follow_us", 99));
+            htmlText += htmlText.Replace("$$instagram$$", _lexService.GetTextValue("_instagram", 99));
+            htmlText += htmlText.Replace("$$contact_phone$$", _lexService.GetTextValue("_contact_phone", 99));
+            htmlText += htmlText.Replace("$$contact_email$$", _lexService.GetTextValue("_contact_email", 99));
+            htmlText += htmlText.Replace("$$service_here$$", _lexService.GetTextValue("_service_here_brand_text", 99));
+            htmlText += htmlText.Replace("$$domain_name$$", _lexService.GetTextValue("_domain_name", 99));
+
+            var result = _mailService.Send(new ViewModel.Views.Mail.SendEmailModel { ToSingle = request.EmailOrPhone, Body = htmlText, IsHtml = true, Subject = _lexService.GetTextValue("_otp_email_subject", 12) });
+
             return result;
         }
         CommonResult CreateSmsOtp(CreateOtpModel request)

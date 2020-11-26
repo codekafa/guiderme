@@ -8,6 +8,7 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreap
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\Dapper.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.dll

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "MyBookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+
+            @await Html.PartialAsync("_GetUserMenu", new ViewDataDictionary(ViewData)
+                                {
+                                    { @"menu", @"booking" }
+                                })
+
+
+        </div>
+
+    </div>
+
+</div>

@@ -9,7 +9,7 @@ namespace ViewModel.Views.Otp
 
         public int OtpType { get; set; }
 
-
+        public string OtpCode { get; set; }
         public string EmailOrPhone { get; set; }
 
     }

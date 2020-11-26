@@ -14,6 +14,7 @@ namespace ViewModel.Views.Mail
 
         public List<string> To { get; set; }
 
+        public string ToSingle { get; set; }
         public string Subject { get; set; }
 
         public string Body { get; set; }

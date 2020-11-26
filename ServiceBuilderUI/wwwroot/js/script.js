@@ -195,19 +195,19 @@ Version      : 1.0
 
 	// Datepicker
 	
-	if($('.datepicker').length > 0) {
-		$('.datepicker').datepicker({
-				dateFormat: 'dd-mm-yy',
-				minDate: new Date(),	
-				icons: {
-					up: "fas fa-angle-up",
-					down: "fas fa-angle-down",
-					next: 'fas fa-angle-right',
-					previous: 'fas fa-angle-left'
-				}, onSelect: function(dateText) {
-			}
-		});
-	}
+	//if($('.datepicker').length > 0) {
+	//	$('.datepicker').datepicker({
+	//			dateFormat: 'dd-mm-yy',
+	//			minDate: new Date(),	
+	//			icons: {
+	//				up: "fas fa-angle-up",
+	//				down: "fas fa-angle-down",
+	//				next: 'fas fa-angle-right',
+	//				previous: 'fas fa-angle-left'
+	//			}, onSelect: function(dateText) {
+	//		}
+	//	});
+	//}
 
 	// Chat
 
