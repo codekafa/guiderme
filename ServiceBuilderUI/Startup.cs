@@ -66,7 +66,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
-            services.AddScoped<IMailService, GodadyMailService>();
+            services.AddScoped<IMailService, GmailMailService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IServiceService, ServiceService>();

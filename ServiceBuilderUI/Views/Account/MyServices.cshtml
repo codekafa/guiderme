@@ -1,8 +1,13 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+
+
 @{
-    ViewData["Title"] = "MyBookings";
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_services_page_title", 14);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
 
 <div class="content">
     <div class="container">
@@ -10,7 +15,7 @@
 
             @await Html.PartialAsync("_GetUserMenu", new ViewDataDictionary(ViewData)
                                 {
-                                    { @"menu", @"booking" }
+                                    { @"menu", @"service" }
                                 })
 
 
@@ -19,3 +24,4 @@
     </div>
 
 </div>
+

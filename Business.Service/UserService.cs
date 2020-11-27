@@ -21,7 +21,6 @@ namespace Business.Service
         IFileService _fileService;
         ILexiconService _lexService;
         IOtpService _otpService;
-        CommonResultHelper _helper;
         public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce)
         {
             _userRepo = userRepo;
@@ -33,7 +32,6 @@ namespace Business.Service
         }
 
         public AddOrEditUserModel GetUserViewModel(long user_id)
-
         {
             AddOrEditUserModel result = new AddOrEditUserModel();
             var existUser = _userRepo.Get(x => x.ID == user_id);
@@ -46,6 +44,7 @@ namespace Business.Service
             result.Password = existUser.Password;
             result.Phone = existUser.Phone;
             result.PhotoUrl = existUser.ProfilePhoto;
+            result.UserType = existUser.UserType;
             return result;
 
         }
@@ -92,6 +91,52 @@ namespace Business.Service
             result.IsSuccess = true;
             return result;
         }
+
+
+        public User GetUserByID(long id)
+        {
+            return _userRepo.Get(x => x.ID == id);
+        }
+        public CommonResult UpdateUserForUI(AddOrEditUserModel user)
+        {
+            var result = new CommonResult();
+            var existUser = new User();
+
+            existUser = GetUserByID(user.ID);
+
+            if (existUser == null)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_not_found", null);
+                return result;
+            }
+
+            bool check = IsExistMobileNumber(new CheckUserModel { Email = user.Email, Mobile = user.Phone, ID = user.ID });
+
+            if (check)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_alreay_exist_with_eail_or_phone", null);
+                return result;
+            }
+
+            if (user.Photo != null)
+            {
+                string path = _fileService.SaveImage(user.Photo, FileTypes.ProfileFiles).Data.ToString();
+                existUser.ProfilePhoto = path;
+            }
+
+            existUser.FirstName = user.FirstName;
+            existUser.Email = user.Email;
+            existUser.LastName = user.LastName;
+            existUser.Password = user.Password;
+            existUser.Phone = user.Phone;
+            existUser.UserType = user.UserType;
+            result = UpdateUser(existUser);
+            result.IsSuccess = true;
+            return result;
+        }
+
         public CommonResult UpdateUser(User user)
         {
             CommonResult result = new CommonResult();
@@ -233,7 +278,6 @@ namespace Business.Service
             return result;
         }
 
-
         public CommonResult ApproveMailOtp(CheckOtpCode request)
         {
             var result = _otpService.ApproveOtp(request);
@@ -264,6 +308,45 @@ namespace Business.Service
             user.IsMobileActivated = true;
             _userRepo.Update(user);
             return result;
+        }
+
+        public CommonResult ChangePassword(ChangePasswordModel password)
+        {
+            CommonResult result = new CommonResult();
+            try
+            {
+
+                if (password.Password != password.PasswordAgain)
+                {
+                    result.IsSuccess = false;
+                    result.Message = _lexService.GetAlertSring("_password_not_same", null);
+                    return result;
+                }
+
+                var user = GetUserByID(password.CurrentUserId);
+
+                if (password.CurrentPassword != user.Password)
+                {
+                    result.IsSuccess = false;
+                    result.Message = _lexService.GetAlertSring("_current_password_not_same", null);
+                    return result;
+                }
+
+                user.Password = password.Password;
+                _userRepo.Update(user);
+
+                result.IsSuccess = true;
+                result.Message = _lexService.GetAlertSring("_success_passwoord_changed", null);
+                return result;
+
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.Message;
+                return result;
+            }
         }
 
     }

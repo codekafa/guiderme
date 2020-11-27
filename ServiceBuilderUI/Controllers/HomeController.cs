@@ -12,7 +12,7 @@ using ViewModel.Views.Service;
 
 namespace ServiceBuilderUI.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         IContentService _contentService;
         IServiceService _serviceService;

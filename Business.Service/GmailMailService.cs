@@ -7,10 +7,10 @@ using ViewModel.Views.Mail;
 
 namespace Business.Service
 {
-    public class GmailMailService : IMailService
+    public class GodadyMailService : IMailService
     {
         AppSettings _appSettings;
-        public GmailMailService(IOptions<AppSettings> appSettings)
+        public GodadyMailService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
@@ -23,7 +23,7 @@ namespace Business.Service
                 smtp.Timeout = 600000;
                 smtp.Host = _appSettings.EmailSettings.SmtpAddress;
                 smtp.Port = _appSettings.EmailSettings.SmtpPost;
-                smtp.EnableSsl = true;
+                smtp.EnableSsl = false;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new System.Net.NetworkCredential(_appSettings.EmailSettings.Email, _appSettings.EmailSettings.Password);

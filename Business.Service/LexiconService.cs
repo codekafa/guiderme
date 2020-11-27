@@ -12,7 +12,7 @@ namespace Business.Service
         {
             _lexPreo = lexRepo;
         }
-        public string GetAlertSring(string key, string culture)
+        public string GetAlertSring(string key, string culture = null)
         {
             culture = "en-EN";
             var item = _lexPreo.Get(x => x.Key == key && x.LaunguageCode == culture);

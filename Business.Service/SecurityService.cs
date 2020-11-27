@@ -39,10 +39,10 @@ namespace Business.Service
                 return result;
             }
 
-            if (!existUser.IsMobileActivated)
+            if (!existUser.IsMailActivated)
             {
                 result.IsSuccess = false;
-                result.Message = _lexService.GetAlertSring("_user_not_active_for_mobile_phonee_for_login", request.CultureCode);
+                result.Message = _lexService.GetAlertSring("_user_not_active_for_mail_for_login", request.CultureCode);
                 return result;
             }
 

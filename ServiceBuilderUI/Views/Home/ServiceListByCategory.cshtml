@@ -3,7 +3,7 @@
 @model ViewModel.Views.CommonResult
 
 @{
-    ViewBag.Title = lexiconHelper.GetTextValue("_category_service_list", 11);
+    ViewBag.Title = lexiconHelper.GetTextValue("_category_service_list_page_title", 11);
     ViewBag.CategoriesSelect = "active";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -33,14 +33,23 @@
                         <div class="service-widget">
                             <div class="service-img">
                                 <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-01.jpg">
+
+                                    @{
+                                        string fileTransform = item.GetFileNameFromUrl();
+                                        string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_640,h_426/" + fileTransform;
+                                    }
+
+                                    <img class="img-fluid serv-img" alt="Service Image" src="@url">
                                 </a>
                                 <div class="item-info">
                                     <div class="service-user">
+                                        @{
+                                            string fileTransformUser = item.GetFileNameFromUserPhoto();
+                                            string urlUser = "https://res.cloudinary.com/servicebuilder/image/upload/w_30,h_30/" + fileTransformUser;
+                                        }
                                         <a href="#">
-                                            <img src="assets/img/customer/user-01.jpg" alt="">
+                                            <img src="@urlUser" alt="">
                                         </a>
-                                        <span class="service-price">$25</span>
                                     </div>
                                     <div class="cate-list">
                                         <a class="bg-yellow" href="service-details.html">@item.ServiceCategory</a>

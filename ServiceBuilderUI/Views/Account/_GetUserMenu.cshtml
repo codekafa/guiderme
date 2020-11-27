@@ -9,10 +9,9 @@
 <div class="col-xl-3 col-md-4">
     <div class="mb-4">
         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-            <img alt="profile image" src="~/@currentUser.ProfilePhoto" class="avatar-lg rounded-circle">
+            <img alt="profile image" src="@currentUser.ProfilePhoto" class="avatar-lg rounded-circle">
             <div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
                 <h6 class="mb-0">@currentUser.FullName</h6>
-                @*<p class="text-muted mb-0">Member Since Apr 2020</p>*@
             </div>
         </div>
     </div>
@@ -22,41 +21,49 @@
             <li class="nav-item current">
                 <a href="/dashboard" class="nav-link  @(ViewData["menu"] != null && ViewData["menu"].ToString() == "dashboard" ? "active":""  )">
                     <i class="fas fa-chart-line"></i>
-                    <span>Dashboard</span>
+                    <span>@lexiconHelper.GetTextValue("_dashboard",17)</span>
                 </a>
             </li>
             <li class="nav-item current">
                 <a href="/my-bookings" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "booking" ? "active":""  )">
                     <i class="far fa-calendar-check"></i>
-                    <span>My Bookings</span>
+                    <span>@lexiconHelper.GetTextValue("_my_bookings", 17)</span>
                 </a>
             </li>
 
             <li class="nav-item current">
-                <a href="/my-services" class="nav-link">
+                <a href="/my-services" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "service" ? "active":""  )">
                     <i class="far fa-calendar-check"></i>
-                    <span>My Services</span>
+                    <span>@lexiconHelper.GetTextValue("_my_services", 17)</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="/my-profile" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "profile" ? "active":""  )">
                     <i class="far fa-user"></i>
-                    <span>Profile Settings</span>
+                    <span>@lexiconHelper.GetTextValue("_profile_settings", 17)</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="/change-password" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "password" ? "active":""  )">
+                    <i class="far fa-user"></i>
+                    <span>@lexiconHelper.GetTextValue("_change_password", 17)</span>
+                </a>
+            </li>
+
 
             @if (currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.ServicerEndEmployer || currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.Servicer)
             {
                 <li class="nav-item">
                     <a href="/my-bids" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "payment" ? "active":""  )">
                         <i class="fas fa-hashtag"></i>
-                        <span>My Bids</span>
+                        <span>@lexiconHelper.GetTextValue("_my_bids", 17)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/payment" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "payment" ? "active":""  )">
                         <i class="fas fa-hashtag"></i>
-                        <span>Payment</span>
+                        <span>@lexiconHelper.GetTextValue("_payment", 17)</span>
                     </a>
                 </li>
             }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceBuilderUI.Controllers
 {
-    public class TemplateController : Controller
+    public class TemplateController : BaseController
     {
         public IActionResult EmailOtp()
         {

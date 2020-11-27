@@ -20,5 +20,32 @@ namespace ViewModel.Views.Service
         public string Longitude { get; set; }
         public string Latitude { get; set; }
 
+        public string Photo { get; set; }
+
+        public string UserPhoto { get; set; }
+        public string GetFileNameFromUrl()
+        {
+            if (!string.IsNullOrWhiteSpace(Photo))
+            {
+                Uri uri = new Uri(Photo);
+                return System.IO.Path.GetFileName(uri.LocalPath);
+            }
+            else
+            {
+                return "";
+            }
+        }
+        public string GetFileNameFromUserPhoto()
+        {
+            if (!string.IsNullOrWhiteSpace(UserPhoto))
+            {
+                Uri uri = new Uri(UserPhoto);
+                return System.IO.Path.GetFileName(uri.LocalPath);
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }

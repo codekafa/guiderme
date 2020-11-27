@@ -27,5 +27,11 @@ namespace Business.Service.Infrastructure
         CommonResult ApproveMailOtp(CheckOtpCode request);
 
         CommonResult ApproveSmsOtp(CheckOtpCode request);
+
+        User GetUserByID(long id);
+
+        CommonResult UpdateUserForUI(AddOrEditUserModel user);
+
+        CommonResult ChangePassword(ChangePasswordModel password);
     }
 }

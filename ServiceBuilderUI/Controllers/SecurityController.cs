@@ -11,7 +11,7 @@ using ViewModel.Views.Security;
 
 namespace ServiceBuilderUI.Controllers
 {
-    public class SecurityController : Controller
+    public class SecurityController : BaseController
     {
 
         IUserService _userService;

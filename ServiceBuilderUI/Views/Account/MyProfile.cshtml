@@ -1,6 +1,9 @@
-﻿
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+
+@model ViewModel.Views.User.AddOrEditUserModel
+
 @{
-    ViewBag.Title = "MyProfile";
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_profile_page_title", 14);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,20 +19,26 @@
                 <div class="tab-content pt-0">
                     <div class="tab-pane show active" id="user_profile_settings">
                         <div class="widget">
-                            <h4 class="widget-title">Profile Settings</h4>
-                            <form>
+                            <h4 class="widget-title">@lexiconHelper.GetTextValue("_profile_settings", 14)</h4>
+                            <form id="myProfileForm" method="post">
                                 <div class="row">
                                     <div class="col-xl-12">
-                                        <h5 class="form-title">Basic Information</h5>
+                                        <h5 class="form-title">@lexiconHelper.GetTextValue("_basic_information", 14)</h5>
                                     </div>
                                     <div class="form-group col-xl-12">
                                         <div class="media align-items-center mb-3">
-                                            <img class="user-image" src="~/img/customer/user-01.jpg" alt="">
+
+                                            @{
+                                                string fileTransform = Model.GetPhotoName;
+                                                string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_300,h_300/" + fileTransform;
+                                            }
+
+                                            <img class="user-image" src="@url" alt="">
                                             <div class="media-body">
-                                                <h5 class="mb-0">Jeffrey Akridge</h5>
-                                                <p>Max file size is 20mb</p>
+                                                <h5 class="mb-0">@Model.FirstName @Model.LastName</h5>
+                                                <p>@lexiconHelper.GetTextValue("max_file_size_is", 14) 5MB</p>
                                                 <div class="jstinput">
-                                                    <a href="javascript:void(0);" class="avatar-view-btn browsephoto openfile">Browse</a>
+                                                    <a class="avatar-view-btn browsephoto openfile"><input type="file" style="position: relative !important;width: 75px;" href="javascript:void(0);" id="Photo" name="Photo" class="avatar-view-btn browsephoto openfile" placeholder="Browse" />Browse</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -37,12 +46,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-xl-6">
-                                        <label class="mr-sm-2">Name</label>
-                                        <input class="form-control" type="text" value="Jeffrey Akridge" readonly>
+                                        <label class="mr-sm-2">@lexiconHelper.GetTextValue("_first_name", 99)</label>
+                                        <input class="form-control" type="text" id="FirstName" name="FirstName" value="@Model.FirstName" />
                                     </div>
                                     <div class="form-group col-xl-6">
-                                        <label class="mr-sm-2">Email</label>
-                                        <input class="form-control" type="email" value="jeffreyakridge@example.com" readonly>
+                                        <label class="mr-sm-2">@lexiconHelper.GetTextValue("_last_name", 99)</label>
+                                        <input class="form-control" type="text" id="LastName"  name="LastName" value="@Model.LastName" />
+                                    </div>
+                                    <div class="form-group col-xl-6">
+                                        <label class="mr-sm-2">@lexiconHelper.GetTextValue("_email", 99)</label>
+                                        <input class="form-control" type="email" id="Email" name="Email" value="@Model.Email" />
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Country Code</label>
@@ -50,13 +63,13 @@
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Mobile Number</label>
-                                        <input class="form-control no_only" type="text" value="410-242-3850" name="mobileno" readonly required>
+                                        <input class="form-control no_only" type="text" value="@Model.Phone" name="Phone" id="Phone"  />
                                     </div>
-                                    <div class="form-group col-xl-6">
+                                    @*<div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Date of birth</label>
                                         <input type="text" class="form-control datepicker" autocomplete="off" name="dob" value="01-01-1970">
-                                    </div>
-                                    <div class="col-xl-12">
+                                    </div>*@
+                                    @*<div class="col-xl-12">
                                         <h5 class="form-title">Address</h5>
                                     </div>
                                     <div class="form-group col-xl-12">
@@ -81,9 +94,9 @@
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Postal Code</label>
                                         <input type="text" class="form-control" name="pincode" value="665487">
-                                    </div>
+                                    </div>*@
                                     <div class="form-group col-xl-12">
-                                        <button name="form_submit" id="form_submit" class="btn btn-primary pl-5 pr-5" type="submit">Update</button>
+                                        <button name="form_submit" id="form_submit" class="btn btn-primary pl-5 pr-5" type="submit">@lexiconHelper.GetTextValue("_save", 99)</button>
                                     </div>
                                 </div>
                             </form>
@@ -96,3 +109,75 @@
 </div>
 
 
+@section Scripts{ 
+
+    <script>
+
+
+        $("#myProfileForm").validate({
+                rules: {
+                    Email: {
+                        required: true
+                    },
+                    LastName: {
+                        required: true
+                    },
+                    FirstName: {
+                        required: true
+                },
+                Phone: {
+                    required: true
+                }
+                },
+               messages: {
+                   Email: "@lexiconHelper.GetTextValue("_email_required",99)",
+                   LastName: "@lexiconHelper.GetTextValue("_last_name_required",99)",
+                   FirstName: "@lexiconHelper.GetTextValue("_first_name_required",99)",
+                   Phone: "@lexiconHelper.GetTextValue("_phone_required",99)"
+                },
+               submitHandler: function () {
+
+
+                   var form = $('#myProfileForm')[0];
+                   var data = new FormData(form);
+
+                       $.ajax({
+                           type: "POST",
+                           url: "/account/UpdateProfile",
+                           enctype: 'multipart/form-data',
+                           data: data,
+                           processData: false,
+                           contentType: false,
+                            success: function (e) {
+                                  if (e.isSuccess == true) {
+                                      location.href = "my-profile";
+                                } else {
+
+                                }
+                            },
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                }
+                            }
+                        });
+            }
+
+            });
+
+    </script>
+
+}

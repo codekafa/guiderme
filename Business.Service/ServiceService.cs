@@ -64,8 +64,10 @@ namespace Business.Service
                                     se.CreateDate,
                                     se.Longitude,
                                     se.Latitude,
-                                    us.Phone
-                                     from services se 
+                                    se.Photo,
+                                    us.Phone,
+                                    us.ProfilePhoto as UserPhoto
+                                    from services se 
                                     INNER JOIN servicecategories sc on sc.ID = se.ServiceCategoryID
                                     INNER JOIN countries co on co.ID = se.CountryID
                                     INNER JOIN cities ci on ci.ID = se.CityID

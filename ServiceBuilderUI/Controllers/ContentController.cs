@@ -9,7 +9,7 @@ using ViewModel.Views.Content.ServiceCategory;
 
 namespace ServiceBuilderUI.Controllers
 {
-    public class ContentController : Controller
+    public class ContentController : BaseController
     {
         IContentService _contentService;
         public ContentController(IContentService contentService)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace ViewModel.Views.User
 {
@@ -13,6 +14,22 @@ namespace ViewModel.Views.User
         public bool IsMailActivated { get; set; }
         public bool IsMobileActivated { get; set; }
         public string PhotoUrl { get; set; }
+
+        public string GetPhotoName { get
+            {
+                if (!string.IsNullOrWhiteSpace(PhotoUrl))
+                {
+                    Uri uri = new Uri(PhotoUrl);
+                    return System.IO.Path.GetFileName(uri.LocalPath);
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+        public int UserType { get; set; }
         public IFormFile Photo { get; set; }
     }
 }
