@@ -11,5 +11,9 @@ namespace Business.Service.Infrastructure
         CommonResult CreateNewOtp(CreateOtpModel request);
 
         CommonResult ApproveOtp(CheckOtpCode request);
+
+        bool CheckOtpCode(string otp_code);
+
+        CommonResult GetOtpResult(string otp_code, int type);
     }
 }

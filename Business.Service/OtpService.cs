@@ -28,7 +28,6 @@ namespace Business.Service
             _lexService = lexService;
             _documentService = documentService;
         }
-
         public CommonResult CreateNewOtp(CreateOtpModel request)
         {
             CommonResult result = new CommonResult();
@@ -41,8 +40,10 @@ namespace Business.Service
 
             if (request.OtpType == (int)OtpTypes.Email)
                 otpResult = CreateEmailOtp(request);
-            else
+            else if (request.OtpType == (int)OtpTypes.Sms)
                 otpResult = CreateSmsOtp(request);
+            else if (request.OtpType == (int)OtpTypes.ChangePassword)
+                otpResult = CreateChangeEmailOtp(request);
 
             if (otpResult.IsSuccess)
             {
@@ -53,13 +54,11 @@ namespace Business.Service
             return result;
 
         }
-
         string GetOrpCode()
         {
             string otp = "";
 
-            var lastOtp = _queryRepo.GetSingle<OtpTransaction>("SELECT * FROM OtpTransactions  order by ID desc LIMIT 1", null);
-
+            var lastOtp = _queryRepo.GetSingle<OtpTransaction>("SELECT * FROM OtpTransactions   order by ID desc LIMIT 1", null);
 
             if (lastOtp == null)
             {
@@ -73,9 +72,29 @@ namespace Business.Service
                 return otpvalue.ToString();
             }
         }
+        CommonResult CreateChangeEmailOtp(CreateOtpModel request)
+        {
+            string htmlText = _documentService.GetStringDocument(@"Views\Template\ChangePasswordMail.cshtml");
+            htmlText = htmlText.Replace("$$user_dear_text$$", _lexService.GetTextValue("change_password_dear_text", 12));
+            htmlText = htmlText.Replace("$$user_dear$$", request.EmailOrPhone);
+            htmlText = htmlText.Replace("$$user_description$$", _lexService.GetTextValue("_change_password_description", 12));
+            htmlText = htmlText.Replace("$$change_link_text$$", _lexService.GetTextValue("_change_password_link_text", 12));
+            htmlText = htmlText.Replace("$$change_link$$", _lexService.GetTextValue("_domain_name", 99) + "change-password/" + request.OtpCode);
+            htmlText = htmlText.Replace("$$follow_us$$", _lexService.GetTextValue("_follow_us", 99));
+            htmlText = htmlText.Replace("$$instagram$$", _lexService.GetTextValue("_instagram", 99));
+            htmlText = htmlText.Replace("$$contact_phone$$", _lexService.GetTextValue("_contact_phone", 99));
+            htmlText = htmlText.Replace("$$contact_email$$", _lexService.GetTextValue("_contact_email", 99));
+            htmlText = htmlText.Replace("$$service_here$$", _lexService.GetTextValue("_service_here_brand_text", 99));
+            htmlText = htmlText.Replace("$$domain_name$$", _lexService.GetTextValue("_domain_name", 99));
+
+            var result = _mailService.Send(new ViewModel.Views.Mail.SendEmailModel { ToSingle = request.EmailOrPhone, Body = htmlText, IsHtml = true, Subject = _lexService.GetTextValue("_change_password_mail_subject", 12) });
+
+            return result;
+        }
         CommonResult CreateEmailOtp(CreateOtpModel request)
         {
             string htmlText = _documentService.GetStringDocument(@"Views\Template\EmailOtp.cshtml");
+            htmlText = htmlText.Replace("  $$register_dear_text$$", _lexService.GetTextValue("_otp_register_dear_text", 12));         
             htmlText = htmlText.Replace("$$otp_ode$$", request.OtpCode);
             htmlText = htmlText.Replace("$$register_dear$$", request.EmailOrPhone);
             htmlText = htmlText.Replace("$$register_description$$", _lexService.GetTextValue("_otp_email_description", 12));
@@ -116,7 +135,7 @@ namespace Business.Service
                 return result;
             }
 
-            if (DateTime.Now > otp.ExpireDate )
+            if (DateTime.Now > otp.ExpireDate)
             {
                 result.IsSuccess = false;
                 result.Data = _lexService.GetAlertSring("_otp_has_been_expired!", otpModel.CultureCode);
@@ -133,6 +152,32 @@ namespace Business.Service
             result.Data = otp;
             result.Message = _lexService.GetAlertSring("_otp_successfully_approved!", otpModel.CultureCode);
             return result;
+        }
+        public bool CheckOtpCode(string otp_code)
+        {
+
+            var exist = _otpRepo.Get(x => x.IsActive == true && x.OTPCode == otp_code && x.IsUsed == false && x.OTPType == (int)OtpTypes.ChangePassword);
+
+            if (exist == null)
+                return false;
+            else
+            {
+                exist.IsUsed = true;
+                _otpRepo.Update(exist);
+                return true;
+            }
+        }
+        public CommonResult GetOtpResult(string otp_code, int type)
+        {
+            CommonResult result = new CommonResult();
+            var exist = _otpRepo.Get(x => x.OTPCode == otp_code && x.OTPType == type);
+
+            if (exist != null)
+                result.IsSuccess = true;
+
+            result.Data = exist;
+            return result;
+
         }
     }
 }

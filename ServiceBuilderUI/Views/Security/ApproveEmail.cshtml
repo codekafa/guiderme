@@ -1,6 +1,6 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
 @{
-    ViewData["Title"] = "ApproveEmail";
+    ViewBag.Title = lexiconHelper.GetTextValue("_approve_email_page_title", 13);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

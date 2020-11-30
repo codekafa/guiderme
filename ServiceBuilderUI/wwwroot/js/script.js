@@ -1,8 +1,5 @@
-/*
-Author       : Dreamguys
-Template Name: Truelysell - Service Marketplace
-Version      : 1.0
-*/
+
+
 
 (function($) {
 	"use strict";
@@ -235,3 +232,33 @@ Version      : 1.0
 	});
 	
 })(jQuery);
+toastr.options = {
+	"closeButton": true,
+	"debug": false,
+	"newestOnTop": false,
+	"progressBar": true,
+	"positionClass": "toast-top-right",
+	"preventDuplicates": false,
+	"onclick": null,
+	"showDuration": "300",
+	"hideDuration": "1000",
+	"timeOut": "5000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+}
+
+
+function toastrSuccess(text) {
+	toastr["success"](text);
+}
+function toastrDanger(text) {
+	toastr["error"](text);
+}
+function toastrAlert(text) {
+	toastr["warning"](text);
+}
+
+

@@ -111,7 +111,7 @@ namespace ServiceBuilderApi
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
-            services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IMailService, GmailMailService>();
             services.AddScoped<ISmsService, SmsService>();
 
             services.AddScoped<IUserRepository, UserRepository>();

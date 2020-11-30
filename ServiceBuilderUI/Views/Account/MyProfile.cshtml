@@ -55,15 +55,15 @@
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">@lexiconHelper.GetTextValue("_email", 99)</label>
-                                        <input class="form-control" type="email" id="Email" name="Email" value="@Model.Email" />
+                                        <input class="form-control" type="email" id="Email" readonly name="Email" value="@Model.Email" />
                                     </div>
-                                    <div class="form-group col-xl-6">
+                                    @*<div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Country Code</label>
                                         <input class="form-control" type="text" value="91" readonly>
-                                    </div>
+                                    </div>*@
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Mobile Number</label>
-                                        <input class="form-control no_only" type="text" value="@Model.Phone" name="Phone" id="Phone"  />
+                                        <input class="form-control no_only" type="text" readonly value="@Model.Phone" name="Phone" id="Phone"  />
                                     </div>
                                     @*<div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Date of birth</label>
@@ -149,10 +149,14 @@
                            processData: false,
                            contentType: false,
                             success: function (e) {
-                                  if (e.isSuccess == true) {
-                                      location.href = "my-profile";
+                                if (e.isSuccess == true) {
+                                    toastrSuccess("@lexiconHelper.GetAlertSring("_update_successfuly_for_profile",null)")
+                                    setTimeout(function () {
+                                        location.href = "my-profile";
+                                    },2000)
+                                 
                                 } else {
-
+                                    toastrDanger(e.message);
                                 }
                             },
                             error: function (jqXHR, exception) {
@@ -172,6 +176,7 @@
                                 } else {
                                     msg = 'Uncaught Error.\n' + jqXHR.responseText;
                                 }
+                                toastrDanger(msg);
                             }
                         });
             }

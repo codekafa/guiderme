@@ -17,6 +17,7 @@
     <link href="~/lib/owlcarousel/owl.carousel.min.css" rel="stylesheet" />
     <link href="~/lib/owlcarousel/owl.theme.default.min.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
 
     @RenderSection("Styles", required: false)
 
@@ -126,25 +127,30 @@
             </nav>
         </header>
 
-        <div class="breadcrumb-bar">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="breadcrumb-title">
-                            <h2>@ViewBag.Title</h2>
+
+        @if (ViewBag.HideBreadCrumb != true)
+        {
+            <div class="breadcrumb-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="breadcrumb-title">
+                                <h2>@ViewBag.Title</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-auto float-right ml-auto breadcrumb-menu">
-                        <nav aria-label="breadcrumb" class="page-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">@lexiconHelper.GetTextValue("_main_page", 1)</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
-                            </ol>
-                        </nav>
+                        <div class="col-auto float-right ml-auto breadcrumb-menu">
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">@lexiconHelper.GetTextValue("_main_page", 1)</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+
 
         @RenderBody()
 
@@ -220,11 +226,11 @@
                                     </ul>
                                 </div>
                                 @*<div class="subscribe-form">
-                                        <input type="email" class="form-control" placeholder="@lexiconHelper.GetTextValue("_enter_you_email", 2)">
-                                        <button type="submit" class="btn footer-btn">
-                                            <i class="fas fa-paper-plane"></i>
-                                        </button>
-                                    </div>*@
+                                    <input type="email" class="form-control" placeholder="@lexiconHelper.GetTextValue("_enter_you_email", 2)">
+                                    <button type="submit" class="btn footer-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -388,6 +394,7 @@
                         </div>
                         <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">@lexiconHelper.GetTextValue("_login", 2)</button>
                         <div class="login-or">
+
                             <span class="or-line"></span>
                             <span class="span-or">or</span>
                         </div>
@@ -400,6 +407,9 @@
                             </div>
                         </div>
                         <div class="text-center dont-have">
+                            @lexiconHelper.GetTextValue("_forgot_you_password_text", 2) <a href="/forgot-password">@lexiconHelper.GetTextValue("_forgot_you_password_link_text", 2)</a>
+                        </div>
+                        <div class="text-center dont-have">
                             @lexiconHelper.GetTextValue("_dont_have_an_account", 2) <a href="#">@lexiconHelper.GetTextValue("_register", 2)</a>
                         </div>
                     </form>
@@ -408,6 +418,7 @@
         </div>
     </div>
 
+
     <script src="~/js/jquery-3.5.0.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
@@ -415,187 +426,193 @@
     <script src="~/js/moment.min.js"></script>
     <script src="~/js/bootstrap-datetimepicker.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/script.js"></script>
-
 
     @RenderSection("Scripts", required: false)
 
 
     <script>
-        $(document).ready(function () {
-            $("#loginForm").validate({
-                rules: {
-                    EmailOrPhone: {
-                        required: true
-                    },
-                    Password: {
-                        required: true
+   $(document).ready(function () {
+	$("#loginForm").validate({
+		rules: {
+			EmailOrPhone: {
+				required: true
+			},
+			Password: {
+				required: true
+			}
+		},
+		messages: {
+			EmailOrPhone: "@lexiconHelper.GetTextValue("_email_or_phone_required",99)",
+			Password: "@lexiconHelper.GetTextValue("_password_required",99)"
+                },
+		submitHandler: function () {
+
+			$.ajax({
+				type: "POST",
+				url: "/security/login",
+				data: $('#loginForm').serialize(),
+				processData: false,
+				enctype: 'multipart/form-data',
+				cache: false,
+				timeout: 600000,
+				success: function (e) {
+					if (e.isSuccess == true) {
+						toastrSuccess("Successfuly login!");
+						location.href = "my-profile";
+					} else {
+						toastrDanger(e.message)
+					}
+				},
+				error: function (jqXHR, exception) {
+					var msg = '';
+					if (jqXHR.status === 0) {
+						msg = 'Not connect.\n Verify Network.';
+					} else if (jqXHR.status == 404) {
+						msg = 'Requested page not found. [404]';
+					} else if (jqXHR.status == 500) {
+						msg = 'Internal Server Error [500].';
+					} else if (exception === 'parsererror') {
+						msg = 'Requested JSON parse failed.';
+					} else if (exception === 'timeout') {
+						msg = 'Time out error.';
+					} else if (exception === 'abort') {
+						msg = 'Ajax request aborted.';
+					} else {
+						msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                },
-               messages: {
-                   EmailOrPhone: "@lexiconHelper.GetTextValue("_email_or_phone_required",99)",
-                   Password: "@lexiconHelper.GetTextValue("_password_required",99)"
-                },
-                   submitHandler: function () {
 
-                $.ajax({
-                    type: "POST",
-                    url: "/security/login",
-                    data: $('#loginForm').serialize(),
-                    processData: false,
-                    enctype: 'multipart/form-data',
-					cache: false,
-					timeout: 600000,
-                    success: function (e) {
-                          if (e.isSuccess == true) {
-                             location.href = "my-profile";
-                        } else {
+                    toastrDanger(msg);
+				}
+			});
+		}
 
-                        }
-                    },
-                    error: function (jqXHR, exception) {
-                        var msg = '';
-                        if (jqXHR.status === 0) {
-                            msg = 'Not connect.\n Verify Network.';
-                        } else if (jqXHR.status == 404) {
-                            msg = 'Requested page not found. [404]';
-                        } else if (jqXHR.status == 500) {
-                            msg = 'Internal Server Error [500].';
-                        } else if (exception === 'parsererror') {
-                            msg = 'Requested JSON parse failed.';
-                        } else if (exception === 'timeout') {
-                            msg = 'Time out error.';
-                        } else if (exception === 'abort') {
-                            msg = 'Ajax request aborted.';
-                        } else {
-                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                        }
+	});
+
+	$("#userRegisterForm").validate({
+		rules: {
+			UserEmail: {
+				required: true
+			},
+			UserMobile: {
+				required: true
+			},
+			UserPassword: {
+				required: true
+			}
+		},
+		messages: {
+			UserEmail: "@lexiconHelper.GetTextValue("_email_required",99)",
+			UserMobile: "@lexiconHelper.GetTextValue("_mobile_required",99)",
+			UserPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
+                },
+		submitHandler: function () {
+
+			var newUser = new Object();
+			newUser.Email = $('#UserEmail').val();
+			newUser.Phone = $('#UserMobile').val();
+			newUser.Password = $('#UserPassword').val();
+			newUser.PasswordAgain = newUser.Password;
+			newUser.RegisterType = 1;
+
+			$.ajax({
+				type: "POST",
+				url: "/security/RegisterUser",
+				data: newUser,
+				success: function (e) {
+					if (e.isSuccess == true) {
+						location.href = "email-approve";
+					} else {
+                        toastrDanger(e.message)
+					}
+				},
+				error: function (jqXHR, exception) {
+					var msg = '';
+					if (jqXHR.status === 0) {
+						msg = 'Not connect.\n Verify Network.';
+					} else if (jqXHR.status == 404) {
+						msg = 'Requested page not found. [404]';
+					} else if (jqXHR.status == 500) {
+						msg = 'Internal Server Error [500].';
+					} else if (exception === 'parsererror') {
+						msg = 'Requested JSON parse failed.';
+					} else if (exception === 'timeout') {
+						msg = 'Time out error.';
+					} else if (exception === 'abort') {
+						msg = 'Ajax request aborted.';
+					} else {
+						msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                });
-            }
+                    toastrDanger(msg)
+				}
+			});
+		}
 
-            });
+	});
 
-            $("#userRegisterForm").validate({
-                rules: {
-                    UserEmail: {
-                        required: true
-                    },
-                    UserMobile: {
-                        required: true
-                    },
-                    UserPassword: {
-                        required: true
+	$("#registerProviderForm").validate({
+		rules: {
+			ProviderEmail: {
+				required: true
+			},
+			ProviderMobile: {
+				required: true
+			},
+			ProviderPassword: {
+				required: true
+			}
+		},
+		messages: {
+			ProviderEmail: "@lexiconHelper.GetTextValue("_email_required",99)",
+			ProviderMobile: "@lexiconHelper.GetTextValue("_mobile_required",99)",
+			ProviderPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
+                },
+		submitHandler: function () {
+
+			var newUser = new Object();
+			newUser.Email = $('#ProviderEmail').val();
+			newUser.Phone = $('#ProviderMobile').val();
+			newUser.Password = $('#ProviderPassword').val();
+			newUser.PasswordAgain = newUser.Password;
+			newUser.RegisterType = 2;
+			$.ajax({
+				type: "POST",
+				url: "/security/RegisterUser",
+				data: newUser,
+				success: function (e) {
+					if (e.isSuccess == true) {
+						location.href = "email-approve";
+					} else {
+                        toastrDanger(e.message)
+					}
+				},
+				error: function (jqXHR, exception) {
+					var msg = '';
+					if (jqXHR.status === 0) {
+						msg = 'Not connect.\n Verify Network.';
+					} else if (jqXHR.status == 404) {
+						msg = 'Requested page not found. [404]';
+					} else if (jqXHR.status == 500) {
+						msg = 'Internal Server Error [500].';
+					} else if (exception === 'parsererror') {
+						msg = 'Requested JSON parse failed.';
+					} else if (exception === 'timeout') {
+						msg = 'Time out error.';
+					} else if (exception === 'abort') {
+						msg = 'Ajax request aborted.';
+					} else {
+						msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                },
-               messages: {
-                   UserEmail: "@lexiconHelper.GetTextValue("_email_required",99)",
-                   UserMobile: "@lexiconHelper.GetTextValue("_mobile_required",99)",
-                    UserPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
-                },
-               submitHandler: function () {
 
-                   var newUser = new Object();
-                   newUser.Email = $('#UserEmail').val();
-                   newUser.Phone = $('#UserMobile').val();
-                   newUser.Password = $('#UserPassword').val();
-                   newUser.PasswordAgain = newUser.Password;
-                   newUser.RegisterType = 1;
+                    toastrDanger(msg)
+				}
+			});
+		}
 
-                       $.ajax({
-                           type: "POST",
-                           url: "/security/RegisterUser",
-                           data: newUser,
-                            success: function (e) {
-                                  if (e.isSuccess == true) {
-                                      location.href = "email-approve";
-                                } else {
+	});
 
-                                }
-                            },
-                            error: function (jqXHR, exception) {
-                                var msg = '';
-                                if (jqXHR.status === 0) {
-                                    msg = 'Not connect.\n Verify Network.';
-                                } else if (jqXHR.status == 404) {
-                                    msg = 'Requested page not found. [404]';
-                                } else if (jqXHR.status == 500) {
-                                    msg = 'Internal Server Error [500].';
-                                } else if (exception === 'parsererror') {
-                                    msg = 'Requested JSON parse failed.';
-                                } else if (exception === 'timeout') {
-                                    msg = 'Time out error.';
-                                } else if (exception === 'abort') {
-                                    msg = 'Ajax request aborted.';
-                                } else {
-                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                                }
-                            }
-                        });
-            }
-
-            });
-
-            $("#registerProviderForm").validate({
-                rules: {
-                    ProviderEmail: {
-                        required: true
-                    },
-                    ProviderMobile: {
-                        required: true
-                    },
-                    ProviderPassword: {
-                        required: true
-                    }
-                },
-               messages: {
-                   ProviderEmail: "@lexiconHelper.GetTextValue("_email_required",99)",
-                   ProviderMobile: "@lexiconHelper.GetTextValue("_mobile_required",99)",
-                   ProviderPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
-                },
-               submitHandler: function () {
-
-                   var newUser = new Object();
-                   newUser.Email = $('#ProviderEmail').val();
-                   newUser.Phone = $('#ProviderMobile').val();
-                   newUser.Password = $('#ProviderPassword').val();
-                   newUser.PasswordAgain = newUser.Password;
-                   newUser.RegisterType = 2;
-                       $.ajax({
-                            type: "POST",
-                           url: "/security/RegisterUser",
-                           data: newUser,
-                            success: function (e) {
-                                  if (e.isSuccess == true) {
-                                     location.href = "email-approve";
-                                } else {
-
-                                }
-                            },
-                            error: function (jqXHR, exception) {
-                                var msg = '';
-                                if (jqXHR.status === 0) {
-                                    msg = 'Not connect.\n Verify Network.';
-                                } else if (jqXHR.status == 404) {
-                                    msg = 'Requested page not found. [404]';
-                                } else if (jqXHR.status == 500) {
-                                    msg = 'Internal Server Error [500].';
-                                } else if (exception === 'parsererror') {
-                                    msg = 'Requested JSON parse failed.';
-                                } else if (exception === 'timeout') {
-                                    msg = 'Time out error.';
-                                } else if (exception === 'abort') {
-                                    msg = 'Ajax request aborted.';
-                                } else {
-                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                                }
-                            }
-                        });
-            }
-
-            });
-
-        });
+});
     </script>
 
 

@@ -16,10 +16,12 @@ namespace ServiceBuilderUI.Controllers
 
         IUserService _userService;
         ISecurityService _securityService;
-        public SecurityController(IUserService userService, ISecurityService securityService)
+        IOtpService _otpService;
+        public SecurityController(IUserService userService, ISecurityService securityService, IOtpService otpService)
         {
             _userService = userService;
             _securityService = securityService;
+            _otpService = otpService;
         }
 
         [Route("login")]
@@ -77,6 +79,20 @@ namespace ServiceBuilderUI.Controllers
             return View();
         }
 
+
+        [Route("forgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public CommonResult SendChangePasswordMail(ForgatPasswordModel mail)
+        {
+            CommonResult result = new CommonResult();
+            result = _userService.SendForgotPasswordMail(mail);
+            return result;
+        }
+
         [HttpPost]
         public CommonResult ApproveOtp(ApproveOtpModel request)
         {
@@ -91,6 +107,24 @@ namespace ServiceBuilderUI.Controllers
                 result = _userService.ApproveSmsOtp(new CheckOtpCode { CheckUsed = true, OtpCode = request.OtpCode });
             }
             return result;
+        }
+
+        [Route("change-password/{otp_code}")]
+        public IActionResult ChangePassword(string otp_code)
+        {
+            bool check = _otpService.CheckOtpCode(otp_code);
+            if (!check)
+                return Redirect("/login");
+            ViewBag.OtpCode = otp_code;
+            return View();
+        }
+
+        public CommonResult ChangePasswordWithOtp(ChangePasswordModel request)
+        {
+            CommonResult result = new CommonResult();
+            result = _userService.ChangePasswordWithOtp(request);
+            return result;
+
         }
 
     }

@@ -91,8 +91,6 @@ namespace Business.Service
             result.IsSuccess = true;
             return result;
         }
-
-
         public User GetUserByID(long id)
         {
             return _userRepo.Get(x => x.ID == id);
@@ -134,6 +132,10 @@ namespace Business.Service
             existUser.UserType = user.UserType;
             result = UpdateUser(existUser);
             result.IsSuccess = true;
+
+            if (existUser.Email != user.Email)
+                result.ActionCode = "1";
+
             return result;
         }
 
@@ -348,6 +350,73 @@ namespace Business.Service
                 return result;
             }
         }
+
+        public CommonResult SendForgotPasswordMail(ForgatPasswordModel mail)
+        {
+            CommonResult result = new CommonResult();
+            var existEmail = _userRepo.Get(x => x.IsActive && x.Email == mail.Email);
+
+            if (existEmail == null)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_user_not_found_for_change_password_mail", null);
+                return result;
+            }
+
+            var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = existEmail.ID, EmailOrPhone = existEmail.Email, OtpType = (int)OtpTypes.ChangePassword });
+
+            if (!otpResult.IsSuccess)
+                return otpResult;
+
+            return result;
+
+        }
+
+
+        public CommonResult ChangePasswordWithOtp(ChangePasswordModel request)
+        {
+
+            CommonResult result = new CommonResult();
+
+            if (request.Password != request.PasswordAgain)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_password_not_same", null);
+                return result;
+            }
+
+            var otpResult = _otpService.GetOtpResult(request.OtpCode, (int)OtpTypes.ChangePassword);
+
+            if (otpResult.IsSuccess)
+            {
+
+                var otpTransaction = otpResult.Data as OtpTransaction;
+
+                if (!otpTransaction.IsActive || !otpTransaction.IsUsed)
+                {
+                    result.IsSuccess = false;
+                    result.Message = _lexService.GetAlertSring("_otp_code_not_found", null);
+                    return result;
+                }
+                else
+                {
+
+                    var user = _userRepo.Get(x => x.ID == otpTransaction.UserID);
+                    user.Password = request.Password;
+                    _userRepo.Update(user);
+                    result.IsSuccess = true;
+                    result.Message = _lexService.GetAlertSring("_password_change_successfuly", null);
+                    return result;
+                }
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_otp_code_not_found", null);
+                return result;
+            }         
+        }
+
 
     }
 }

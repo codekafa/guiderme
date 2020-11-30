@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Repository.ConCreate\Repository.ConCreate.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\toastr\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,9 @@
 ﻿using Business.Service.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Repository.Base;
+using System;
+using System.Linq;
+using System.Security.Claims;
 using ViewModel.Views;
 using ViewModel.Views.Security;
 using ViewModel.Views.User;
@@ -54,10 +57,9 @@ namespace Business.Service
 
             if (_contextAcc.HttpContext.User != null)
             {
-                string email = _contextAcc.HttpContext.User.Identity.Name;
-
-                var user = _userRepo.Get(x => x.IsActive == true && x.Email == email);
-
+                var  claimId = _contextAcc.HttpContext.User.Claims.Where(x=> x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
+                long userId = Convert.ToInt64(claimId.Value);
+                var user = _userRepo.Get(x => x.IsActive == true && x.ID == userId);
                 return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType };
             }
             else

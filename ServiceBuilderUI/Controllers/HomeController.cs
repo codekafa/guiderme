@@ -24,11 +24,13 @@ namespace ServiceBuilderUI.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.HideBreadCrumb = true;
             return View();
         }
         [Route("main-page")]
         public IActionResult MainPage()
         {
+            ViewBag.HideBreadCrumb = true;
             return View("Index");
         }
 

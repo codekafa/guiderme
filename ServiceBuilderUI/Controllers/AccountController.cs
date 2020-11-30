@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Business.Service.Infrastructure;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using ServiceBuilderUI.Models;
 using ViewModel.Views;
@@ -16,9 +17,11 @@ namespace ServiceBuilderUI.Controllers
     public class AccountController : BaseController
     {
         IUserService _userService;
-        public AccountController(IUserService userService)
+        IServiceService _serviceService;
+        public AccountController(IUserService userService, IServiceService serviceService)
         {
             _userService = userService;
+            _serviceService = serviceService;
         }
 
         [Route("my-profile")]
@@ -29,10 +32,16 @@ namespace ServiceBuilderUI.Controllers
         }
 
         [HttpPost]
-        public CommonResult UpdateProfile(AddOrEditUserModel user)
+        public async Task<CommonResult> UpdateProfileAsync(AddOrEditUserModel user)
         {
             user.ID = CurrentUserId.Value;
             var updateResult = _userService.UpdateUserForUI(user);
+
+            if (updateResult.ActionCode == "1")
+            {
+                await HttpContext.SignOutAsync();
+            }
+
             return updateResult;
         }
 
@@ -45,7 +54,8 @@ namespace ServiceBuilderUI.Controllers
         [Route("my-services")]
         public IActionResult MyServices()
         {
-            return View();
+            var list = _serviceService.GetServiceList(new ViewModel.Views.Service.ServiceSearchModel { UserID = CurrentUserId.Value , TakeRow = 100, PageIndex= 0 });
+            return View(list);
         }
 
         [Route("dashboard")]
@@ -59,7 +69,7 @@ namespace ServiceBuilderUI.Controllers
         public IActionResult ChangePassword()
         {
             return View();
-        
+
         }
         [HttpPost]
         public CommonResult ChangePassword(ChangePasswordModel pass)

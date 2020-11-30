@@ -37,7 +37,8 @@ namespace Common.Helpers
         public enum OtpTypes
         {
             Sms = 1,
-            Email = 2
+            Email = 2,
+            ChangePassword =3
         }
     }
 }

@@ -1,0 +1,89 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+
+@model ViewModel.Views.CommonResult
+@{
+    var services = Model.Data as List<ViewModel.Views.Service.ServiceListModel>;
+}
+
+<h4 class="widget-title">My Services</h4>
+<ul class="nav nav-tabs menu-tabs">
+    <li class="nav-item active">
+        <a class="nav-link" href="my-services.html">Active Services</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="my-services-inactive.html">Inactive Services</a>
+    </li>
+</ul>
+<div class="row">
+
+    @foreach (var service in services)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="service-widget">
+                <div class="service-img">
+                    <a href="service-details.html">
+                        @{
+                            string fileTransform = service.GetFileNameFromUrl();
+                            string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_640,h_426/" + fileTransform;
+                        }
+
+                        <img class="img-fluid serv-img" alt="Service Image" src="@url">
+                    </a>
+                    <div class="item-info">
+                        <div class="cate-list">
+                            <a class="bg-yellow" href="service-details.html">@service.ServiceCategory</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="title text-truncate">
+                        <a href="service-details.html">@service.Name</a>
+                    </h3>
+                    @*<div class="rating">
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <span class="d-inline-block average-rating">(4.3)</span>
+                    </div>*@
+                    <div class="user-info">
+                        <div class="service-action">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="/edit-service/@service.ID" class="text-success"><i class="far fa-edit"></i> Edit</a>
+                                </div>
+                                <div class="col text-right">
+                                    <a href="javascript:void(0);" class="text-danger" data-toggle="modal" data-target="#deleteNotConfirmModal"><i class="far fa-trash-alt"></i> Inactive</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+    @*<div class="pagination">
+        <ul>
+            <li class="active">
+                <a href="javascript:void(0);">1</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);">2</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);">3</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);">4</a>
+            </li>
+            <li class="arrow">
+                <a href="javascript:void(0);"><i class="fas fa-angle-right"></i></a>
+            </li>
+        </ul>
+    </div>*@
+</div>
+

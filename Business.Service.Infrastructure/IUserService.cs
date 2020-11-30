@@ -33,5 +33,8 @@ namespace Business.Service.Infrastructure
         CommonResult UpdateUserForUI(AddOrEditUserModel user);
 
         CommonResult ChangePassword(ChangePasswordModel password);
+
+        CommonResult SendForgotPasswordMail(ForgatPasswordModel mail);
+        CommonResult ChangePasswordWithOtp(ChangePasswordModel request);
     }
 }
