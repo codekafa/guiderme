@@ -24,5 +24,12 @@ namespace ServiceBuilderUI.Controllers
             return Json(result);
         }
 
+
+        public JsonResult GetCitiesSelectViewModel(long country_id)
+        {
+            var result = _contentService.GetCitiesSelectViewModel(country_id);
+            return Json(result);
+        }
+
     }
 }

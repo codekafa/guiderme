@@ -11,10 +11,13 @@ namespace DataModel.BaseEntities
         public string Description { get; set; }
         public string Longitude { get; set; }
         public string Latitude { get; set; }
+
+        public string Photo { get; set; }
         public long? ServiceStartYear { get; set; }
         public long? CountryID { get; set; }
         public long? CityID { get; set; }
-        public bool IsActive { get; set; }
+        public long UserID { get; set; }
+        public long ServiceCategoryID { get; set; }
         public Country Country { get; set; }
         public City City { get; set; }
         public ServiceCategory ServiceCategory { get; set; }

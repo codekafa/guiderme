@@ -41,5 +41,12 @@ namespace Business.Service.Infrastructure
 
         List<CategoryAutoCompleteModel> GetCategoryAutoCompleteList(string keys);
 
+
+        List<SelectViewModel> GetCategorySelectViewModel();
+
+        List<SelectViewModel> GetCountriesSelectViewModel();
+
+        List<SelectViewModel> GetCitiesSelectViewModel(long countryId);
+
     }
 }

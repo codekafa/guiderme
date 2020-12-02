@@ -10,6 +10,8 @@ namespace DataModel.BaseEntities
         public string PhotoUrl { get; set; }
 
         public string PhotoName { get; set; }
+
+        public long ServiceID { get; set; }
         public Service Service { get; set; }
     }
 }

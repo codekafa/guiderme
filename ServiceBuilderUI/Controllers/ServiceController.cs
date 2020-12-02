@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Service.Infrastructure;
+﻿using Business.Service.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBuilderUI.Models;
+using ViewModel.Views;
 using ViewModel.Views.Service;
 
 namespace ServiceBuilderUI.Controllers
 {
+    [AuthorizeCustom]
     public class ServiceController : BaseController
     {
         IServiceService _serviceService;
@@ -21,11 +20,33 @@ namespace ServiceBuilderUI.Controllers
             return View(list);
         }
 
-        [Route("serive-detail/{service_id}")]
-        public IActionResult ServiceDetail(long service_id)
+        [Route("service-detail")]
+        public IActionResult ServiceDetail(long? service_id)
         {
-            var list = _serviceService.GetServiceDetail(service_id);
-            return View(list);
+            AddOrEditServiceModel result = null;
+
+            if (service_id.HasValue)
+            {
+                result = _serviceService.GetServiceDetailForEdit(service_id.Value);
+            }
+
+            if (result == null)
+            {
+                result = new AddOrEditServiceModel();
+            }
+
+            result.UserID = CurrentUserId.Value;
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public CommonResult AddOrEditService(AddOrEditServiceModel request)
+        {
+            CommonResult result = new CommonResult();
+            result = _serviceService.AddOrEditService(request);
+            return result;
+
         }
 
     }

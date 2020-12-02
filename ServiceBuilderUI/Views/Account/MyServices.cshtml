@@ -1,26 +1,21 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
 @inject Business.Service.Infrastructure.ISecurityService securityHelper;
 @model ViewModel.Views.CommonResult
-
-
-
-
+@{ 
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_services_page_title", 20);
+}
+ 
 <div class="content">
     <div class="container">
         <div class="row">
-
             @await Html.PartialAsync("_GetUserMenu", new ViewDataDictionary(ViewData)
                                 {
                                     { @"menu", @"service" }
                                 })
-
             <div class="col-xl-9 col-md-8">
-
                 @await Html.PartialAsync("../Service/_GetServiceList", Model)
             </div>
         </div>
-
     </div>
-
 </div>
 

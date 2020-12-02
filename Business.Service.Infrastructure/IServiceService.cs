@@ -11,6 +11,8 @@ namespace Business.Service.Infrastructure
         CommonResult GetServiceList(ServiceSearchModel search);
 
         ServiceDetailModel GetServiceDetail(long service_id);
+        CommonResult AddOrEditService(AddOrEditServiceModel request);
 
+        AddOrEditServiceModel GetServiceDetailForEdit(long service_id);
     }
 }

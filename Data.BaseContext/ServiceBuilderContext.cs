@@ -21,8 +21,8 @@ namespace Data.BaseContext
         public DbSet<Page> Pages { get; set; }
         public DbSet<Lexicon> Lexicons { get; set; }
         public DbSet<ExceptionLog> ExceptionLog { get; set; }
-
-        public DbSet<Service> Sevices { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ServicePhoto> ServicePhotos { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public override int SaveChanges()
@@ -36,6 +36,7 @@ namespace Data.BaseContext
                 if (entityEntry.State == EntityState.Added)
                 {
                     ((BaseEntity)entityEntry.Entity).CreateDate = DateTime.Now;
+                    ((BaseEntity)entityEntry.Entity).IsActive = true;
                 }
             }
             return base.SaveChanges();

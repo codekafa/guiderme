@@ -4,8 +4,10 @@ using DataModel.BaseEntities;
 using Repository.Base;
 using Repository.Infrastructure.Interface;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using ViewModel.Views;
+using ViewModel.Views.Content;
 using ViewModel.Views.Content.ServiceCategory;
 using static Common.Helpers.Enum;
 
@@ -225,9 +227,44 @@ namespace Business.Service
 
             string query = @"select 
                             Id as data,
-                            Name as value from servicecategories WHERE name like @Search";
+                            Name as value from servicecategories WHERE   ParentServiceCategoryID  > 0 and  name like @Search";
              result = _queryRepo.GetList<CategoryAutoCompleteModel>(query, new SearchAutoCmpleteModel { Search = like });
             return result;
         }
+
+        public List<SelectViewModel> GetCategorySelectViewModel()
+        {
+            List<SelectViewModel> result = new List<SelectViewModel>();
+
+            string query = @"select 
+                            Id as ID,
+                            Name as Name from servicecategories WHERE IsActive = 1 and ParentServiceCategoryID  > 0";
+            result = _queryRepo.GetList<SelectViewModel>(query, null);
+            return result;
+        }
+
+        public List<SelectViewModel> GetCountriesSelectViewModel()
+        {
+            List<SelectViewModel> result = new List<SelectViewModel>();
+
+            string query = @"select 
+                            Id as ID,
+                            Name as Name from countries where IsActive = 1";
+            result = _queryRepo.GetList<SelectViewModel>(query, null);
+            return result;
+        }
+        public List<SelectViewModel> GetCitiesSelectViewModel(long country_id)
+        {
+            List<SelectViewModel> result = new List<SelectViewModel>();
+
+            string query = @"select 
+                            Id as ID,
+                            Name as Name from cities where IsActive = 1 and  CountryID = @p0";
+            result = _queryRepo.GetList<SelectViewModel>(query, new BaseParamModel {p0 = country_id });
+            return result;
+        }
+
+
+
     }
 }

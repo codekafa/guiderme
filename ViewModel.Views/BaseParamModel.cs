@@ -12,6 +12,6 @@ namespace ViewModel.Views
         public string CultureCode { get; set; }
         public string Token { get; set; }
         public long CurrentUserId { get; set; }
-
+        public object p0 { get; set; }
     }
 }
