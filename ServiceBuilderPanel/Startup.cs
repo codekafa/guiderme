@@ -45,7 +45,8 @@ namespace ServiceBuilderPanel
             }));
             services.AddMvc();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-
+            services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
 
 
 
@@ -65,11 +66,12 @@ namespace ServiceBuilderPanel
             services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
-            services.AddScoped<IMailService, GodadyMailService>();
+            services.AddScoped<IMailService, GmailMailService>();
             services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IDocumentService, DocumentService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();

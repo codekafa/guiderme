@@ -1,0 +1,126 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+
+@model ViewModel.Views.Request.AddOrEditRequestModel
+
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_booking_detail_page_title", 21);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="section-header text-center">
+                    <h2>
+                        @lexiconHelper.GetTextValue("_booking_detail_page_name", 20)
+                    </h2>
+                </div>
+                <form id="serviceDetailForm" method="post">
+                    <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+                    <input type="hidden" id="UserID" name="UserID" value="@Model.UserID" />
+                    <div class="service-fields mb-3">
+                        <h3 class="heading-2"> @lexiconHelper.GetTextValue("_booking_information", 21)</h3>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>@lexiconHelper.GetTextValue("_service_category", 99) <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="ServiceCategoryID" name="ServiceCategoryID" disabled>
+                                        <option value="">@lexiconHelper.GetTextValue("_select", 99) </option>
+                                        @foreach (var item in contentHelper.GetCategorySelectViewModel())
+                                        {
+
+                                            if (item.ID == Model.ServiceCategoryID)
+                                            {
+                                                <option value="@item.ID" selected>@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.Name</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label> @lexiconHelper.GetTextValue("_country", 99) <span class="text-danger">*</span></label>
+                                    <select id="CountryID" name="CountryID" class="form-control" disabled>
+
+                                        <option value="">@lexiconHelper.GetTextValue("_select", 99) </option>
+                                        @foreach (var item in contentHelper.GetCountriesSelectViewModel())
+                                        {
+                                            if (item.ID == Model.CountryID)
+                                            {
+                                                <option value="@item.ID" selected>@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ID">@item.Name</option>
+                                            }
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label> @lexiconHelper.GetTextValue("_city", 99)<span class="text-danger">*</span></label>
+                                    <select id="CityID" name="CityID" class="form-control" disabled>
+                                        <option value="">@lexiconHelper.GetTextValue("_select", 99) </option>
+                                        @if (Model.CountryID > 0)
+                                        {
+                                            foreach (var item in contentHelper.GetCitiesSelectViewModel(Model.CountryID))
+                                            {
+                                                if (item.ID == Model.CityID)
+                                                {
+                                                    <option value="@item.ID" selected>@item.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.ID">@item.Name</option>
+                                                }
+                                            }
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label> @lexiconHelper.GetTextValue("_description", 99)</label>
+                                    <textarea class="form-control service-desc" id="Description" disabled name="Description">@Model.Description</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

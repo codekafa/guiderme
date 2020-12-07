@@ -24,11 +24,7 @@ namespace ServiceBuilderUI
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-
-
         public void ConfigureServices(IServiceCollection services)
         {
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -71,7 +67,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IDocumentService, DocumentService>();
-
+            services.AddScoped<IRequestService, RequestService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -85,8 +81,9 @@ namespace ServiceBuilderUI
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IServiceRequestsRepository, ServiceRequestRepository>();
+            services.AddScoped<IServiceRequestPropertyRepository, ServiceRequestPropertyRepository>();
         }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

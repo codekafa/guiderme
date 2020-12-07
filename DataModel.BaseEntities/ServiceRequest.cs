@@ -9,7 +9,12 @@ namespace DataModel.BaseEntities
     {
         public long UserID { get; set; }
         public long ServiceCategoryID { get; set; }
-        public int ContactType { get; set; }
+        public long CountryID { get; set; }
+        public long CityID { get; set; }
+        public bool IsPublish { get; set; }
 
+        public string Description { get; set; }
+        public DateTime? FinishDate { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

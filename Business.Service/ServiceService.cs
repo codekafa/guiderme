@@ -31,7 +31,7 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             try
-            {           
+            {
                 result = ValidateServiceModel(request);
 
                 if (!result.IsSuccess)
@@ -95,7 +95,7 @@ namespace Business.Service
                 return result;
             }
 
-           
+
         }
 
         public CommonResult ValidateServiceModel(AddOrEditServiceModel request)
@@ -146,7 +146,7 @@ namespace Business.Service
 
             if (request.ID > 0)
             {
-                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.ID != request.ID);
+                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.ID != request.ID && x.IsActive == true);
 
                 if (exist_service != null)
                 {
@@ -158,7 +158,7 @@ namespace Business.Service
             }
             else
             {
-                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID);
+                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.IsActive == true);
 
                 if (exist_service != null)
                 {
@@ -320,5 +320,37 @@ namespace Business.Service
             return detail;
         }
 
+        public CommonResult RemoveService(long service_id, long user_id)
+        {
+            CommonResult result = new CommonResult();
+
+
+            try
+            {
+                var exist = _serviceRepo.Get(x => x.ID == service_id && x.UserID == user_id);
+
+
+                if (exist == null)
+                {
+                    result.IsSuccess = false;
+                    result.Message = _lexService.GetAlertSring("_service_not_found", null);
+                    return result;
+                }
+
+                exist.IsActive = false;
+                _serviceRepo.Update(exist);
+
+                result.IsSuccess = true;
+                result.Message = _lexService.GetAlertSring("_service_removed_successfuly", null);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.Message;
+                return result;
+            }
+        }
     }
 }

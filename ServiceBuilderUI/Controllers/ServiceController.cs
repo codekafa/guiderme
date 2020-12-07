@@ -49,5 +49,12 @@ namespace ServiceBuilderUI.Controllers
 
         }
 
+        public CommonResult RemoveMyService(long service_id)
+        {
+            CommonResult result = new CommonResult();
+            result = _serviceService.RemoveService(service_id,CurrentUserId.Value);
+            return result;
+        }
+
     }
 }

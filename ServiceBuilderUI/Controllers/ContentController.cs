@@ -31,5 +31,11 @@ namespace ServiceBuilderUI.Controllers
             return Json(result);
         }
 
+        public JsonResult GetCategoryProperties(long category_id)
+        {
+            var result = _contentService.GetCategoryPropertyList(category_id);
+            return Json(result);
+        }
+
     }
 }

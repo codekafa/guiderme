@@ -1,4 +1,5 @@
 ﻿using System;
+using ViewModel.Views.Request;
 
 namespace ViewModel.Views.Security
 {
@@ -15,5 +16,6 @@ namespace ViewModel.Views.Security
 
         public string PasswordAgain { get; set; }
 
+        public NewRequestModel RequestModel { get; set; }
     }
 }

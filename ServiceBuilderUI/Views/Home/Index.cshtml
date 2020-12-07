@@ -1,15 +1,23 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+
 @{
 
-    ViewBag.Title = lexiconHelper.GetTextValue("_main_page_title",3);
+    ViewBag.Title = lexiconHelper.GetTextValue("_main_page_title", 3);
     ViewBag.MetaDescription = lexiconHelper.GetTextValue("_main_page_mte_description", 3);
     ViewBag.HomeSelect = "active";
 
 }
 
 
-@section Styles{ 
+@section Styles{
     <link href="~/lib/autocomplete/styles.css" rel="stylesheet" />
+}
+
+@if (securityHelper.GetCurrentUser() != null)
+{
+    <input type="hidden" id="CurrentUserID" name="CurrentUserID" value="@securityHelper.GetCurrentUser().ID" />
 }
 
 <section class="hero-section">
@@ -19,25 +27,18 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="section-search">
-                        <h3>@lexiconHelper.GetTextValue("world_s_largets",3)<span>@lexiconHelper.GetTextValue("_market_place", 3)</span></h3>
+                        <h3>@lexiconHelper.GetTextValue("world_s_largets", 3)<span>@lexiconHelper.GetTextValue("_market_place", 3)</span></h3>
                         <p>@lexiconHelper.GetTextValue("_search_from_text", 3)</p>
                         <div class="search-box">
                             <form action="search.html">
-                                <div class="search-input line">
+                                <div class="search-input ">
                                     <i class="fas fa-tv bficon"></i>
                                     <div class="form-group mb-0">
                                         <input type="text" class="form-control" id="categorySearch" placeholder="@lexiconHelper.GetTextValue("_what_are_you_looking_for",3)">
                                     </div>
                                 </div>
-                                <div class="search-input">
-                                    <i class="fas fa-location-arrow bficon"></i>
-                                    <div class="form-group mb-0">
-                                        <input type="text" class="form-control" placeholder="Your Location">
-                                        <a class="current-loc-icon current_location" href="javascript:void(0);"><i class="fas fa-crosshairs"></i></a>
-                                    </div>
-                                </div>
                                 <div class="search-btn">
-                                    <button class="btn search_service" type="submit">@lexiconHelper.GetTextValue("_search", 3)</button>
+                                    <button class="btn search_service" type="button" onclick="clearSearch()">@lexiconHelper.GetTextValue("_clear", 3)</button>
                                 </div>
                             </form>
                         </div>
@@ -622,33 +623,194 @@
 </section>
 
 
-@section Scripts{ 
+
+
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="pageId" name="pageId" value="0" />
+                <input type="hidden" id="categoryId" name="categoryId" value="" />
+                <h5 class="modal-title" id="requestModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="requestModalBody">
+                <div class="modal_page category_property" id="page_0">
+                </div>
+                <div class="modal_page" id="page_1">
+                    <div class="col-md-12">
+                        <span>@lexiconHelper.GetTextValue("_description_for_request", 99):</span>
+                        <textarea class="form-control" id="RequestDescription" name="RequestDescription" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal_page" id="page_2">
+                    <div class="col-md-12">
+                        <span>@lexiconHelper.GetTextValue("_request_adress", 99):</span>
+                        <select class="form-control" id="RequestCountryId" name="RequestCountryId">
+                            <option value="">@lexiconHelper.GetTextValue("_select_country", 99) </option>
+                            @foreach (var item in contentHelper.GetCountriesSelectViewModel())
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+
+                        <select class="form-control" id="RequestCityId" name="RequestCityId">
+                            <option value="">@lexiconHelper.GetTextValue("_select_city", 99) </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success " id="backButton" onclick="backPage()">@lexiconHelper.GetTextValue("_back", 99)</button>
+                <button type="button" class="btn btn-primary " onclick="nextPage()">@lexiconHelper.GetTextValue("_next", 99)</button>
+            </div>
+        </div>
+    </div>
+</div>﻿
+
+
+
+
+
+@section Scripts{
     <script src="~/lib/autocomplete/jquery.autocomplete.js"></script>
 
-    @*<script src="~/lib/autocomplete/jquery.autocomplete.min.js"></script>*@
+    <script>
 
-<script>
+        $('#categorySearch').autocomplete({
+            serviceUrl: '/content/AutoComplateCategroy',
+            lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+                var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+                return re.test(suggestion.value);
+            },
+            minChars: 3,
+            onSelect: function (suggestion) {
+                OpenRequestModal(suggestion.data, suggestion.value);
+            },
+            onHint: function (hint) {
+                $('#autocomplete-ajax-x').val(hint);
+            },
+            onInvalidateSelection: function () {
+                $('#selction-ajax').html('You selected: none');
+            }
+        });
 
-    $('#categorySearch').autocomplete({
-        serviceUrl: '/content/AutoComplateCategroy',
-        //lookup: countriesArray,
-        lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
-            var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
-            return re.test(suggestion.value);
-        },
-        minChars:3,
-        onSelect: function (suggestion) {
-            $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
-        },
-        onHint: function (hint) {
-            $('#autocomplete-ajax-x').val(hint);
-        },
-        onInvalidateSelection: function () {
-            $('#selction-ajax').html('You selected: none');
+        function clearSearch() {
+            $('#categorySearch').val("");
         }
-    });
 
-    
+        function OpenRequestModal(id, text) {
+            $('.modal_page').css("display", "none");
+            $('#page_0').css("display", "block");
+            $('#backButton').css("display", "none");
+            $('#requestModalTitle').html(text);
+            $('#categoryId').val(id);
+            $('#pageId').val(0);
+            $.ajax({
+                type: "GET",
+                url: "/content/GetCategoryProperties?category_id=" + id,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    if (e.isSuccess == true) {
+                        $('#page_0').html("");
+                        $.each(e.data, function (index, value) {
+                            var item = "<div class='col-md-12'><span>" + value.name + " : </span> <input type='text' dataid='" + value.id + "' class='form-control requestproperty' name='property_" + value.id + "' id='property_" + value.id + "' /></div>";
+                            $('#page_0').append(item);
+                        });
+                    } else {
+                        toastrDanger(e.message);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    toastrDanger(msg);
+                }
+            });
+
+            $('#requestModal').modal();
+        }
+
+        function nextPage() {
+            $('.modal_page').css("display", "none");
+            var page_id = $('#pageId').val();
+            page_id = parseFloat(page_id) + 1;
+            $('#page_' + page_id).css("display", "block");
+            $('#pageId').val(page_id);
+            if (page_id > 0) {
+                $('#backButton').css("display", "block");
+            }
+
+            if (page_id == 3) {
+                var userId = $('#CurrentUserID').val();
+                if (userId != null || userId != undefined) {
+
+                    createNewRequest();
+                    $('#requestModal').modal("toggle");
+
+                } else {
+                    $('#requestModal').modal("toggle");
+                    $('#user-register').modal();
+                }
+            }
+        }
+
+        function backPage() {
+            $('.modal_page').css("display", "none");
+            var page_id = $('#pageId').val();
+            page_id = parseFloat(page_id) - 1;
+            $('#page_' + page_id).css("display", "block");
+            $('#pageId').val(page_id);
+            if (page_id == 0) {
+                $('#backButton').css("display", "none");
+            } else {
+                $('#backButton').css("display", "block");
+            }
+        }
+
+        $(document).ready(function () {
+            $('#RequestCountryId').on('change', function () {
+                var id = $(this).val();
+                if (id > 0) {
+                    loadCities(id);
+                }
+            });
+        });
+
+        function loadCities(id) {
+            $.ajax({
+                type: "POST",
+                url: "/content/GetCitiesSelectViewModel?country_id=" + id,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    $.each(e, function (index, value) {
+                        var opt = "<option value='" + value.id + "'>" + value.name + "</option>";
+                        $('#RequestCityId').append(opt);
+                    });
+
+                }
+            });
+        }
+
+      
 
     </script>
 

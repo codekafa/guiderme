@@ -1,21 +1,210 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+@model ViewModel.Views.CommonResult
 @{
-    ViewData["Title"] = "MyBookings";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_booking_page_title", 20);
 }
 
 <div class="content">
     <div class="container">
         <div class="row">
-
             @await Html.PartialAsync("_GetUserMenu", new ViewDataDictionary(ViewData)
                                 {
                                     { @"menu", @"booking" }
                                 })
-
-
+            <div class="col-xl-9 col-md-8">
+                @await Html.PartialAsync("../Booking/_GetRequestList", Model)
+            </div>
         </div>
-
     </div>
-
 </div>
+
+
+
+<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="pageId" name="pageId" value="0" />
+                <input type="hidden" id="categoryId" name="categoryId" value="" />
+                <h5 class="modal-title" id="requestModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="requestModalBody">
+                <div class="modal_page" id="page_0">
+                    <span>@lexiconHelper.GetTextValue("_what_do_you_want_service", 99):</span>
+                    <input class="form-control" id="categorySearchModal" name="categorySearchModal" />
+                </div>
+                <div class="modal_page category_property" id="page_1" style="display:none">
+                </div>
+                <div class="modal_page" id="page_2" style="display:none">
+                    <div class="col-md-12">
+                        <span>@lexiconHelper.GetTextValue("_description_for_request", 99):</span>
+                        <textarea class="form-control" id="RequestDescription" name="RequestDescription" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal_page" id="page_3" style="display:none">
+                    <div class="col-md-12">
+                        <span>@lexiconHelper.GetTextValue("_request_adress", 99):</span>
+                        <select class="form-control" id="RequestCountryId" name="RequestCountryId">
+                            <option value="">@lexiconHelper.GetTextValue("_select_country", 99) </option>
+                            @foreach (var item in contentHelper.GetCountriesSelectViewModel())
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+
+                        <select class="form-control" id="RequestCityId" name="RequestCityId">
+                            <option value="">@lexiconHelper.GetTextValue("_select_city", 99) </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success " style="display:none" id="backButton" onclick="backPage()">@lexiconHelper.GetTextValue("_back", 99)</button>
+                <button type="button" class="btn btn-primary " onclick="nextPage()">@lexiconHelper.GetTextValue("_next", 99)</button>
+            </div>
+        </div>
+    </div>
+</div>﻿
+
+@section scripts{
+
+    <script src="~/lib/autocomplete/jquery.autocomplete.js"></script>
+
+    <script>
+
+        $('#categorySearchModal').autocomplete({
+            serviceUrl: '/content/AutoComplateCategroy',
+            lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+                var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+                return re.test(suggestion.value);
+            },
+            minChars: 3,
+            onSelect: function (suggestion) {
+                OpenRequestModal(suggestion.data, suggestion.value);
+            },
+            onHint: function (hint) {
+                $('#autocomplete-ajax-x').val(hint);
+            },
+            onInvalidateSelection: function () {
+                $('#selction-ajax').html('You selected: none');
+            }
+        });
+
+        function clearSearch() {
+            $('#categorySearch').val("");
+        }
+
+        function OpenRequestModal(id, text) {
+            $('.modal_page').css("display", "none");
+            $('#page_0').css("display", "block");
+            $('#backButton').css("display", "none");
+            $('#requestModalTitle').html(text);
+            $('#categoryId').val(id);
+            $('#pageId').val(0);
+            $.ajax({
+                type: "GET",
+                url: "/content/GetCategoryProperties?category_id=" + id,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    if (e.isSuccess == true) {
+                        $('#page_1').html("");
+                        $.each(e.data, function (index, value) {
+                            var item = "<div class='col-md-12'><span>" + value.name + " : </span> <input type='text' dataid='" + value.id + "' class='form-control requestproperty' name='property_" + value.id + "' id='property_" + value.id + "' /></div>";
+                            $('#page_1').append(item);
+                        });
+                    } else {
+                        toastrDanger(e.message);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    toastrDanger(msg);
+                }
+            });
+
+            $('#requestModal').modal();
+        }
+
+        function nextPage() {
+            $('.modal_page').css("display", "none");
+            var page_id = $('#pageId').val();
+            page_id = parseFloat(page_id) + 1;
+            $('#page_' + page_id).css("display", "block");
+            $('#pageId').val(page_id);
+            if (page_id > 0) {
+                $('#backButton').css("display", "block");
+            }
+
+            if (page_id == 4) {
+                createNewRequest();
+                $('#requestModal').modal("toggle");
+            }
+        }
+
+        function backPage() {
+            $('.modal_page').css("display", "none");
+            var page_id = $('#pageId').val();
+            page_id = parseFloat(page_id) - 1;
+            $('#page_' + page_id).css("display", "block");
+            $('#pageId').val(page_id);
+            if (page_id == 0) {
+                $('#backButton').css("display", "none");
+            } else {
+                $('#backButton').css("display", "block");
+            }
+        }
+
+        $(document).ready(function () {
+            $('#RequestCountryId').on('change', function () {
+                var id = $(this).val();
+                if (id > 0) {
+                    loadCities(id);
+                }
+            });
+        });
+
+        function loadCities(id) {
+            $.ajax({
+                type: "POST",
+                url: "/content/GetCitiesSelectViewModel?country_id=" + id,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    $.each(e, function (index, value) {
+                        var opt = "<option value='" + value.id + "'>" + value.name + "</option>";
+                        $('#RequestCityId').append(opt);
+                    });
+
+                }
+            });
+        }
+
+
+
+    </script>
+
+}
+
+
+

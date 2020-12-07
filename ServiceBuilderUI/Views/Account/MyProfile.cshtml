@@ -1,4 +1,5 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
 
 @model ViewModel.Views.User.AddOrEditUserModel
 
@@ -51,7 +52,7 @@
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">@lexiconHelper.GetTextValue("_last_name", 99)</label>
-                                        <input class="form-control" type="text" id="LastName"  name="LastName" value="@Model.LastName" />
+                                        <input class="form-control" type="text" id="LastName" name="LastName" value="@Model.LastName" />
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">@lexiconHelper.GetTextValue("_email", 99)</label>
@@ -59,7 +60,7 @@
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Mobile Number</label>
-                                        <input class="form-control no_only" type="text" readonly value="@Model.Phone" name="Phone" id="Phone"  />
+                                        <input class="form-control no_only" type="text" readonly value="@Model.Phone" name="Phone" id="Phone" />
                                     </div>
                                     <div class="form-group col-xl-12">
                                         <button name="form_submit" id="form_submit" class="btn btn-primary pl-5 pr-5" type="submit">@lexiconHelper.GetTextValue("_save", 99)</button>
@@ -75,7 +76,7 @@
 </div>
 
 
-@section Scripts{ 
+@section Scripts{
 
     <script>
 
@@ -120,7 +121,7 @@
                                     setTimeout(function () {
                                         location.href = "my-profile";
                                     },2000)
-                                 
+
                                 } else {
                                     toastrDanger(e.message);
                                 }

@@ -462,3 +462,5 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Security\ChangePassword.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Service\_GetServiceList.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Service\ServiceDetail.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Booking\_GetRequestList.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Booking\RequestDetail.cshtml.g.cs

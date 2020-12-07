@@ -18,10 +18,12 @@ namespace ServiceBuilderUI.Controllers
     {
         IUserService _userService;
         IServiceService _serviceService;
-        public AccountController(IUserService userService, IServiceService serviceService)
+        IRequestService _requestService;
+        public AccountController(IUserService userService, IServiceService serviceService, IRequestService requestService)
         {
             _userService = userService;
             _serviceService = serviceService;
+            _requestService = requestService;
         }
 
         [Route("my-profile")]
@@ -48,7 +50,8 @@ namespace ServiceBuilderUI.Controllers
         [Route("my-bookings")]
         public IActionResult MyBookings()
         {
-            return View();
+            var list = _requestService.GetMyRequestList(new ViewModel.Views.Request.RequestSearchModel { UserID = CurrentUserId.Value, TakeRow = 100, PageIndex = 0 });
+            return View(list);
         }
 
         [Route("my-services")]

@@ -25,6 +25,10 @@ namespace Data.BaseContext
         public DbSet<ServicePhoto> ServicePhotos { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+
+        public DbSet<ServiceRequest> ServiceRequests { get; set; }
+
+        public DbSet<ServiceRequestProperty> ServiceRequestProperties { get; set; }
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));

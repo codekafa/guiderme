@@ -14,5 +14,6 @@ namespace Business.Service.Infrastructure
         CommonResult AddOrEditService(AddOrEditServiceModel request);
 
         AddOrEditServiceModel GetServiceDetailForEdit(long service_id);
+        CommonResult RemoveService(long service_id, long user_id);
     }
 }

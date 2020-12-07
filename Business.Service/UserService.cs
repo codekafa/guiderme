@@ -21,8 +21,10 @@ namespace Business.Service
         IFileService _fileService;
         ILexiconService _lexService;
         IOtpService _otpService;
-        public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce)
+        IRequestService _requestService;
+        public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce, IRequestService requestService)
         {
+            _requestService = requestService;
             _userRepo = userRepo;
             _userAddressRepo = userAddressRepo;
             _queryRepo = queryRepo;
@@ -127,7 +129,7 @@ namespace Business.Service
             existUser.FirstName = user.FirstName;
             existUser.Email = user.Email;
             existUser.LastName = user.LastName;
-            existUser.Password = user.Password;
+            //existUser.Password = user.Password;
             existUser.Phone = user.Phone;
             existUser.UserType = user.UserType;
             result = UpdateUser(existUser);
@@ -218,6 +220,18 @@ namespace Business.Service
                 var addUser = _userRepo.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password });
 
                 var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = addUser.ID, EmailOrPhone = addUser.Email, OtpType = (int)OtpTypes.Email });
+
+
+                if (newUser.RequestModel != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
+                    {
+                        newUser.RequestModel.IsPublish = false;
+                        newUser.RequestModel.UserId = addUser.ID;
+                        _requestService.AddNewRequest(newUser.RequestModel);
+                        result.ActionCode = "2";
+                    }
+                }
 
                 result.IsSuccess = true;
                 result.Data = otpResult.Data.ToString();

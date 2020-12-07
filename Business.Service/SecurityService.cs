@@ -15,11 +15,13 @@ namespace Business.Service
         IUserRepository _userRepo;
         ILexiconService _lexService;
         IHttpContextAccessor _contextAcc;
-        public SecurityService(IUserRepository userRepo, ILexiconService lexService, IHttpContextAccessor contextAccessor)
+        IRequestService _requestService;
+        public SecurityService(IUserRepository userRepo, ILexiconService lexService, IHttpContextAccessor contextAccessor, IRequestService requestService)
         {
             _userRepo = userRepo;
             _lexService = lexService;
             _contextAcc = contextAccessor;
+            _requestService = requestService;
         }
 
         public CommonResult GetLoginUser(LoginUserModel request)
@@ -49,6 +51,19 @@ namespace Business.Service
                 return result;
             }
 
+
+            if (request.RequestModel != null)
+            {
+                if (!string.IsNullOrWhiteSpace(request.RequestModel.Description) && request.RequestModel.CategoryId > 0)
+                {
+                    request.RequestModel.IsPublish = true;
+                    request.RequestModel.UserId = existUser.ID;
+                    _requestService.AddNewRequest(request.RequestModel);
+                    result.ActionCode = "2";
+                }
+            }
+
+
             return new CommonResult { Data = existUser, IsSuccess = true };
         }
 
@@ -58,6 +73,10 @@ namespace Business.Service
             if (_contextAcc.HttpContext.User != null)
             {
                 var  claimId = _contextAcc.HttpContext.User.Claims.Where(x=> x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
+
+                if (claimId == null)
+                    return null;
+
                 long userId = Convert.ToInt64(claimId.Value);
                 var user = _userRepo.Get(x => x.IsActive == true && x.ID == userId);
                 return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType };
