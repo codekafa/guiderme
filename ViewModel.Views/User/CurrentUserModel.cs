@@ -24,5 +24,20 @@ namespace ViewModel.Views.User
                 return FirstName + " " + LastName;
             }
         }
+
+
+        public string GetFileNameFromUserPhoto()
+        {
+            if (!string.IsNullOrWhiteSpace(ProfilePhoto))
+            {
+                Uri uri = new Uri(ProfilePhoto);
+                return System.IO.Path.GetFileName(uri.LocalPath);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
     }
 }

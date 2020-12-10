@@ -3489,11 +3489,11 @@ html.menu-opened body {
 	margin-bottom: 0;
 }
 .booking-details li span {
-    width: 120px;
+/*    width: 120px;*/
     display: inline-block;
     font-weight: 500;
     color: #000;
-    flex: 0 0 120px;
+/*    flex: 0 0 120px;*/
 }
 .booking-details li {
     color: #858585;
@@ -3878,7 +3878,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 		padding: 0 !important;
 	}
 	.main-nav > li > a > i {
-		font-size: 12px;
+		font-size: 20px;
 		margin-left: 3px;
 	}
 	.main-nav li > ul {

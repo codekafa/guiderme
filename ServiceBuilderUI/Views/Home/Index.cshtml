@@ -679,6 +679,24 @@
 
     <script>
 
+        //$('#categorySearchMain').autocomplete({
+        //    serviceUrl: '/content/AutoComplateCategroy',
+        //    lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
+        //        var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+        //        return re.test(suggestion.value);
+        //    },
+        //    minChars: 3,
+        //    onSelect: function (suggestion) {
+        //        OpenRequestModal(suggestion.data, suggestion.value);
+        //    },
+        //    onHint: function (hint) {
+        //        $('#autocomplete-ajax-x').val(hint);
+        //    },
+        //    onInvalidateSelection: function () {
+        //        $('#selction-ajax').html('You selected: none');
+        //    }
+        //});
+
         $('#categorySearch').autocomplete({
             serviceUrl: '/content/AutoComplateCategroy',
             lookupFilter: function (suggestion, originalQuery, queryLowerCase) {

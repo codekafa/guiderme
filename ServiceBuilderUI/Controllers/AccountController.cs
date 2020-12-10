@@ -19,11 +19,13 @@ namespace ServiceBuilderUI.Controllers
         IUserService _userService;
         IServiceService _serviceService;
         IRequestService _requestService;
-        public AccountController(IUserService userService, IServiceService serviceService, IRequestService requestService)
+        INotificationService _notifyService;
+        public AccountController(IUserService userService, IServiceService serviceService, IRequestService requestService, INotificationService notificationService)
         {
             _userService = userService;
             _serviceService = serviceService;
             _requestService = requestService;
+            _notifyService = notificationService;
         }
 
         [Route("my-profile")]
@@ -50,7 +52,18 @@ namespace ServiceBuilderUI.Controllers
         [Route("my-bookings")]
         public IActionResult MyBookings()
         {
+            ViewBag.Booking = "active";
             var list = _requestService.GetMyRequestList(new ViewModel.Views.Request.RequestSearchModel { UserID = CurrentUserId.Value, TakeRow = 100, PageIndex = 0 });
+            return View(list);
+        }
+
+
+        [Route("my-bookings-history/{page}")]
+        public IActionResult MyBookingsHistory(int page = 0)
+        {
+            ViewBag.Page = page;
+            ViewBag.History = "active";
+            var list = _requestService.GetMyRequestHistoryList(new ViewModel.Views.Request.RequestSearchModel { UserID = CurrentUserId.Value, TakeRow = 10, PageIndex = page });
             return View(list);
         }
 
@@ -58,6 +71,14 @@ namespace ServiceBuilderUI.Controllers
         public IActionResult MyServices()
         {
             var list = _serviceService.GetServiceList(new ViewModel.Views.Service.ServiceSearchModel { UserID = CurrentUserId.Value , TakeRow = 100, PageIndex= 0 });
+            return View(list);
+        }
+
+        [Route("my-notifications/{page}")]
+        public IActionResult MyNotifications(int page = 0)
+        {
+            ViewBag.Page = page;
+            var list = _notifyService.GetAllNotification(new ViewModel.Views.Notification.NotificationSearchModel { CurrentUserId = CurrentUserId.Value , PageIndex = page , TakeRow =20 });
             return View(list);
         }
 

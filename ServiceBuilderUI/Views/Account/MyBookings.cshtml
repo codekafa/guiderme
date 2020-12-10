@@ -6,6 +6,11 @@
     ViewBag.Title = lexiconHelper.GetTextValue("_my_booking_page_title", 20);
 }
 
+
+@section Styles{
+    <link href="~/lib/autocomplete/styles.css" rel="stylesheet" />
+}
+
 <div class="content">
     <div class="container">
         <div class="row">
@@ -174,6 +179,7 @@
                 $('#backButton').css("display", "block");
             }
         }
+
 
         $(document).ready(function () {
             $('#RequestCountryId').on('change', function () {

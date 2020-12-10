@@ -17,14 +17,15 @@ namespace ViewModel.Views.Request
         public string CityName { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime FinishDate { get; set; }
+        public DateTime? FinishDate { get; set; }
 
         public bool IsPublish { get; set; }
 
         public long ID { get; set; }
 
+        public int BidCount { get; set; }
         public string GetFileNameFromUrl()
         {
             if (!string.IsNullOrWhiteSpace(CategoryPhoto))

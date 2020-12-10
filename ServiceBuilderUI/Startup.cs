@@ -68,6 +68,8 @@ namespace ServiceBuilderUI
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<INotificationService, NotificationService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -83,6 +85,7 @@ namespace ServiceBuilderUI
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IServiceRequestsRepository, ServiceRequestRepository>();
             services.AddScoped<IServiceRequestPropertyRepository, ServiceRequestPropertyRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

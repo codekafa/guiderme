@@ -25,7 +25,7 @@ namespace Data.BaseContext
         public DbSet<ServicePhoto> ServicePhotos { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
 
         public DbSet<ServiceRequestProperty> ServiceRequestProperties { get; set; }

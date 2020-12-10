@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository.Infrastructure
 {
-    public class EFEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new() 
+    public class EFEntityRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
 
         protected readonly ServiceBuilderContext _dbContext;
@@ -27,12 +28,34 @@ namespace Repository.Infrastructure
             return addEnttiy.Entity;
         }
 
+        public Task<TEntity> AddASync(TEntity entity)
+        {
+            Task<TEntity> result = Task.Run(() =>
+           {
+               var addEnttiy = _dbContext.Entry(entity);
+               addEnttiy.State = EntityState.Added;
+               var result = _dbContext.SaveChangesAsync();
+               return addEnttiy.Entity;
+           });
+            return result;
+        }
+
         public void Delete(TEntity entity)
         {
             var addEnttiy = _dbContext.Entry(entity);
             addEnttiy.State = EntityState.Deleted;
             _dbContext.SaveChanges();
 
+        }
+
+        public void DeleteASync(TEntity entity)
+        {
+            Task.Run(() =>
+           {
+               var addEnttiy = _dbContext.Entry(entity);
+               addEnttiy.State = EntityState.Deleted;
+               _dbContext.SaveChanges();
+           });
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
@@ -51,6 +74,18 @@ namespace Repository.Infrastructure
             updateEntity.State = EntityState.Modified;
             _dbContext.SaveChanges();
             return updateEntity.Entity;
+        }
+
+        public Task<TEntity> UpdateASync(TEntity entity)
+        {
+            Task<TEntity> result = Task.Run(() =>
+            {
+                var updateEntity = _dbContext.Entry(entity);
+                updateEntity.State = EntityState.Modified;
+                _dbContext.SaveChanges();
+                return updateEntity.Entity;
+            });
+            return result;
         }
     }
 }

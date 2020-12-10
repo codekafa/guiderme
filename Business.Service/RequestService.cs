@@ -8,6 +8,7 @@ using System.Text;
 using ViewModel.Views;
 using ViewModel.Views.Request;
 using ViewModel.Views.Service;
+using static Common.Helpers.Enum;
 
 namespace Business.Service
 {
@@ -17,12 +18,14 @@ namespace Business.Service
         IServiceRequestPropertyRepository _propertyRepo;
         IQuerableRepository _queryRepo;
         ILexiconService _lexService;
-        public RequestService(IServiceRequestsRepository serviceRequests, IServiceRequestPropertyRepository serviceRequestPropertyRepository, IQuerableRepository querableRepository, ILexiconService lexiconService)
+        IUserRepository _userRepo;
+        public RequestService(IServiceRequestsRepository serviceRequests, IServiceRequestPropertyRepository serviceRequestPropertyRepository, IQuerableRepository querableRepository, ILexiconService lexiconService, IUserRepository userRepo)
         {
             _requestRepo = serviceRequests;
             _propertyRepo = serviceRequestPropertyRepository;
             _queryRepo = querableRepository;
             _lexService = lexiconService;
+            _userRepo = userRepo;
         }
         public CommonResult AddNewRequest(NewRequestModel request)
         {
@@ -45,16 +48,30 @@ namespace Business.Service
                 sReq.FinishDate = null;
                 sReq = _requestRepo.Add(sReq);
 
-                foreach (var item in request.Properties)
+                if (request.Properties != null)
                 {
-                    ServiceRequestProperty prop = new ServiceRequestProperty();
-                    prop.IsActive = true;
-                    prop.ServiceCategoryPropertyID = item.Id;
-                    prop.ServiceRequestID = sReq.ID;
-                    prop.UserID = sReq.UserID;
-                    prop.Value = item.Value;
-                    _propertyRepo.Add(prop);
+                    foreach (var item in request.Properties)
+                    {
+                        ServiceRequestProperty prop = new ServiceRequestProperty();
+                        prop.IsActive = true;
+                        prop.ServiceCategoryPropertyID = item.Id;
+                        prop.ServiceRequestID = sReq.ID;
+                        prop.UserID = sReq.UserID;
+                        prop.Value = item.Value;
+                        _propertyRepo.Add(prop);
+                    }
                 }
+
+               
+
+                var user = _userRepo.Get(x => x.ID == sReq.UserID);
+
+                if (user.UserType == (int)UserTypes.Servicer)
+                {
+                    user.UserType = (int)UserTypes.ServicerEndEmployer;
+                    _userRepo.Update(user);
+                }
+
                 result.IsSuccess = true;
                 result.Message = _lexService.GetAlertSring("added_new_booking_successfuly", null);
             }
@@ -70,15 +87,61 @@ namespace Business.Service
         {
             throw new NotImplementedException();
         }
-        public AddOrEditRequestModel GetBookingDetailForEdit(long request_id)
+        public RequestDetailModel GetBookingDetailForView(long request_id)
         {
             var search = new RequestSearchModel { p0 = request_id };
 
-            string query = @" select 
-                                    *
-                                     from servicerequests sr where sr.ID = @p0";
+            string query = @"select 
+                                    co.Name as CountryName,
+                                    ci.Name as CityName,
+                                    co.ID as CountryID,
+                                    ci.ID as CityID,
+                                    sc.ID as ServiceCategoryID,
+                                    sc.CategoryPhoto,
+                                    sc.Name as CategoryName,
+                                    sr.CreateDate,
+                                    sr.StartDate,
+                                    sr.FinishDate,
+                                    sr.IsPublish,
+                                    sr.Description,
+                                    sr.ID,
+                                    sr.UserID
+                                     from servicerequests sr
+                                    inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
+                                    inner join users u on u.Id = sr.UserID 
+                                    inner join countries co on co.ID = sr.CountryID
+                                    inner join cities ci on ci.ID = sr.CityID 
+                                    where sr.ID = @p0";
 
-            var detail = _queryRepo.GetSingle<AddOrEditRequestModel>(query, search);
+            var detail = _queryRepo.GetSingle<RequestDetailModel>(query, search);
+
+            if (detail == null )
+                return detail;
+
+            detail.Properties = new List<RequestPorpertyModel>();
+
+            string queryProps = @"SELECT srp.ID, srp.Value, scp.name FROM servicebuilder.servicerequestproperties srp
+                                    inner join servicecategoryproperties scp on scp.id = srp.ServiceCategoryPropertyID
+                                    where srp.ServiceRequestID = @p0";
+
+            detail.Properties = _queryRepo.GetList<RequestPorpertyModel>(queryProps, search);
+
+            detail.Bids = new List<RequestBidListModel>();
+
+            string queryBids = @"SELECT 
+                                        s.Photo as ServicePhoto,
+                                        CONCAT(u.FirstName ,' ', u.LastName ) as BidUserName,
+                                        rb.ServiceCost,
+                                        rb.CreateDate,
+                                        rb.ServiceID,
+                                        s.Name as ServiceName,
+                                        rb.ID
+                                         FROM servicebuilder.requestbids rb
+                                        inner join services s on s.ID = rb.ServiceID
+                                        inner join users u on u.ID = rb.BidUserID
+                                        where rb.ServiceRequestID = @p0";
+
+            detail.Bids = _queryRepo.GetList<RequestBidListModel>(queryBids, search);
 
             return detail;
         }
@@ -96,18 +159,24 @@ namespace Business.Service
                                     sr.IsPublish,
                                     sr.ID,
                                     co.Name as CountryName,
-                                    ci.Name  as CityName
+                                    ci.Name  as CityName,
+                                    (select COUNT(rb.ID) from RequestBids rb where rb.ServiceRequestID = sr.ID) as BidCount
                                      from servicerequests sr
                                     inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
                                     inner join users u on u.Id = sr.UserID 
                                     inner join countries co on co.ID = sr.CountryID
                                     inner join cities ci on ci.ID = sr.CityID
-                                    inner join users u on u.Id = sr.UserID where sr.IsActive = 1 and u.ID = @UserID";
+                                    
+                                    where sr.IsActive = 1 and u.ID = @UserID and FinishDate > NOW() and IsPublish = 1 ";
 
             if (search.ServiceCategoryID.HasValue)
                 query += "  and sr.ServiceCategoryID = @ServiceCategoryID";
 
+            query += " ORDER BY  sr.ID DESC";
+
             query += " LIMIT  " + search.PageIndex * search.TakeRow + "," + search.TakeRow;
+
+        
 
             var list = _queryRepo.GetList<RequestListModel>(query, search);
 
@@ -116,6 +185,64 @@ namespace Business.Service
                                      from servicerequests sr
                                     inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
                                     inner join users u on u.Id = sr.UserID where sr.IsActive = 1 and u.ID = @UserID";
+
+            if (search.ServiceCategoryID.HasValue)
+                queryCount += "  and sr.ServiceCategoryID = @ServiceCategoryID";
+
+            long count = _queryRepo.GetSingle<long>(queryCount, search);
+
+            result.DataCount = count;
+
+            long k = count % 10;
+
+            if (k > 0)
+                count = (count / 20) + 1;
+
+            result.IsSuccess = true;
+            result.Data = list;
+            result.PageCount = count;
+            result.SelectedPage = search.PageIndex;
+            return result;
+        }
+
+        public CommonResult GetMyRequestHistoryList(RequestSearchModel search)
+        {
+
+            CommonResult result = new CommonResult();
+
+            string query = @"select 
+                                    sc.CategoryPhoto,
+                                    sc.Name as CategoryName,
+                                    sr.CreateDate,
+                                    sr.StartDate,
+                                    sr.FinishDate,
+                                    sr.IsPublish,
+                                    sr.ID,
+                                    co.Name as CountryName,
+                                    ci.Name  as CityName,
+                                    (select COUNT(rb.ID) from RequestBids rb where rb.ServiceRequestID = sr.ID) as BidCount
+                                     from servicerequests sr
+                                    inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
+                                    inner join users u on u.Id = sr.UserID 
+                                    inner join countries co on co.ID = sr.CountryID
+                                    inner join cities ci on ci.ID = sr.CityID
+                                    where sr.IsActive = 1 and u.ID = @UserID and FinishDate < NOW() and IsPublish = 0";
+
+            if (search.ServiceCategoryID.HasValue)
+                query += "  and sr.ServiceCategoryID = @ServiceCategoryID";
+
+            query += " ORDER BY  sr.ID DESC";
+
+            query += " LIMIT  " + search.PageIndex * search.TakeRow + "," + search.TakeRow;
+
+
+            var list = _queryRepo.GetList<RequestListModel>(query, search);
+
+            string queryCount = @"select 
+                                    COUNT(sr.ID)
+                                     from servicerequests sr
+                                    inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
+                                    inner join users u on u.Id = sr.UserID where sr.IsActive = 1 and u.ID = @UserID and FinishDate < NOW() and IsPublish = 0";
 
             if (search.ServiceCategoryID.HasValue)
                 queryCount += "  and sr.ServiceCategoryID = @ServiceCategoryID";

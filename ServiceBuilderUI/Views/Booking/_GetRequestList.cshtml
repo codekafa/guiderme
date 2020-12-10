@@ -1,79 +1,89 @@
 ﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
-
+@inject Business.Service.Infrastructure.ISecurityService securService;
 @model ViewModel.Views.CommonResult
 @{
     var requests = Model.Data as List<ViewModel.Views.Request.RequestListModel>;
 }
 
-<h4 class="widget-title">@lexiconHelper.GetTextValue("_my_bookings", 21)  - <a class="btn btn-primary submit-btn" href="javascript:void(0);" data-toggle="modal" data-target="#requestModal"   >@lexiconHelper.GetTextValue("_add_new_booking", 21) </a></h4>
+<h4 class="widget-title">@lexiconHelper.GetTextValue("_my_bookings", 21)  - <a class="btn btn-primary submit-btn" href="javascript:void(0);" data-toggle="modal" data-target="#requestModal">@lexiconHelper.GetTextValue("_add_new_booking", 21) </a></h4>
 
 <ul class="nav nav-tabs menu-tabs">
-    <li class="nav-item active">
+    <li class="nav-item @ViewBag.Booking">
         <a class="nav-link" href="/my-bookings">@lexiconHelper.GetTextValue("_active_bookings", 21) </a>
+    </li>
+    <li class="nav-item @ViewBag.History">
+        <a class="nav-link" href="/my-bookings-history/0">@lexiconHelper.GetTextValue("_complete_bookings", 21) </a>
     </li>
 </ul>
 <div class="row">
     @foreach (var request in requests)
     {
-    <div class="col-lg-12 col-md-12">
+        <div class="col-lg-12 col-md-12">
 
-        <div class="bookings">
-            <div class="booking-list">
-                <div class="booking-widget">
-                    <a href="service-details.html" class="booking-img">
-                        @{
-                            string fileTransform = request.GetFileNameFromUrl();
-                            string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_640,h_426/" + fileTransform;
-                        }
-                        <img class="img-fluid serv-img" alt="Service Image" src="@url">
-                    </a>
-                    <div class="booking-det-info">
-                        <h3>
-                            <a class="bg-yellow" href="/booking-detail?booking_id=@request.ID">@request.CategoryName</a>
-                        </h3>
+            <div class="bookings">
+                <div class="booking-list">
+                    <div class="booking-widget">
+                        <a href="/booking-detail?booking_id=@request.ID" class="booking-img">
+                            @{
+                                string fileTransform = request.GetFileNameFromUrl();
+                                string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_640,h_426/" + fileTransform;
+                            }
+                            <img class="img-fluid serv-img" alt="Service Image" src="@url">
+                        </a>
+                        <div class="booking-det-info">
+                            <h3>
+                                <a class="" href="/booking-detail?booking_id=@request.ID">@request.CategoryName</a>
+                            </h3>
+
+                            @if (!securService.GetCurrentUser().IsMailActivation)
+                            {
+                                <span class="badge badge-pill badge-prof bg-warning" style="color:white">@lexiconHelper.GetTextValue("_you_must_email_approve", 99)</span>
+                            }
+                            else
+                            {
+                                if (request.IsPublish)
+                                {
+                                    <span class="badge badge-pill badge-prof bg-success" style="color:white">@lexiconHelper.GetTextValue("_in_live", 99)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-pill badge-prof bg-primary" style="color:white">@lexiconHelper.GetTextValue("_not_live", 99)</span>
+                                }
+                            }
+
+
                         <ul class="booking-details">
                             <li>
-                                <span>@lexiconHelper.GetTextValue("_booking_date", 99)</span> @request.StartDate
-                                <span class="badge badge-pill badge-prof bg-primary">@lexiconHelper.GetTextValue("_in_live", 99)</span>
+                                <span>@lexiconHelper.GetTextValue("_booking_date", 99) :</span> @if (request.StartDate != null)
+                                {
+                                    <label>@request.StartDate.ToString()</label>
+                                }
                             </li>
-                            <li><span>@lexiconHelper.GetTextValue("_lcation", 99)</span> @request.CityName, @request.CountryName</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="booking-action">
-                    <a href="#" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_service_bids", 99)</a>
-                    <a href="javascript:;" class="btn btn-sm bg-danger-light"><i class="fas fa-times"></i> Cancel the Service</a>
-                </div>
-            </div>
-        </div>
+                            <li>
+                                <span>@lexiconHelper.GetTextValue("_finish_booking_date", 99) :</span> @if (request.FinishDate != null)
+                                {
+                                    <label>@request.FinishDate.ToString()</label>
+                                }
+                            </li>
+                            <li><span>@lexiconHelper.GetTextValue("_location", 99) :</span> @request.CityName, @request.CountryName</li>
+                            <li><span>@lexiconHelper.GetTextValue("_bid_count", 99) :</span> @request.BidCount</li>
 
-        <div class="service-widget">
-            <div class="service-img">
-                <div class="item-info">
-                    <div class="cate-list">
-                        <a class="bg-yellow" href="/booking-detail?booking_id=@request.ID">@request.CategoryName</a>
-                    </div>
-                </div>
-            </div>
-            <div class="service-content">
-                <h3 class="title">
-                    <a href="/booking-detail?booking_id=@request.ID">@request.CategoryName</a>
-                </h3>
-                <div class="user-info">
-                    <div class="service-action">
-                        <div class="row">
-                            <div class="col">
-                                <a href="/booking-detail?booking_id=@request.ID" class="text-success"><i class="far fa-list"></i> @lexiconHelper.GetTextValue("_detail", 99) </a>
-                            </div>
-                            <div class="col text-right">
-                                <a href="javascript:void(0);" onclick="removeConfirmedBookingModal(@request.ID)" class="text-danger"><i class="far fa-trash-alt"></i> @lexiconHelper.GetTextValue("_remove", 99)</a>
-                            </div>
+
+                        </ul>
                         </div>
                     </div>
+                    <div class="booking-action">
+
+                        @if (request.IsPublish)
+                        {
+                            <a href="/booking-detail?booking_id=@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_service_bids", 99)</a>
+                        }
+                        @*<a href="javascript:;" class="btn btn-sm bg-danger-light"><i class="fas fa-times"></i> Cancel the Service</a>*@
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
     }
 </div>
 
@@ -100,7 +110,19 @@
 </div>﻿
 
 
+
+<script type="text/javascript">
+
+
+
+
+</script>
+
+
 <script>
+
+
+
 
     function removeConfirmedBookingModal(id) {
         $('#bookingId').val(id);

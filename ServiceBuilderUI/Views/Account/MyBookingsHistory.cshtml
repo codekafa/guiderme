@@ -1,0 +1,64 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+@model ViewModel.Views.CommonResult
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_booking_history_page_title", 20);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            @await Html.PartialAsync("_GetUserMenu", new ViewDataDictionary(ViewData)
+                                {
+                                    { @"menu", @"booking" }
+                                })
+            <div class="col-xl-9 col-md-8">
+                @await Html.PartialAsync("../Booking/_GetRequestList", Model)
+
+                <div class="pagination">
+                    <ul>
+
+                        @if (Model.DataCount.HasValue)
+                        {
+                            var count = Model.DataCount.Value;
+
+                            long k = count % 10;
+
+                            long page = 0;
+
+                            if (k > 0)
+                            {
+                                page = (count / 10) + 1;
+                            }
+                            else
+                            {
+                                page = (count / 10);
+                            }
+
+                            for (int i = 0; i < page; i++)
+                            {
+                                if (i == ViewBag.Page)
+                                {
+                                    <li class="active">
+                                        <a  href="/my-bookings-history/@i">@(i + 1)</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="">
+                                        <a href="/my-bookings-history/@i">@(i + 1)</a>
+                                    </li>
+                                }
+                            }
+                        }
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

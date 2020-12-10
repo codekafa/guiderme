@@ -1,0 +1,87 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
+@model ViewModel.Views.CommonResult
+
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_my_notification_page_title", 24);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var notifyList = Model.Data as List<ViewModel.Views.Notification.NotificationListModel>;
+
+}
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div>
+                        <h4 class="widget-title">@lexiconHelper.GetTextValue("_my_notification_page_name", 24)</h4>
+                        <div class="notcenter">
+                            @if (notifyList != null && notifyList.Count > 0)
+                            {
+                                foreach (var item in notifyList)
+                                {
+                                    <div class="notificationlist">
+                                        <div class="inner-content-blk position-relative">
+                                            <div class="d-flex text-dark">
+                                                <div class="noti-contents">
+                                                    <h3><strong>@item.Description</strong></h3>
+                                                    <span>@item.CreateDate</span>
+
+                                                    @if (!string.IsNullOrWhiteSpace(item.Url))
+                                                    {
+                                                        <a href="@item.Url" class="btn btn-success btn-sm"><i class="fa fa-eye-slash"> </i></a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="pagination">
+                            <ul>
+
+                                @if (Model.DataCount.HasValue)
+                                {
+                                    var count = Model.DataCount.Value;
+
+                                    long k = count % 10;
+
+                                    long page = 0;
+
+                                    if (k > 0)
+                                    {
+                                        page = (count / 10) + 1;
+                                    }
+                                    else
+                                    {
+                                        page = (count / 10);
+                                    }
+
+                                    for (int i = 0; i < page; i++)
+                                    {
+                                        if (i == ViewBag.Page)
+                                        {
+                                            <li class="active">
+                                                <a href="/my-notifications/@i">@(i + 1)</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="">
+                                                <a href="/my-notifications/@i">@(i + 1)</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

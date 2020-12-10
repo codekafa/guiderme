@@ -25,17 +25,19 @@ namespace ServiceBuilderUI.Controllers
         [Route("booking-detail")]
         public IActionResult RequestDetail(long? booking_id)
         {
-            AddOrEditRequestModel result = null;
+            RequestDetailModel result = null;
 
             if (booking_id.HasValue)
             {
-                result = _requestService.GetBookingDetailForEdit(booking_id.Value);
+                result = _requestService.GetBookingDetailForView(booking_id.Value);
             }
 
             if (result == null)
-            {
-                result = new AddOrEditRequestModel();
-            }
+                return RedirectToAction("Index", "Home");
+
+            if (result.UserID != CurrentUserId)
+                return RedirectToAction("Index", "Home");
+
 
             result.UserID = CurrentUserId.Value;
 
@@ -47,6 +49,7 @@ namespace ServiceBuilderUI.Controllers
         {
             CommonResult result = new CommonResult();
             request.UserId = CurrentUserId.Value;
+            request.IsPublish = true;
             result = _requestService.AddNewRequest(request);
             return result;
 

@@ -18,13 +18,15 @@ namespace Business.Service
         IQuerableRepository _queryRepo;
         ILexiconService _lexService;
         IFileService _fileService;
-        public ServiceService(IServiceRepository serviceRepo, IServicePhotoRepository photoRepo, IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService)
+        IUserRepository _userRepo;
+        public ServiceService(IServiceRepository serviceRepo, IServicePhotoRepository photoRepo, IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService, IUserRepository userRepo)
         {
             _serviceRepo = serviceRepo;
             _photoRepo = photoRepo;
             _queryRepo = queryRepo;
             _lexService = lexiconService;
             _fileService = fileService;
+            _userRepo = userRepo;
         }
 
         public CommonResult AddOrEditService(AddOrEditServiceModel request)
@@ -42,7 +44,6 @@ namespace Business.Service
 
                 if (request.ID > 0)
                     serviceProfile = _serviceRepo.Get(x => x.ID == request.ID);
-
 
                 serviceProfile.CityID = request.CityID;
                 serviceProfile.CountryID = request.CountryID;
@@ -67,6 +68,14 @@ namespace Business.Service
                 else
                 {
                     serviceProfile = _serviceRepo.Add(serviceProfile);
+
+                    var user = _userRepo.Get(x => x.ID == serviceProfile.UserID);
+
+                    if (user.UserType == (int)UserTypes.Customer)
+                    {
+                        user.UserType = (int)UserTypes.ServicerEndEmployer;
+                        _userRepo.Update(user);
+                    }
                 }
 
                 if (request.ServicePhotos != null)
