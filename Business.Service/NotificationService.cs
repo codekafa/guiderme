@@ -62,6 +62,18 @@ namespace Business.Service
             return result;
 
         }
+
+        public async Task<CommonResult> ReadNotificationsAsync(long userId)
+        {
+            CommonResult result = new CommonResult();
+            string query = "update notifications set IsRead = 1 where UserID = " + userId.ToString() + " and IsRead = 0";
+            var value = await _queryRepo.ExecuteQueryASync(query,null);
+            result.Data = value;
+            result.IsSuccess = true;
+            return result;
+
+        }
+
         public CommonResult GetUnReadNotifications(long user_id)
         {
             CommonResult result = new CommonResult();

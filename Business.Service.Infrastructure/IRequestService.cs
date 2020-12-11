@@ -11,7 +11,7 @@ namespace Business.Service.Infrastructure
     {
         CommonResult AddNewRequest(NewRequestModel request);
         CommonResult GetMyRequestList(RequestSearchModel search);
-        RequestDetailModel GetBookingDetailForView(long value);
+        RequestDetailModel GetBookingDetailForView(long request_id, long currentUserId);
         CommonResult AddOrEditRequest(AddOrEditRequestModel request);
         CommonResult RemoveRequest(long booking_id, long value);
 

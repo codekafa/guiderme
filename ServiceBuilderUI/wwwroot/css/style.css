@@ -4021,7 +4021,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 @media only screen and (max-width: 991.98px) {
 	.sidebar-overlay.opened {
-		display: block;
+	/*	display: block;*/
 	}
 	.main-nav {
 		padding: 0;
@@ -4051,7 +4051,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 		font-weight: 500;
 	}
 	.main-nav > li > a > i {
-		float: right;
+		float: left;
 		margin-top: 5px;
 	}
 	.main-nav > li .submenu li a {
@@ -4299,6 +4299,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 	}
 	.section-header h2 {
 		font-size: 1.875rem;
+		word-break: break-all;
 	}
 	.dropdown-menu {
 		font-size: 0.875rem;
@@ -4407,6 +4408,9 @@ div.dataTables_wrapper div.dataTables_filter input {
     .booking-img {
         margin: 0 0 15px;
     }
+	.booking-img-list-item {
+		display:none;
+	}
     .bookings .booking-action {
         justify-content: flex-start;
     }

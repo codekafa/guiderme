@@ -77,7 +77,7 @@
                         <div class="bookings">
                             <div class="booking-list">
                                 <div class="booking-widget">
-                                    <a href="/booking-view-detail?bid_id=@item.ID" class="booking-img">
+                                    <a href="/booking-view-detail?bid_id=@item.ID" class="booking-img booking-img-list-item">
                                         @{
                                             string fileTransform = item.GetFileNameFromUrl();
                                             string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_300,h_300/" + fileTransform;
@@ -89,12 +89,12 @@
                                             <a class="" href="/booking-view-detail?bid_id=@item.ID">@item.ServiceName</a>
                                         </h3>
                                         <ul class="booking-details">
-                                            <li><span>@lexiconHelper.GetTextValue("_bid_user", 99) :</span> @item.BidUserName</li>
-                                            <li>
+                                            <li><span>@lexiconHelper.GetTextValue("_bid_user", 99) : @item.BidUserName</span> </li>
+                                            @*<li>
                                                 <span>@lexiconHelper.GetTextValue("_give_bid_date", 99) :</span>
                                                 @item.CreateDate.ToString()
-                                            </li>
-                                            <li><span>@lexiconHelper.GetTextValue("_give_bid_cost", 99) :</span> @item.ServiceCost</li>
+                                            </li>*@
+                                            <li><span>@lexiconHelper.GetTextValue("_give_bid_cost", 99) : @item.ServiceCost</span> </li>
                                         </ul>
                                     </div>
                                 </div>

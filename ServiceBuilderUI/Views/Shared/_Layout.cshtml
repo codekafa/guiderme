@@ -88,33 +88,39 @@
                                 <a class="nav-link header-login" href="javascript:void(0);" data-toggle="modal" data-target="#login_modal">@lexiconHelper.GetTextValue("_login", 1)</a>
                             </li>
                         }
-                        else
-                        {
 
-                            var currentUser = securtyService.GetCurrentUser();
+                    </ul>
+                </div>
 
-                            string urlPhoto = "";
-                            string fileTransform = currentUser.GetFileNameFromUserPhoto();
-                            urlPhoto = "https://res.cloudinary.com/servicebuilder/image/upload/w_300,h_300/" + fileTransform;
-                            var notifyResult = notifyService.GetUnReadNotifications(currentUser.ID);
-                            var notifyList = notifyResult.Data as List<ViewModel.Views.Notification.NotificationListModel>;
 
-                            <li class="nav-item dropdown">
-                                <a href="#" class="" data-toggle="dropdown">
-                                    <i class="fas fa-bell"></i> <span class="badge badge-pill bg-yellow">@notifyResult.DataCount</span>
+                @{var currentUser = securtyService.GetCurrentUser();
+
+                    string urlPhoto = "";
+
+                    if (currentUser != null)
+                    {
+                        string fileTransform = currentUser.GetFileNameFromUserPhoto();
+                        urlPhoto = "https://res.cloudinary.com/servicebuilder/image/upload/w_300,h_300/" + fileTransform;
+                        var notifyResult = notifyService.GetUnReadNotifications(currentUser.ID);
+                        var notifyList = notifyResult.Data as List<ViewModel.Views.Notification.NotificationListModel>;
+
+                        <ul class="nav header-navbar-rht">
+                            <li class="nav-item dropdown logged-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-bell"></i> <span class="badge badge-pill bg-yellow" id="notifyCount">@notifyResult.DataCount</span>
                                 </a>
-                                <div class="dropdown-menu notify-blk dropdown-menu-right notifications">
+                                <div class="dropdown-menu dropdown-menu-right notifications">
                                     <div class="topnav-dropdown-header">
                                         <span class="notification-title">@lexiconHelper.GetTextValue("_notifications", 1)</span>
                                         <a href="javascript:void(0)" class="clear-noti">@lexiconHelper.GetTextValue("_clear_all", 1)</a>
                                     </div>
                                     <div class="noti-content">
                                         <ul class="notification-list">
-
                                             @foreach (var item in notifyList)
                                             {
                                                 <li class="notification-message">
-                                                    <a href="notifications.html">
+                                                    <a href="/my-notifications/0">
+                                                        <input type="hidden" id="notifyListId[]" name="notifyListId[]" value="@item.ID" />
                                                         <div class="media">
                                                             <div class="media-body">
                                                                 <p class="noti-details"> <span class="noti-title">@item.Description</span></p>
@@ -124,7 +130,6 @@
                                                     </a>
                                                 </li>
                                             }
-
                                         </ul>
                                     </div>
                                     <div class="topnav-dropdown-footer">
@@ -133,13 +138,14 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item ">
+                            <li class="nav-item logged-item">
                                 <a href="chat.html" class="nav-link">
                                     <i class="fa fa-comments" aria-hidden="true"></i>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown has-arrow">
-                                <a href="#" class="" data-toggle="dropdown" aria-expanded="false">
+
+                            <li class="nav-item dropdown has-arrow logged-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
                                     <span class="user-img">
                                         <img class="rounded-circle" src="@urlPhoto" alt="" width="31">
                                     </span>
@@ -163,18 +169,16 @@
                                         <a class="dropdown-item" href="/my-bids">@lexiconHelper.GetTextValue("_my_bids", 1)</a>
                                         <a class="dropdown-item" href="/payment">@lexiconHelper.GetTextValue("_my_payments", 1)</a>
                                     }
-
                                     <a class="dropdown-item" href="provider-wallet.html">Wallet</a>
                                     <a class="dropdown-item" href="provider-subscription.html">Subscription</a>
                                     <a class="dropdown-item" href="provider-availability.html">Availability</a>
                                     <a class="dropdown-item" href="chat.html">Chat</a>
-                                    <a class="nav-link header-login" href="/logout">@lexiconHelper.GetTextValue("_logout", 1)</a>
+                                    <a class="dropdown-item" href="/logout">@lexiconHelper.GetTextValue("_logout", 1)</a>
                                 </div>
                             </li>
-                        }
-
-                    </ul>
-                </div>
+                        </ul>
+                    }
+                }
 
             </nav>
         </header>
@@ -277,12 +281,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                @*<div class="subscribe-form">
-                                        <input type="email" class="form-control" placeholder="@lexiconHelper.GetTextValue("_enter_you_email", 2)">
-                                        <button type="submit" class="btn footer-btn">
-                                            <i class="fas fa-paper-plane"></i>
-                                        </button>
-                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -676,7 +674,6 @@
 
    });
 
-
         function clearSearch() {
             $('#categorySearch').val("");
         }
@@ -718,6 +715,27 @@
                     }
                 }
             });
+        }
+
+        function clearNotifications() {
+            var list = new Array();
+             list = $("input[name='notifyListId[]']").map(function () { return $(this).val(); }).get();
+
+            $.ajax({
+                type: "POST",
+                url: "/account/ReadNotifications",
+                data: list,
+                success: function (e) {
+                    if (e.isSuccess == true) {
+                        $('.notification-message').remove();
+                        $('#notifyCount').hmtml("0");
+                    } else {
+                        toastrDanger(e.message)
+                    }
+                }
+            });
+
+
         }
 
     </script>

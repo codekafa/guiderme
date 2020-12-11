@@ -42,10 +42,19 @@ namespace Business.Service
                 sReq.ServiceCategoryID = request.CategoryId;
                 sReq.Description = request.Description;
                 if (request.IsPublish)
+                {
                     sReq.StartDate = DateTime.Now;
+                    sReq.FinishDate = DateTime.Now.AddDays(2);
+                }
+                else
+                {
+                    sReq.StartDate = null;
+                    sReq.FinishDate = null;
+                }
+                   
 
                 sReq.UserID = request.UserId;
-                sReq.FinishDate = null;
+           
                 sReq = _requestRepo.Add(sReq);
 
                 if (request.Properties != null)
@@ -87,9 +96,9 @@ namespace Business.Service
         {
             throw new NotImplementedException();
         }
-        public RequestDetailModel GetBookingDetailForView(long request_id)
+        public RequestDetailModel GetBookingDetailForView(long request_id,long currentUserId)
         {
-            var search = new RequestSearchModel { p0 = request_id };
+            var search = new RequestSearchModel { p0 = request_id , CurrentUserId = currentUserId};
 
             string query = @"select 
                                     co.Name as CountryName,
@@ -111,7 +120,7 @@ namespace Business.Service
                                     inner join users u on u.Id = sr.UserID 
                                     inner join countries co on co.ID = sr.CountryID
                                     inner join cities ci on ci.ID = sr.CityID 
-                                    where sr.ID = @p0";
+                                    where sr.ID = @p0 and sr.UserID = @CurrentUserID";
 
             var detail = _queryRepo.GetSingle<RequestDetailModel>(query, search);
 

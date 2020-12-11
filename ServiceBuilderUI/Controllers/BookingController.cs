@@ -23,21 +23,13 @@ namespace ServiceBuilderUI.Controllers
         }
 
         [Route("booking-detail")]
-        public IActionResult RequestDetail(long? booking_id)
+        public IActionResult RequestDetail(long booking_id)
         {
             RequestDetailModel result = null;
-
-            if (booking_id.HasValue)
-            {
-                result = _requestService.GetBookingDetailForView(booking_id.Value);
-            }
+            result = _requestService.GetBookingDetailForView(booking_id, CurrentUserId.Value);
 
             if (result == null)
                 return RedirectToAction("Index", "Home");
-
-            if (result.UserID != CurrentUserId)
-                return RedirectToAction("Index", "Home");
-
 
             result.UserID = CurrentUserId.Value;
 

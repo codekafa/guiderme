@@ -82,6 +82,13 @@ namespace ServiceBuilderUI.Controllers
             return View(list);
         }
 
+        [HttpPost]
+        public Task<CommonResult> ReadNotifications()
+        {
+            var result = _notifyService.ReadNotificationsAsync(CurrentUserId.Value);
+            return result;
+        }
+
         [Route("dashboard")]
         public IActionResult Dashboard()
         {

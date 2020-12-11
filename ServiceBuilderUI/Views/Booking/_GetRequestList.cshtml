@@ -23,13 +23,13 @@
             <div class="bookings">
                 <div class="booking-list">
                     <div class="booking-widget">
-                        <a href="/booking-detail?booking_id=@request.ID" class="booking-img">
+                        @*<a href="/booking-detail?booking_id=@request.ID" class="booking-img">
                             @{
                                 string fileTransform = request.GetFileNameFromUrl();
                                 string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_640,h_426/" + fileTransform;
                             }
                             <img class="img-fluid serv-img" alt="Service Image" src="@url">
-                        </a>
+                        </a>*@
                         <div class="booking-det-info">
                             <h3>
                                 <a class="" href="/booking-detail?booking_id=@request.ID">@request.CategoryName</a>
