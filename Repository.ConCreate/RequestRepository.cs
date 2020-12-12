@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Repository.ConCreate
 {
-    public class ServiceRequestRepository  :  EFEntityRepositoryBase<ServiceRequest>, IServiceRequestsRepository
+    public class RequestRepository  :  EFEntityRepositoryBase<Request>, IRequestRepository
     {
-        public ServiceRequestRepository(ServiceBuilderContext _dbContext) : base(_dbContext)
+        public RequestRepository(ServiceBuilderContext _dbContext) : base(_dbContext)
         {
 
         }

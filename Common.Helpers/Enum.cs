@@ -40,5 +40,13 @@ namespace Common.Helpers
             Email = 2,
             ChangePassword =3
         }
+
+        public enum ServiceRequestRelationStatus
+        {
+            Waiting = 1,
+            Bidded = 2,
+            Rejected = 3
+        }
+
     }
 }

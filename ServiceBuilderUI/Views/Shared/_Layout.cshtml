@@ -162,17 +162,22 @@
                                     <a class="dropdown-item" href="/dashboard">@lexiconHelper.GetTextValue("_dashboard", 1)</a>
                                     <a class="dropdown-item" href="/my-services">@lexiconHelper.GetTextValue("_services", 1)</a>
                                     <a class="dropdown-item" href="/my-bookings">@lexiconHelper.GetTextValue("_bookings", 1)</a>
-                                    <a class="dropdown-item" href="/my-profile">@lexiconHelper.GetTextValue("_profile_settings_page", 1)</a>
 
-                                    @if (this.User.Claims.Where(x => x.Type == System.Security.Claims.ClaimTypes.Role).FirstOrDefault().Value == ((int)Common.Helpers.Enum.UserTypes.ServicerEndEmployer).ToString() || this.User.Claims.Where(x => x.Type == System.Security.Claims.ClaimTypes.Role).FirstOrDefault().Value == ((int)Common.Helpers.Enum.UserTypes.Servicer).ToString())
+
+                                    @if (currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.ServicerEndEmployer || currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.Servicer)
                                     {
+                                        <a class="dropdown-item" href="/avaible-bookings/0">@lexiconHelper.GetTextValue("_avaible_bookings", 1)</a>
                                         <a class="dropdown-item" href="/my-bids">@lexiconHelper.GetTextValue("_my_bids", 1)</a>
                                         <a class="dropdown-item" href="/payment">@lexiconHelper.GetTextValue("_my_payments", 1)</a>
                                     }
-                                    <a class="dropdown-item" href="provider-wallet.html">Wallet</a>
-                                    <a class="dropdown-item" href="provider-subscription.html">Subscription</a>
-                                    <a class="dropdown-item" href="provider-availability.html">Availability</a>
-                                    <a class="dropdown-item" href="chat.html">Chat</a>
+                                    @*<a class="dropdown-item" href="provider-wallet.html">Wallet</a>
+        <a class="dropdown-item" href="provider-subscription.html">Subscription</a>
+        <a class="dropdown-item" href="provider-availability.html">Availability</a>*@
+                                    <a class="dropdown-item" href="/chat">@lexiconHelper.GetTextValue("_chat", 1)</a>
+
+                                    <a class="dropdown-item" href="/my-profile">@lexiconHelper.GetTextValue("_profile_settings_page", 1)</a>
+                                    <a class="dropdown-item" href="/change-password">@lexiconHelper.GetTextValue("_change_password", 1)</a>
+
                                     <a class="dropdown-item" href="/logout">@lexiconHelper.GetTextValue("_logout", 1)</a>
                                 </div>
                             </li>

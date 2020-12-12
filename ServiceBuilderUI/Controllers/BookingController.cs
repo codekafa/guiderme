@@ -44,14 +44,18 @@ namespace ServiceBuilderUI.Controllers
             request.IsPublish = true;
             result = _requestService.AddNewRequest(request);
             return result;
-
         }
 
-        public CommonResult RemoveMyRequest(long booking_id)
+        [Route("avaible-bookings/{page_id}")]
+        public IActionResult AvaibleRequest(int page_id)
         {
-            CommonResult result = new CommonResult();
-            result = _requestService.RemoveRequest(booking_id, CurrentUserId.Value);
-            return result;
+             var search = new BaseParamModel();
+            search.CurrentUserId = CurrentUserId.Value;
+            search.PageIndex = page_id;
+            search.TakeRow = 10;
+            var result = _requestService.AvaibleRequests(search);
+            ViewBag.Page = page_id;
+            return View(result);
         }
 
     }

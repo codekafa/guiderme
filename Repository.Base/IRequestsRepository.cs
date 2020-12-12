@@ -3,8 +3,8 @@ using Repository.Infrastructure.Interface;
 
 namespace Repository.Base
 {
-    public interface IServiceRequestsRepository : IEntityRepository<ServiceRequest>
+    public interface IRequestRepository : IEntityRepository<Request>
     {
     }
-
+    
 }

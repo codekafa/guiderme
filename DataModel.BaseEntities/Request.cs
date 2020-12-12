@@ -5,7 +5,7 @@ using DataModel.Infrastructure;
 
 namespace DataModel.BaseEntities
 {
-    public class ServiceRequest : BaseEntity
+    public class Request : BaseEntity
     {
         public long UserID { get; set; }
         public long ServiceCategoryID { get; set; }

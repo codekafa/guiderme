@@ -466,3 +466,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\staticwebassets\ServiceBuilderUI.StaticWebAssets.xml
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.genruntimeconfig.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Account\MyNotifications.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Booking\AvaibleRequest.cshtml.g.cs

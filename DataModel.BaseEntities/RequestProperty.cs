@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataModel.BaseEntities
 {
-    public class ServiceRequestProperty : BaseEntity
+    public class RequestProperty : BaseEntity
     {
         public long ServiceRequestID { get; set; }
         public long ServiceCategoryPropertyID { get; set; }

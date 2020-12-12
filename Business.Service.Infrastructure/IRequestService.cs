@@ -16,5 +16,7 @@ namespace Business.Service.Infrastructure
         CommonResult RemoveRequest(long booking_id, long value);
 
         CommonResult GetMyRequestHistoryList(RequestSearchModel search);
+
+        CommonResult AvaibleRequests(BaseParamModel search);
     }
 }

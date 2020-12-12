@@ -1,0 +1,90 @@
+﻿
+@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.ISecurityService securityHelper;
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+@model ViewModel.Views.CommonResult
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_avaible_booking_page_title", 25);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var requests = Model.Data as List<ViewModel.Views.Request.AvaibleRequestListModel>;
+}
+
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            @await Html.PartialAsync("../Account/_GetUserMenu", new ViewDataDictionary(ViewData)
+                                {
+                                    { @"menu", @"avaible" }
+                                })
+            <div class="col-xl-9 col-md-8">
+                <div class="row">
+                    @foreach (var request in requests)
+                    {
+                        <div class="col-lg-12 col-md-12">
+                            <div class="bookings">
+                                <div class="booking-list">
+                                    <div class="booking-widget">
+                                        <div class="booking-det-info">
+                                            <h3>
+                                                <a class="" href="/booking-detail-for-service?request_id=@request.ID">@request.ServiceName</a>
+                                            </h3>
+                                            <ul class="booking-details">
+                                                <li><span>@lexiconHelper.GetTextValue("_location", 99) :</span> @request.CityName, @request.CountryName</li>
+                                                <li><span>@lexiconHelper.GetTextValue("_user_name_request", 25) :</span> @request.RequestUserName</li>
+                                                <li>
+                                                    <span>@lexiconHelper.GetTextValue("_finish_booking_date", 25) :</span> @if (request.FinishDate != null)
+                                                    {
+                                                        <label>@request.FinishDate.ToString()</label>
+                                                    }
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="booking-action">
+                                        <a href="/booking-detail-for-service?request_id=@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_view_request", 25)</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+                <div class="pagination">
+                    <ul>
+
+                        @if (Model.DataCount.HasValue)
+                        {
+
+                            for (int i = 0; i < Model.PageCount; i++)
+                            {
+                                if (i == ViewBag.Page)
+                                {
+                                    <li class="active">
+                                        <a href="/avaible-booking/@i">@(i + 1)</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="">
+                                        <a href="/avaible-booking/@i">@(i + 1)</a>
+                                    </li>
+                                }
+                            }
+                        }
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

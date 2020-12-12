@@ -55,6 +55,7 @@ namespace ServiceBuilderUI
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
             services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
@@ -69,7 +70,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
-
+        
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -83,9 +84,10 @@ namespace ServiceBuilderUI
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
-            services.AddScoped<IServiceRequestsRepository, ServiceRequestRepository>();
-            services.AddScoped<IServiceRequestPropertyRepository, ServiceRequestPropertyRepository>();
+            services.AddScoped<IRequestPropertyRepository, RequestPropertyRepository>();
+            services.AddScoped<IRequestRepository, RequestRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

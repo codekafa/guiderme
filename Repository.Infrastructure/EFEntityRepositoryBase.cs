@@ -24,7 +24,7 @@ namespace Repository.Infrastructure
         {
             var addEnttiy = _dbContext.Entry(entity);
             addEnttiy.State = EntityState.Added;
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
             return addEnttiy.Entity;
         }
 
@@ -44,7 +44,7 @@ namespace Repository.Infrastructure
         {
             var addEnttiy = _dbContext.Entry(entity);
             addEnttiy.State = EntityState.Deleted;
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
 
         }
 
@@ -54,7 +54,7 @@ namespace Repository.Infrastructure
            {
                var addEnttiy = _dbContext.Entry(entity);
                addEnttiy.State = EntityState.Deleted;
-               _dbContext.SaveChanges();
+               //_dbContext.SaveChanges();
            });
         }
 
@@ -72,7 +72,7 @@ namespace Repository.Infrastructure
         {
             var updateEntity = _dbContext.Entry(entity);
             updateEntity.State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
             return updateEntity.Entity;
         }
 
@@ -82,7 +82,7 @@ namespace Repository.Infrastructure
             {
                 var updateEntity = _dbContext.Entry(entity);
                 updateEntity.State = EntityState.Modified;
-                _dbContext.SaveChanges();
+                //_dbContext.SaveChanges();
                 return updateEntity.Entity;
             });
             return result;
