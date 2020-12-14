@@ -12,20 +12,20 @@ namespace Business.Service
 {
     public class NotificationService : INotificationService
     {
-        INotificationRepository _notifyRepo;
         IQuerableRepository _queryRepo;
-        public NotificationService(INotificationRepository notificationRepository, IQuerableRepository querableRepository)
+        IUnitOfWork _uow;
+        public NotificationService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork)
         {
-            _notifyRepo = notificationRepository;
             _queryRepo = querableRepository;
+            _uow = unitOfWork;
         }
         public CommonResult AddNotification(NewNotificationModel notify)
         {
             CommonResult result = new CommonResult();
             try
             {
-                var notfiyDb = _notifyRepo.Add(new DataModel.BaseEntities.Notification { Description = notify.Description, IsRead = false, IsActive = true, Url = notify.Url, UserID = notify.UserID, });
-
+                var notfiyDb = _uow.NotificationRepository.Add(new DataModel.BaseEntities.Notification { Description = notify.Description, IsRead = false, IsActive = true, Url = notify.Url, UserID = notify.UserID, });
+                _uow.SaveChanges();
                 result.IsSuccess = true;
                 result.Data = notfiyDb.ID;
                 return result;
@@ -40,7 +40,12 @@ namespace Business.Service
         }
         public Task AddNotificationSync(NewNotificationModel notify)
         {
-            return _notifyRepo.AddASync(new DataModel.BaseEntities.Notification { Description = notify.Description, IsRead = false, IsActive = true, Url = notify.Url, UserID = notify.UserID, });
+            return Task.Run(() =>
+            {
+                var task = _uow.NotificationRepository.Add(new DataModel.BaseEntities.Notification { Description = notify.Description, IsRead = false, IsActive = true, Url = notify.Url, UserID = notify.UserID, });
+                _uow.SaveChanges();
+            });
+
         }
         public CommonResult GetAllNotification(NotificationSearchModel search)
         {
@@ -67,7 +72,7 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             string query = "update notifications set IsRead = 1 where UserID = " + userId.ToString() + " and IsRead = 0";
-            var value = await _queryRepo.ExecuteQueryASync(query,null);
+            var value = await _queryRepo.ExecuteQueryASync(query, null);
             result.Data = value;
             result.IsSuccess = true;
             return result;
@@ -98,5 +103,6 @@ namespace Business.Service
 
             return result;
         }
+
     }
 }

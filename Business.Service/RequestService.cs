@@ -6,8 +6,10 @@ using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Transactions;
 using ViewModel.Views;
+using ViewModel.Views.Notification;
 using ViewModel.Views.Request;
 using ViewModel.Views.Service;
 using static Common.Helpers.Enum;
@@ -20,11 +22,13 @@ namespace Business.Service
         IQuerableRepository _queryRepo;
         IUnitOfWork _uow;
         ILexiconService _lexService;
-        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService)
+        INotificationService _notifyService;
+        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService, INotificationService notifyService)
         {
             _queryRepo = querableRepository;
             _uow = unitOfWork;
             _lexService = lexiconService;
+            _notifyService = notifyService;
         }
         public CommonResult AddNewRequest(NewRequestModel request)
         {
@@ -55,8 +59,8 @@ namespace Business.Service
                       }
 
                       sReq.UserID = request.UserId;
-
                       sReq = _uow.RequestsRepository.Add(sReq);
+
                       _uow.SaveChanges();
                       if (request.Properties != null)
                       {
@@ -80,12 +84,24 @@ namespace Business.Service
                           _uow.UserRepository.Update(user);
                       }
 
-                      var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == sReq.ServiceCategoryID);
-
-                      foreach (var service in serviceList)
+                      if (sReq.IsPublish)
                       {
-                          _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = sReq.ID, Status = (int)ServiceRequestRelationStatus.Waiting });
+                          var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == sReq.ServiceCategoryID);
+
+                          foreach (var service in serviceList)
+                          {
+                              var request = _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = sReq.ID, Status = (int)ServiceRequestRelationStatus.Waiting });
+                              _uow.SaveChanges();
+                              string url = "/booking-view?request_id=" + request.ID;
+                              string description = _lexService.GetTextValue("_new_service_booking_created", 23);
+                              _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, Url = url, UserID = request.ServiceUserID });
+                          }
                       }
+
+                      string urlB = "/booking-detail?booking_id=" + sReq.ID;
+                      string descriptionB = _lexService.GetTextValue("_your_booking_created_successfuly", 23);
+
+                      _notifyService.AddNotificationSync(new NewNotificationModel { Description = descriptionB, Url = urlB, UserID = user.ID });
 
                       _uow.SaveChanges();
                       _uow.Commit();
@@ -94,12 +110,91 @@ namespace Business.Service
                   }
                   catch (Exception ex)
                   {
-                      ts.Rollback();
+                      _uow.Rollback();
                       result.IsSuccess = false;
                       result.Message = ex.Message;
                   }
               }
           });
+
+            return result;
+
+        }
+        public CommonResult AddNewRequestWitoutTransaction(NewRequestModel request)
+        {
+            CommonResult result = new CommonResult();
+
+            try
+            {
+                Request sReq = new Request();
+                sReq.CityID = request.CityId;
+                sReq.CountryID = request.CountryId;
+                sReq.IsPublish = request.IsPublish;
+                sReq.ServiceCategoryID = request.CategoryId;
+                sReq.Description = request.Description;
+                if (request.IsPublish)
+                {
+                    sReq.StartDate = DateTime.Now;
+                    sReq.FinishDate = DateTime.Now.AddDays(2);
+                }
+                else
+                {
+                    sReq.StartDate = null;
+                    sReq.FinishDate = null;
+                }
+
+                sReq.UserID = request.UserId;
+                sReq = _uow.RequestsRepository.Add(sReq);
+
+                _uow.SaveChanges();
+                if (request.Properties != null)
+                {
+                    foreach (var item in request.Properties)
+                    {
+                        RequestProperty prop = new RequestProperty();
+                        prop.IsActive = true;
+                        prop.ServiceCategoryPropertyID = item.Id;
+                        prop.ServiceRequestID = sReq.ID;
+                        prop.UserID = sReq.UserID;
+                        prop.Value = item.Value;
+                        _uow.RequestPropertyRepository.Add(prop);
+                    }
+                }
+
+                var user = _uow.UserRepository.Get(x => x.ID == sReq.UserID);
+
+                if (user.UserType == (int)UserTypes.Servicer)
+                {
+                    user.UserType = (int)UserTypes.ServicerEndEmployer;
+                    _uow.UserRepository.Update(user);
+                }
+
+                var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == sReq.ServiceCategoryID);
+
+                foreach (var service in serviceList)
+                {
+                    var requestDb = _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = sReq.ID, Status = (int)ServiceRequestRelationStatus.Waiting });
+
+                    string url = "/booking-view?request_id=" + requestDb.ID;
+                    string description = _lexService.GetTextValue("_new_service_booking_created", 23);
+                    _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, Url = url, UserID = requestDb.ServiceUserID });
+                }
+
+                string urlB = "/booking-detail?booking_id=" + sReq.ID;
+                string descriptionB = _lexService.GetTextValue("_your_booking_created_successfuly", 23);
+
+                _notifyService.AddNotificationSync(new NewNotificationModel { Description = descriptionB, Url = urlB, UserID = user.ID });
+
+                _uow.SaveChanges();
+                _uow.Commit();
+                result.IsSuccess = true;
+                result.Message = _lexService.GetAlertSring("added_new_booking_successfuly", null);
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.Message;
+            }
 
             return result;
 
@@ -225,7 +320,6 @@ namespace Business.Service
             result.SelectedPage = search.PageIndex;
             return result;
         }
-
         public CommonResult GetMyRequestHistoryList(RequestSearchModel search)
         {
 
@@ -312,7 +406,6 @@ namespace Business.Service
                 return result;
             }
         }
-
         public CommonResult AvaibleRequests(BaseParamModel search)
         {
             CommonResult result = new CommonResult();
@@ -365,7 +458,45 @@ namespace Business.Service
 
         }
 
+        public async Task<CommonResult> PublishWaitingRequests(long userId)
+        {
+            CommonResult result = new CommonResult();
+            try
+            {
+                var requests = _uow.RequestsRepository.GetList(x => x.UserID == userId && x.IsPublish == false && x.StartDate == null);
 
+                if (requests != null && requests.Count > 0)
+                {
+                    foreach (var item in requests)
+                    {
+                        item.IsPublish = true;
+                        item.StartDate = DateTime.Now;
+                        item.FinishDate = DateTime.Now.AddDays(2);
+                        _uow.RequestsRepository.Update(item);
+                        _uow.SaveChanges();
+
+                        var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == item.ServiceCategoryID);
+
+                        foreach (var service in serviceList)
+                        {
+                            var request = _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = item.ID, Status = (int)ServiceRequestRelationStatus.Waiting });
+                            _uow.SaveChanges();
+                            string url = "/booking-view?request_id=" + request.ID;
+                            string description = _lexService.GetTextValue("_new_service_booking_created", 23);
+                            await _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, Url = url, UserID = request.ServiceUserID });
+                        }
+                    }
+
+                    result.IsSuccess = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

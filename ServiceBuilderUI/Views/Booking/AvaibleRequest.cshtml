@@ -30,7 +30,7 @@
                                     <div class="booking-widget">
                                         <div class="booking-det-info">
                                             <h3>
-                                                <a class="" href="/booking-detail-for-service?request_id=@request.ID">@request.ServiceName</a>
+                                                <a class="" href="/booking-view?request_id=@request.ID">@request.ServiceName</a>
                                             </h3>
                                             <ul class="booking-details">
                                                 <li><span>@lexiconHelper.GetTextValue("_location", 99) :</span> @request.CityName, @request.CountryName</li>
@@ -41,12 +41,11 @@
                                                         <label>@request.FinishDate.ToString()</label>
                                                     }
                                                 </li>
-
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="booking-action">
-                                        <a href="/booking-detail-for-service?request_id=@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_view_request", 25)</a>
+                                        <a href="/booking-view?request_id=@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_view_request", 25)</a>
                                     </div>
                                 </div>
                             </div>
@@ -66,13 +65,13 @@
                                 if (i == ViewBag.Page)
                                 {
                                     <li class="active">
-                                        <a href="/avaible-booking/@i">@(i + 1)</a>
+                                        <a href="/avaible-bookings/@i">@(i + 1)</a>
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="">
-                                        <a href="/avaible-booking/@i">@(i + 1)</a>
+                                        <a href="/avaible-bookings/@i">@(i + 1)</a>
                                     </li>
                                 }
                             }
@@ -80,7 +79,6 @@
 
                     </ul>
                 </div>
-
             </div>
         </div>
     </div>

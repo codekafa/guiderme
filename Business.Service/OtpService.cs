@@ -13,20 +13,22 @@ namespace Business.Service
 {
     public class OtpService : IOtpService
     {
-        IOtpTransactionRepository _otpRepo;
         IMailService _mailService;
         ISmsService _smsService;
         IQuerableRepository _queryRepo;
         ILexiconService _lexService;
         IDocumentService _documentService;
-        public OtpService(IOtpTransactionRepository otpRepo, IMailService mailService, ISmsService smsService, IQuerableRepository queryRepo, ILexiconService lexService, IDocumentService documentService)
+        IUnitOfWork _uow;
+        IRequestService _requestService;
+        public OtpService(IMailService mailService, ISmsService smsService, IQuerableRepository queryRepo, ILexiconService lexService, IDocumentService documentService , IUnitOfWork unitOfWork, IRequestService requestService)
         {
-            _otpRepo = otpRepo;
             _mailService = mailService;
             _smsService = smsService;
             _queryRepo = queryRepo;
             _lexService = lexService;
             _documentService = documentService;
+            _uow = unitOfWork;
+            _requestService = requestService;
         }
         public CommonResult CreateNewOtp(CreateOtpModel request)
         {
@@ -34,8 +36,8 @@ namespace Business.Service
             CommonResult otpResult = new CommonResult();
 
             string otp = GetOrpCode();
-            var newOtp = _otpRepo.Add(new OtpTransaction { ExpireDate = DateTime.Now.AddDays(1), IsActive = true, IsUsed = false, OTPCode = otp, OTPType = request.OtpType, UserID = request.CurrentUserId });
-
+            var newOtp = _uow.OtpTransactionRepository.Add(new OtpTransaction { ExpireDate = DateTime.Now.AddDays(1), IsActive = true, IsUsed = false, OTPCode = otp, OTPType = request.OtpType, UserID = request.CurrentUserId });
+            _uow.SaveChanges();
             request.OtpCode = otp;
 
             if (request.OtpType == (int)OtpTypes.Email)
@@ -94,7 +96,7 @@ namespace Business.Service
         CommonResult CreateEmailOtp(CreateOtpModel request)
         {
             string htmlText = _documentService.GetStringDocument(@"Views\Template\EmailOtp.cshtml");
-            htmlText = htmlText.Replace("  $$register_dear_text$$", _lexService.GetTextValue("_otp_register_dear_text", 12));         
+            htmlText = htmlText.Replace("$$register_dear_text$$", _lexService.GetTextValue("_otp_register_dear_text", 12));         
             htmlText = htmlText.Replace("$$otp_ode$$", request.OtpCode);
             htmlText = htmlText.Replace("$$register_dear$$", request.EmailOrPhone);
             htmlText = htmlText.Replace("$$register_description$$", _lexService.GetTextValue("_otp_email_description", 12));
@@ -119,7 +121,7 @@ namespace Business.Service
         public CommonResult ApproveOtp(CheckOtpCode otpModel)
         {
             CommonResult result = new CommonResult();
-            var otp = _otpRepo.Get(x => x.OTPCode == otpModel.OtpCode);
+            var otp = _uow.OtpTransactionRepository.Get(x => x.OTPCode == otpModel.OtpCode);
 
             if (otp == null)
             {
@@ -142,11 +144,10 @@ namespace Business.Service
                 return result;
             }
 
-
             otp.IsUsed = true;
-            _otpRepo.Update(otp);
-
-
+            _uow.OtpTransactionRepository.Update(otp);
+            _uow.SaveChanges();
+            _requestService.PublishWaitingRequests(otp.UserID);
 
             result.IsSuccess = true;
             result.Data = otp;
@@ -156,21 +157,22 @@ namespace Business.Service
         public bool CheckOtpCode(string otp_code)
         {
 
-            var exist = _otpRepo.Get(x => x.IsActive == true && x.OTPCode == otp_code && x.IsUsed == false && x.OTPType == (int)OtpTypes.ChangePassword);
+            var exist = _uow.OtpTransactionRepository.Get(x => x.IsActive == true && x.OTPCode == otp_code && x.IsUsed == false && x.OTPType == (int)OtpTypes.ChangePassword);
 
             if (exist == null)
                 return false;
             else
             {
                 exist.IsUsed = true;
-                _otpRepo.Update(exist);
+                _uow.OtpTransactionRepository.Update(exist);
+                _uow.SaveChanges();
                 return true;
             }
         }
         public CommonResult GetOtpResult(string otp_code, int type)
         {
             CommonResult result = new CommonResult();
-            var exist = _otpRepo.Get(x => x.OTPCode == otp_code && x.OTPType == type);
+            var exist = _uow.OtpTransactionRepository.Get(x => x.OTPCode == otp_code && x.OTPType == type);
 
             if (exist != null)
                 result.IsSuccess = true;

@@ -9,7 +9,17 @@
 <div class="col-xl-3 col-md-4">
     <div class="mb-4">
         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-            <img alt="profile image" src="@currentUser.ProfilePhoto" class="avatar-lg rounded-circle">
+
+            @if (string.IsNullOrWhiteSpace(currentUser.ProfilePhoto))
+            {
+                <img alt="profile image" src="https://res.cloudinary.com/servicebuilder/image/upload/v1607867463/static/nonimg_aoxjc3.png" class="avatar-lg rounded-circle">
+            }
+            else
+            {
+                <img alt="profile image" src="@currentUser.ProfilePhoto" class="avatar-lg rounded-circle">
+            }
+
+
             <div class="ml-sm-3 ml-md-0 ml-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
                 <h6 class="mb-0">@currentUser.FullName</h6>
             </div>

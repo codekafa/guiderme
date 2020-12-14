@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBuilderApi", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBuilderPanel", "ServiceBuilderPanel\ServiceBuilderPanel.csproj", "{4E722854-03C7-480D-BDCA-5A58B668303C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBuilderUI", "ServiceBuilderUI\ServiceBuilderUI.csproj", "{0877D89C-B73F-4C99-8469-098CC49BC0F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBuilderUI", "ServiceBuilderUI\ServiceBuilderUI.csproj", "{0877D89C-B73F-4C99-8469-098CC49BC0F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

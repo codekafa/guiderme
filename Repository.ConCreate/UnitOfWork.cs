@@ -52,7 +52,10 @@ namespace Repository.ConCreate
         public IServiceRequestRelationRepository ServiceRequestRelationRepository { get; set; }
         public IDbContextTransaction BeginTransaction()
         {
-            return _serviceBuilderContext.Database.BeginTransaction();
+            if (_serviceBuilderContext.Database.CurrentTransaction != null)
+                return _serviceBuilderContext.Database.CurrentTransaction;
+            else
+                return _serviceBuilderContext.Database.BeginTransaction();
         }
         public bool Commit()
         {

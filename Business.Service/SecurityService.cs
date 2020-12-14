@@ -12,23 +12,23 @@ namespace Business.Service
 {
     public class SecurityService : ISecurityService
     {
-        IUserRepository _userRepo;
         ILexiconService _lexService;
         IHttpContextAccessor _contextAcc;
         IRequestService _requestService;
-        public SecurityService(IUserRepository userRepo, ILexiconService lexService, IHttpContextAccessor contextAccessor, IRequestService requestService)
+        IUnitOfWork _uow;
+        public SecurityService( ILexiconService lexService, IHttpContextAccessor contextAccessor, IRequestService requestService, IUnitOfWork unitOfWork)
         {
-            _userRepo = userRepo;
             _lexService = lexService;
             _contextAcc = contextAccessor;
             _requestService = requestService;
+            _uow = unitOfWork;
         }
 
         public CommonResult GetLoginUser(LoginUserModel request)
         {
             CommonResult result = new CommonResult();
 
-            var existUser = _userRepo.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone) && x.Password == request.Password);
+            var existUser = _uow.UserRepository.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone) && x.Password == request.Password);
 
             if (existUser == null)
             {
@@ -78,7 +78,7 @@ namespace Business.Service
                     return null;
 
                 long userId = Convert.ToInt64(claimId.Value);
-                var user = _userRepo.Get(x => x.IsActive == true && x.ID == userId);
+                var user = _uow.UserRepository.Get(x => x.IsActive == true && x.ID == userId);
                 return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType };
             }
             else

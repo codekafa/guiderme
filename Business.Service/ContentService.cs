@@ -15,19 +15,14 @@ namespace Business.Service
 {
     public class ContentService : IContentService
     {
-        IServiceCategoryRepository _scRepo;
         IServiceCategoryPropertyRepository _scpRepo;
         IFileService _fileService;
-        ICountryRepository _countryRepo;
-        ICityRepository _cityRepo;
         IQuerableRepository _queryRepo;
-        public ContentService(IServiceCategoryPropertyRepository scpRepo, IServiceCategoryRepository scRepo, IFileService fileService, ICountryRepository countryRepo, ICityRepository cityRepo, IQuerableRepository queryRepo)
+        IUnitOfWork _uow;
+        public ContentService(IFileService fileService, IQuerableRepository queryRepo, IUnitOfWork unitOfWork)
         {
-            _scRepo = scRepo;
-            _scpRepo = scpRepo;
+            _uow = unitOfWork;
             _fileService = fileService;
-            _countryRepo = countryRepo;
-            _cityRepo = cityRepo;
             _queryRepo = queryRepo;
         }
         public CommonResult AddCategory(ServiceCategory item)
@@ -35,7 +30,9 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             item.IsActive = true;
-            result.Data = _scRepo.Add(item);
+            var category = _uow.ServiceCategoryRepository.Add(item);
+            _uow.SaveChanges();
+            result.Data = category;
             return result;
         }
         public CommonResult AddCategoryProperty(ServiceCategoryProperty item)
@@ -43,14 +40,16 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             item.IsActive = true;
-            result.Data = _scpRepo.Add(item);
+            var ctProp = _uow.ServiceCategoryPropertyRepository.Add(item);
+            _uow.SaveChanges();
+            result.Data = ctProp;
             return result;
         }
         public CommonResult GetCategory(long category_id)
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-            var item = _scRepo.Get(x => x.ID == category_id);
+            var item = _uow.ServiceCategoryRepository.Get(x => x.ID == category_id);
             result.Data = item;
             return result;
         }
@@ -90,7 +89,7 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             List<CategoryListModel> resultList = new List<CategoryListModel>();
-            var list = _scRepo.GetList(x => x.IsActive && x.ParentServiceCategory == null);
+            var list = _uow.ServiceCategoryRepository.GetList(x => x.IsActive && x.ParentServiceCategory == null);
             resultList = list.Select(x => new CategoryListModel { ID = x.ID, Name = x.Name, Url = x.Url }).ToList();
             result.Data = resultList;
             return result;
@@ -99,7 +98,7 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-            result.Data = _scpRepo.GetList(x => x.IsActive && x.ServiceCategory.ID == category_id);
+            result.Data = _uow.ServiceCategoryPropertyRepository.GetList(x => x.IsActive && x.ServiceCategory.ID == category_id);
             return result;
         }
         public CommonResult RemoveCategory(ServiceCategory item)
@@ -107,7 +106,8 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
             item.IsActive = false;
-            _scRepo.Update(item);
+            _uow.ServiceCategoryRepository.Update(item);
+            _uow.SaveChanges();
             result.Data = item;
             return result;
         }
@@ -115,9 +115,11 @@ namespace Business.Service
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-            var exist = _scpRepo.Get(x => x.ID == item_id);
+            var exist = _uow.ServiceCategoryPropertyRepository.Get(x => x.ID == item_id);
             exist.IsActive = false;
-            result.Data = _scpRepo.Update(exist);
+            _uow.ServiceCategoryPropertyRepository.Update(exist);
+            _uow.SaveChanges();
+            result.Data = exist;
             return result;
         }
         public CommonResult AddOrEditCategory(AddOrEditCategoryModel category)
@@ -169,7 +171,8 @@ namespace Business.Service
             CommonResult result = new CommonResult();
             item.IsActive = true;
             result.IsSuccess = true;
-            result.Data = _scRepo.Update(item);
+            result.Data = _uow.ServiceCategoryRepository.Update(item);
+            _uow.SaveChanges();
             return result;
         }
         public CommonResult UpdateCategoryProperty(ServiceCategoryProperty item)
@@ -181,20 +184,21 @@ namespace Business.Service
             exist.Name = item.Name;
             exist.IsActive = true;
             exist.RowNumber = item.RowNumber;
-            result.Data = _scpRepo.Update(exist);
+            result.Data = _uow.ServiceCategoryPropertyRepository.Update(exist);
+            _uow.SaveChanges();
             return result;
         }
         public CommonResult GetCountries()
         {
             CommonResult result = new CommonResult();
-            result.Data = _countryRepo.GetList(x => x.IsActive == true);
+            result.Data = _uow.CountryRepository.GetList(x => x.IsActive == true);
             result.IsSuccess = true;
             return result;
         }
         public CommonResult GetCities(long country_id)
         {
             CommonResult result = new CommonResult();
-            result.Data = _cityRepo.GetList(x => x.IsActive == true && x.CountryID == country_id);
+            result.Data = _uow.CityRepository.GetList(x => x.IsActive == true && x.CountryID == country_id);
             result.IsSuccess = true;
             return result;
         }
@@ -228,7 +232,7 @@ namespace Business.Service
             string query = @"select 
                             Id as data,
                             Name as value from servicecategories WHERE   ParentServiceCategoryID  > 0 and  name like @Search";
-             result = _queryRepo.GetList<CategoryAutoCompleteModel>(query, new SearchAutoCmpleteModel { Search = like });
+            result = _queryRepo.GetList<CategoryAutoCompleteModel>(query, new SearchAutoCmpleteModel { Search = like });
             return result;
         }
 
@@ -260,7 +264,7 @@ namespace Business.Service
             string query = @"select 
                             Id as ID,
                             Name as Name from cities where IsActive = 1 and  CountryID = @p0";
-            result = _queryRepo.GetList<SelectViewModel>(query, new BaseParamModel {p0 = country_id });
+            result = _queryRepo.GetList<SelectViewModel>(query, new BaseParamModel { p0 = country_id });
             return result;
         }
 

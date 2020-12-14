@@ -13,22 +13,17 @@ namespace Business.Service
     public class ServiceService : IServiceService
     {
 
-        IServiceRepository _serviceRepo;
-        IServicePhotoRepository _photoRepo;
         IQuerableRepository _queryRepo;
         ILexiconService _lexService;
         IFileService _fileService;
-        IUserRepository _userRepo;
-        public ServiceService(IServiceRepository serviceRepo, IServicePhotoRepository photoRepo, IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService, IUserRepository userRepo)
+        IUnitOfWork _uow;
+        public ServiceService(IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService , IUnitOfWork unitOfWork)
         {
-            _serviceRepo = serviceRepo;
-            _photoRepo = photoRepo;
             _queryRepo = queryRepo;
             _lexService = lexiconService;
             _fileService = fileService;
-            _userRepo = userRepo;
+            _uow = unitOfWork;
         }
-
         public CommonResult AddOrEditService(AddOrEditServiceModel request)
         {
             CommonResult result = new CommonResult();
@@ -43,7 +38,7 @@ namespace Business.Service
                 DataModel.BaseEntities.Service serviceProfile = new DataModel.BaseEntities.Service();
 
                 if (request.ID > 0)
-                    serviceProfile = _serviceRepo.Get(x => x.ID == request.ID);
+                    serviceProfile = _uow.ServiceRepository.Get(x => x.ID == request.ID);
 
                 serviceProfile.CityID = request.CityID;
                 serviceProfile.CountryID = request.CountryID;
@@ -63,20 +58,22 @@ namespace Business.Service
 
                 if (serviceProfile.ID > 0)
                 {
-                    serviceProfile = _serviceRepo.Update(serviceProfile);
+                    serviceProfile = _uow.ServiceRepository.Update(serviceProfile);
                 }
                 else
                 {
-                    serviceProfile = _serviceRepo.Add(serviceProfile);
+                    serviceProfile = _uow.ServiceRepository.Add(serviceProfile);
 
-                    var user = _userRepo.Get(x => x.ID == serviceProfile.UserID);
+                    var user = _uow.UserRepository.Get(x => x.ID == serviceProfile.UserID);
 
                     if (user.UserType == (int)UserTypes.Customer)
                     {
                         user.UserType = (int)UserTypes.ServicerEndEmployer;
-                        _userRepo.Update(user);
+                        _uow.UserRepository.Update(user);
                     }
                 }
+
+                _uow.SaveChanges();
 
                 if (request.ServicePhotos != null)
                 {
@@ -88,9 +85,10 @@ namespace Business.Service
                             string urlPhoto = photoResult.Data.ToString();
                             Uri uri = new Uri(urlPhoto);
                             string photoName = System.IO.Path.GetFileName(uri.LocalPath);
-                            _photoRepo.Add(new DataModel.BaseEntities.ServicePhoto { IsActive = true, PhotoName = photoName, PhotoUrl = urlPhoto, ServiceID = serviceProfile.ID });
+                            _uow.ServicePhotoRepository.Add(new DataModel.BaseEntities.ServicePhoto { IsActive = true, PhotoName = photoName, PhotoUrl = urlPhoto, ServiceID = serviceProfile.ID });
                         }
                     }
+                    _uow.SaveChanges();
                 }
 
                 result.IsSuccess = true;
@@ -106,7 +104,6 @@ namespace Business.Service
 
 
         }
-
         public CommonResult ValidateServiceModel(AddOrEditServiceModel request)
         {
             CommonResult result = new CommonResult();
@@ -155,7 +152,7 @@ namespace Business.Service
 
             if (request.ID > 0)
             {
-                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.ID != request.ID && x.IsActive == true);
+                var exist_service = _uow.ServiceRepository.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.ID != request.ID && x.IsActive == true);
 
                 if (exist_service != null)
                 {
@@ -167,7 +164,7 @@ namespace Business.Service
             }
             else
             {
-                var exist_service = _serviceRepo.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.IsActive == true);
+                var exist_service = _uow.ServiceRepository.Get(x => x.ServiceCategoryID == request.ServiceCategoryID && x.UserID == request.UserID && x.IsActive == true);
 
                 if (exist_service != null)
                 {
@@ -183,7 +180,6 @@ namespace Business.Service
             return result;
 
         }
-
         public ServiceDetailModel GetServiceDetail(long service_id)
         {
             var search = new ServiceSearchModel { ServiceID = service_id };
@@ -304,7 +300,6 @@ namespace Business.Service
             result.SelectedPage = search.PageIndex;
             return result;
         }
-
         public AddOrEditServiceModel GetServiceDetailForEdit(long service_id)
         {
             string query = @"select 
@@ -317,7 +312,7 @@ namespace Business.Service
             {
                 detail.ServiceImages = new List<string>();
 
-                var photos = _photoRepo.GetList(x => x.ServiceID == service_id);
+                var photos = _uow.ServicePhotoRepository.GetList(x => x.ServiceID == service_id);
 
                 foreach (var item in photos)
                 {
@@ -328,7 +323,6 @@ namespace Business.Service
 
             return detail;
         }
-
         public CommonResult RemoveService(long service_id, long user_id)
         {
             CommonResult result = new CommonResult();
@@ -336,7 +330,7 @@ namespace Business.Service
 
             try
             {
-                var exist = _serviceRepo.Get(x => x.ID == service_id && x.UserID == user_id);
+                var exist = _uow.ServiceRepository.Get(x => x.ID == service_id && x.UserID == user_id);
 
 
                 if (exist == null)
@@ -347,8 +341,8 @@ namespace Business.Service
                 }
 
                 exist.IsActive = false;
-                _serviceRepo.Update(exist);
-
+                _uow.ServiceRepository.Update(exist);
+                _uow.SaveChanges();
                 result.IsSuccess = true;
                 result.Message = _lexService.GetAlertSring("_service_removed_successfuly", null);
                 return result;

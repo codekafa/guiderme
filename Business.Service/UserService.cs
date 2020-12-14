@@ -1,10 +1,12 @@
 ﻿using Business.Service.Infrastructure;
 using DataModel.BaseEntities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Base;
 using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
 using ViewModel.Views;
+using ViewModel.Views.Notification;
 using ViewModel.Views.Otp;
 using ViewModel.Views.Security;
 using ViewModel.Views.User;
@@ -15,28 +17,28 @@ namespace Business.Service
 
     public class UserService : IUserService
     {
-        IUserRepository _userRepo;
-        IUserAddressRepository _userAddressRepo;
         IQuerableRepository _queryRepo;
         IFileService _fileService;
         ILexiconService _lexService;
         IOtpService _otpService;
         IRequestService _requestService;
-        public UserService(IUserRepository userRepo, IUserAddressRepository userAddressRepo, IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce, IRequestService requestService)
+        INotificationService _notifyService;
+        IUnitOfWork _uow;
+        public UserService(IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce, IRequestService requestService, INotificationService notificationService, IUnitOfWork unitOfWork)
         {
             _requestService = requestService;
-            _userRepo = userRepo;
-            _userAddressRepo = userAddressRepo;
             _queryRepo = queryRepo;
             _fileService = fileService;
             _lexService = lexService;
             _otpService = otpServicce;
+            _notifyService = notificationService;
+            _uow = unitOfWork;
         }
 
         public AddOrEditUserModel GetUserViewModel(long user_id)
         {
             AddOrEditUserModel result = new AddOrEditUserModel();
-            var existUser = _userRepo.Get(x => x.ID == user_id);
+            var existUser = _uow.UserRepository.Get(x => x.ID == user_id);
             result.FirstName = existUser.FirstName;
             result.Email = existUser.Email;
             result.ID = existUser.ID;
@@ -95,7 +97,7 @@ namespace Business.Service
         }
         public User GetUserByID(long id)
         {
-            return _userRepo.Get(x => x.ID == id);
+            return _uow.UserRepository.Get(x => x.ID == id);
         }
         public CommonResult UpdateUserForUI(AddOrEditUserModel user)
         {
@@ -140,11 +142,11 @@ namespace Business.Service
 
             return result;
         }
-
         public CommonResult UpdateUser(User user)
         {
             CommonResult result = new CommonResult();
-            var saveResult = _userRepo.Update(user);
+            var saveResult = _uow.UserRepository.Update(user);
+            _uow.SaveChanges();
             result.Data = saveResult;
             result.IsSuccess = true;
             return result;
@@ -152,7 +154,8 @@ namespace Business.Service
         public CommonResult AddUser(User user)
         {
             CommonResult result = new CommonResult();
-            var saveResult = _userRepo.Add(user);
+            var saveResult = _uow.UserRepository.Add(user);
+            _uow.SaveChanges();
             result.Data = saveResult;
             result.IsSuccess = true;
             return result;
@@ -210,37 +213,50 @@ namespace Business.Service
         public CommonResult RegisterNewUser(RegisterNewUserModel newUser)
         {
             CommonResult result = new CommonResult();
-            try
+            result = RegisterUserValidate(newUser);
+
+            if (!result.IsSuccess)
+                return result;
+
+            var strategy = _uow.CreateExecuteStrategy();
+            strategy.Execute(() =>
             {
-                result = RegisterUserValidate(newUser);
-
-                if (!result.IsSuccess)
-                    return result;
-
-                var addUser = _userRepo.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password });
-
-                var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = addUser.ID, EmailOrPhone = addUser.Email, OtpType = (int)OtpTypes.Email });
-
-
-                if (newUser.RequestModel != null)
+                using (var ts = _uow.BeginTransaction())
                 {
-                    if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
+                    try
                     {
-                        newUser.RequestModel.IsPublish = false;
-                        newUser.RequestModel.UserId = addUser.ID;
-                        _requestService.AddNewRequest(newUser.RequestModel);
-                        result.ActionCode = "2";
+                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password });
+
+                        _uow.SaveChanges();
+
+                        var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = addUser.ID, EmailOrPhone = addUser.Email, OtpType = (int)OtpTypes.Email });
+
+                        if (newUser.RequestModel != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
+                            {
+                                newUser.RequestModel.IsPublish = true;
+                                newUser.RequestModel.UserId = addUser.ID;
+                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
+                                result.ActionCode = "2";
+                            }
+                        }
+
+                        result.IsSuccess = true;
+                        result.Data = otpResult.Data.ToString();
+                        _uow.Commit();
                     }
+                    catch (Exception ex)
+                    {
+                        _uow.Rollback();
+                        result.IsSuccess = false;
+                        result.Data = ex;
+                    }
+
                 }
 
-                result.IsSuccess = true;
-                result.Data = otpResult.Data.ToString();
-            }
-            catch (Exception ex)
-            {
-                result.IsSuccess = false;
-                result.Data = ex;
-            }
+            });
+
             return result;
         }
         public CommonResult RegisterUserValidate(RegisterNewUserModel newUser)
@@ -293,7 +309,6 @@ namespace Business.Service
             result.IsSuccess = true;
             return result;
         }
-
         public CommonResult ApproveMailOtp(CheckOtpCode request)
         {
             var result = _otpService.ApproveOtp(request);
@@ -304,12 +319,18 @@ namespace Business.Service
                 return result;
 
 
-            var user = _userRepo.Get(x => x.ID == otp.UserID);
+            var user = _uow.UserRepository.Get(x => x.ID == otp.UserID);
             user.IsMailActivated = true;
-            _userRepo.Update(user);
+            _uow.UserRepository.Update(user);
+            _uow.SaveChanges();
+
+
+
+            string description = _lexService.GetTextValue("_your_email_approved_successfuly", 23);
+            _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, UserID = user.ID });
+
             return result;
         }
-
         public CommonResult ApproveSmsOtp(CheckOtpCode request)
         {
             var result = _otpService.ApproveOtp(request);
@@ -320,12 +341,15 @@ namespace Business.Service
                 return result;
 
 
-            var user = _userRepo.Get(x => x.ID == otp.UserID);
+            var user = _uow.UserRepository.Get(x => x.ID == otp.UserID);
             user.IsMobileActivated = true;
-            _userRepo.Update(user);
+            _uow.UserRepository.Update(user);
+            _uow.SaveChanges();
+            string description = _lexService.GetTextValue("_your_phone_approved_successfuly", 23);
+            _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, UserID = user.ID });
+
             return result;
         }
-
         public CommonResult ChangePassword(ChangePasswordModel password)
         {
             CommonResult result = new CommonResult();
@@ -349,7 +373,10 @@ namespace Business.Service
                 }
 
                 user.Password = password.Password;
-                _userRepo.Update(user);
+                _uow.UserRepository.Update(user);
+                _uow.SaveChanges();
+                string description = _lexService.GetTextValue("your_password_changed_successfuly", 23);
+                _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, UserID = user.ID });
 
                 result.IsSuccess = true;
                 result.Message = _lexService.GetAlertSring("_success_passwoord_changed", null);
@@ -364,11 +391,10 @@ namespace Business.Service
                 return result;
             }
         }
-
         public CommonResult SendForgotPasswordMail(ForgatPasswordModel mail)
         {
             CommonResult result = new CommonResult();
-            var existEmail = _userRepo.Get(x => x.IsActive && x.Email == mail.Email);
+            var existEmail = _uow.UserRepository.Get(x => x.IsActive && x.Email == mail.Email);
 
             if (existEmail == null)
             {
@@ -385,8 +411,6 @@ namespace Business.Service
             return result;
 
         }
-
-
         public CommonResult ChangePasswordWithOtp(ChangePasswordModel request)
         {
 
@@ -415,10 +439,14 @@ namespace Business.Service
                 else
                 {
 
-                    var user = _userRepo.Get(x => x.ID == otpTransaction.UserID);
+                    var user = _uow.UserRepository.Get(x => x.ID == otpTransaction.UserID);
                     user.Password = request.Password;
-                    _userRepo.Update(user);
+                    _uow.UserRepository.Update(user);
+                    _uow.SaveChanges();
                     result.IsSuccess = true;
+                    string description = _lexService.GetTextValue("your_password_changed_successfuly", 23);
+                    _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, UserID = user.ID });
+
                     result.Message = _lexService.GetAlertSring("_password_change_successfuly", null);
                     return result;
                 }
@@ -428,7 +456,7 @@ namespace Business.Service
                 result.IsSuccess = false;
                 result.Message = _lexService.GetAlertSring("_otp_code_not_found", null);
                 return result;
-            }         
+            }
         }
 
 

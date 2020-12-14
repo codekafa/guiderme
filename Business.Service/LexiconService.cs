@@ -7,19 +7,20 @@ namespace Business.Service
 {
     public class LexiconService : ILexiconService
     {
-        ILexiconRepository _lexPreo;
-        public LexiconService(ILexiconRepository lexRepo)
+        IUnitOfWork _uow;
+        public LexiconService(IUnitOfWork unitOfWork)
         {
-            _lexPreo = lexRepo;
+            _uow = unitOfWork;
         }
         public string GetAlertSring(string key, string culture = null)
         {
             culture = "en-EN";
-            var item = _lexPreo.Get(x => x.Key == key && x.LaunguageCode == culture);
+            var item = _uow.LexiconRepository.Get(x => x.Key == key && x.LaunguageCode == culture);
 
             if (item == null)
             {
-                _lexPreo.Add(new Lexicon { IsActive = true, Key = key, LaunguageCode = culture, Value = key, Type = (int)LexiconTypes.Alert });
+                _uow.LexiconRepository.Add(new Lexicon { IsActive = true, Key = key, LaunguageCode = culture, Value = key, Type = (int)LexiconTypes.Alert });
+                _uow.SaveChanges();
                 return key;
             }
 
@@ -29,11 +30,12 @@ namespace Business.Service
         public string GetTextValue(string key, int page_code)
         {
             string culture = "en-EN";
-            var item = _lexPreo.Get(x => x.Key == key && x.LaunguageCode == culture && x.PageCode == page_code);
+            var item = _uow.LexiconRepository.Get(x => x.Key == key && x.LaunguageCode == culture && x.PageCode == page_code);
 
             if (item == null)
             {
-                _lexPreo.Add(new Lexicon { IsActive = true, Key = key, LaunguageCode = culture, Value = key, PageCode = page_code, Type = (int)LexiconTypes.Dictionary });
+                _uow.LexiconRepository.Add(new Lexicon { IsActive = true, Key = key, LaunguageCode = culture, Value = key, PageCode = page_code, Type = (int)LexiconTypes.Dictionary });
+                _uow.SaveChanges();
                 return key;
             }
 

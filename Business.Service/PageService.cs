@@ -13,17 +13,17 @@ namespace Business.Service
     {
 
         IPageRepository _pageRepo;
-
-        public PageService(IPageRepository pageRepo)
+        IUnitOfWork _uow;
+        public PageService(IUnitOfWork unitOfWork)
         {
-            _pageRepo = pageRepo;
+            _uow = unitOfWork;
         }
 
         public CommonResult GetPage(long page_id)
         {
             CommonResult result = new CommonResult();
             result.IsSuccess = true;
-           var page = _pageRepo.Get(x => x.ID == page_id);
+           var page = _uow.PageRepository.Get(x => x.ID == page_id);
             result.Data = page;
             return result;
         }
@@ -40,7 +40,8 @@ namespace Business.Service
                     pageModel.Content = pageModel.Content.Replace("\"", "\'");
                 }
 
-                var updateResult = _pageRepo.Update(pageModel);
+                var updateResult = _uow.PageRepository.Update(pageModel);
+                _uow.SaveChanges();
                 result.IsSuccess = true;
                 result.Data = updateResult;
             }
