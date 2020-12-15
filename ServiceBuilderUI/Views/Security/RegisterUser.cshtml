@@ -1,0 +1,174 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@{
+    ViewData["Title"] = "RegisterUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="login-header">
+                    <h3>@lexiconHelper.GetTextValue("_join_as_a_user", 2)</h3>
+                </div>
+                <form id="userRegisterForm">
+                    <div class="form-group form-focus">
+                        <label class="focus-label">@lexiconHelper.GetTextValue("_email_join", 2)</label>
+                        <input type="text" class="form-control" id="UserEmail" name="UserEmail" placeholder="@lexiconHelper.GetTextValue("_place_holder_email", 2)">
+                    </div>
+                    <div class="form-group form-focus">
+                        <label class="focus-label">@lexiconHelper.GetTextValue("_mobile_join", 2)</label>
+                        <input type="text" class="form-control" id="UserMobile" name="UserMobile" placeholder="@lexiconHelper.GetTextValue("_placeholder_mobile", 2)">
+                    </div>
+                    <div class="form-group form-focus">
+                        <label class="focus-label">@lexiconHelper.GetTextValue("_create_password", 2)</label>
+                        <input type="password" class="form-control" id="UserPassword" name="UserPassword" placeholder="@lexiconHelper.GetTextValue("_placeholder_password", 2)">
+                    </div>
+                    <div class="text-right">
+                        <a class="forgot-link" data-dismiss="modal" href="javascript:void(0);" data-toggle="modal" data-target="#login_modal">@lexiconHelper.GetTextValue("_already_have_account", 2)</a>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">@lexiconHelper.GetTextValue("_sign_up_user", 2)</button>
+                    <div class="login-or">
+                        <span class="or-line"></span>
+                        <span class="span-or">or</span>
+                    </div>
+                    <div class="row form-row social-login">
+                        <div class="col-6">
+                            <a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i>  @lexiconHelper.GetTextValue("_login_facebook", 2)</a>
+                        </div>
+                        <div class="col-6">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+           $(document).ready(function () {
+            $("#userRegisterForm").validate({
+		        rules: {
+			        UserEmail: {
+				        required: true
+			        },
+			        UserMobile: {
+				        required: true
+			        },
+			        UserPassword: {
+				        required: true
+			        }
+		        },
+		        messages: {
+			        UserEmail: "@lexiconHelper.GetTextValue("_email_required",99)",
+			        UserMobile: "@lexiconHelper.GetTextValue("_mobile_required",99)",
+			        UserPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
+                        },
+		        submitHandler: function () {
+
+			        var newUser = new Object();
+			        newUser.Email = $('#UserEmail').val();
+			        newUser.Phone = $('#UserMobile').val();
+			        newUser.Password = $('#UserPassword').val();
+			        newUser.PasswordAgain = newUser.Password;
+                    newUser.RegisterType = 2;
+
+                    newUser.RequestModel = getRequestData();
+
+			        $.ajax({
+				        type: "POST",
+				        url: "/security/RegisterUser",
+				        data: newUser,
+				        success: function (e) {
+					        if (e.isSuccess == true) {
+						        location.href = "email-approve";
+					        } else {
+                                toastrDanger(e.message)
+					        }
+				        },
+				        error: function (jqXHR, exception) {
+					        var msg = '';
+					        if (jqXHR.status === 0) {
+						        msg = 'Not connect.\n Verify Network.';
+					        } else if (jqXHR.status == 404) {
+						        msg = 'Requested page not found. [404]';
+					        } else if (jqXHR.status == 500) {
+						        msg = 'Internal Server Error [500].';
+					        } else if (exception === 'parsererror') {
+						        msg = 'Requested JSON parse failed.';
+					        } else if (exception === 'timeout') {
+						        msg = 'Time out error.';
+					        } else if (exception === 'abort') {
+						        msg = 'Ajax request aborted.';
+					        } else {
+						        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                            }
+                            toastrDanger(msg)
+				        }
+			        });
+		        }
+
+	        });
+           });
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+
+            if ($('#isLogin').val() == "1") {
+                return;
+            }
+            var loginUser = new Object();
+            loginUser.LoginType = 2;
+            loginUser.EmailOrPhone = profile.getEmail();
+            loginUser.Password = profile.getId();
+            loginUser.ProfilePhoto = profile.getImageUrl();
+            loginUser.RequestModel = getRequestData();
+            loginUser.Name = profile.getName();
+
+            $.ajax({
+                type: "POST",
+                url: "/security/login",
+                data: loginUser,
+                success: function (e) {
+                    if (e.isSuccess == true) {
+
+                        if (e.actionCode == "2") {
+                            toastrSuccess("Successfuly login!");
+                            location.href = "my-bookings";
+                        }
+                        toastrSuccess("Successfuly login!");
+                        location.href = "my-profile";
+                    } else {
+                        toastrDanger(e.message)
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+
+                    toastrDanger(msg);
+                }
+            });
+        }
+    </script>
+}
+
+

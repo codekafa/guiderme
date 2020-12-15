@@ -2,6 +2,7 @@
 using DataModel.BaseEntities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBuilderUI.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -30,10 +31,76 @@ namespace ServiceBuilderUI.Controllers
             return View();
         }
 
+
+        [Route("register-user")]
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
+
+        [Route("register-provider")]
+        public IActionResult RegisterProvider()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserModel user)
         {
             var loginResult = _securityService.GetLoginUser(user);
+
+            if (loginResult.IsSuccess)
+            {
+                var userModel = loginResult.Data as User;
+                var claims = new List<Claim>
+                                    {
+                                        new Claim(ClaimTypes.Role, userModel.UserType.ToString()),
+                                        new Claim(ClaimTypes.Name, userModel.Email),
+                                        new Claim(ClaimTypes.NameIdentifier,userModel.ID.ToString())
+                                    };
+
+                var userIdentity = new ClaimsIdentity(claims, "Bearer");
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                await HttpContext.SignInAsync(principal);
+                return Json(loginResult);
+            }
+            else
+            {
+                return Json(loginResult);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWithGoogle(LoginUserModel user)
+        {
+            var loginResult = _securityService.GetLoginUserWtihGoogle(user);
+
+            if (loginResult.IsSuccess)
+            {
+                var userModel = loginResult.Data as User;
+                var claims = new List<Claim>
+                                    {
+                                        new Claim(ClaimTypes.Role, userModel.UserType.ToString()),
+                                        new Claim(ClaimTypes.Name, userModel.Email),
+                                        new Claim(ClaimTypes.NameIdentifier,userModel.ID.ToString())
+                                    };
+
+                var userIdentity = new ClaimsIdentity(claims, "Bearer");
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                await HttpContext.SignInAsync(principal);
+                return Json(loginResult);
+            }
+            else
+            {
+                return Json(loginResult);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWithFacebook(LoginUserModel user)
+        {
+            var loginResult = _securityService.GetLoginUserWithFacebook(user);
 
             if (loginResult.IsSuccess)
             {
@@ -61,7 +128,17 @@ namespace ServiceBuilderUI.Controllers
         {
             await HttpContext.SignOutAsync();
 
-            return Redirect("login");
+            return View();
+        }
+
+
+        [AuthorizeCustom]
+        [Route("/api/logout")]
+        [HttpPost]
+        public async void LogoutUser()
+        {
+            await HttpContext.SignOutAsync();
+
         }
 
         [HttpPost]

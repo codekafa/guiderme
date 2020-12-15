@@ -28,6 +28,7 @@ namespace Business.Service.Infrastructure
 
         CommonResult ApproveSmsOtp(CheckOtpCode request);
 
+        CommonResult RegisterFacebookUser(RegisterNewUserModel newUser);
         User GetUserByID(long id);
 
         CommonResult UpdateUserForUI(AddOrEditUserModel user);
@@ -36,5 +37,9 @@ namespace Business.Service.Infrastructure
 
         CommonResult SendForgotPasswordMail(ForgatPasswordModel mail);
         CommonResult ChangePasswordWithOtp(ChangePasswordModel request);
+
+        CommonResult RegisterGoogleUser(RegisterNewUserModel newUser);
+
+        bool IsExistEmailNumber(CheckUserModel checkModel);
     }
 }

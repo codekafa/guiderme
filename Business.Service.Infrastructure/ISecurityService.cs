@@ -9,6 +9,8 @@ namespace Business.Service.Infrastructure
 
         CommonResult GetLoginUser(LoginUserModel request);
 
+        CommonResult GetLoginUserWithFacebook(LoginUserModel request);
+        CommonResult GetLoginUserWtihGoogle(LoginUserModel request);
         CurrentUserModel GetCurrentUser();
     }
 }

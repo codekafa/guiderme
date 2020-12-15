@@ -1,12 +1,16 @@
 ﻿using Business.Service.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Repository.Base;
 using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using ViewModel.Views;
 using ViewModel.Views.Security;
 using ViewModel.Views.User;
+using static Common.Helpers.Enum;
 
 namespace Business.Service
 {
@@ -16,18 +20,180 @@ namespace Business.Service
         IHttpContextAccessor _contextAcc;
         IRequestService _requestService;
         IUnitOfWork _uow;
-        public SecurityService( ILexiconService lexService, IHttpContextAccessor contextAccessor, IRequestService requestService, IUnitOfWork unitOfWork)
+        IUserService _userService;
+        public SecurityService(ILexiconService lexService, IHttpContextAccessor contextAccessor, IRequestService requestService, IUnitOfWork unitOfWork, IUserService userService)
         {
             _lexService = lexService;
             _contextAcc = contextAccessor;
             _requestService = requestService;
             _uow = unitOfWork;
+            _userService = userService;
         }
 
+
+        public CommonResult GetLoginUserWtihGoogle(LoginUserModel request)
+        {            
+            string googleToken = request.GoogleToken;
+
+            string requestUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
+
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            Request.Method = "GET";
+            Request.KeepAlive = true;
+            HttpWebResponse response = (HttpWebResponse)Request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {            
+                Stream responseStream = response.GetResponseStream();
+                string strStatus = ((HttpWebResponse)response).StatusDescription;
+                StreamReader streamReader = new StreamReader(responseStream);
+                string result  = streamReader.ReadToEnd();
+                GoogleAuthReponse resultModel = JsonConvert.DeserializeObject<GoogleAuthReponse>(result);
+                request.EmailOrPhone = resultModel.email;
+                request.ProfilePhoto = resultModel.picture;
+                request.Password = resultModel.sub;
+                request.Name = resultModel.name;
+                return LoginGoogle(request);
+            }
+            else
+            {
+                return new CommonResult(false, "Google token is not valid!");
+            }
+        }
+
+        public CommonResult GetLoginUserWithFacebook(LoginUserModel request)
+        {
+            string facebookToken = request.FacebookToken;
+
+            string requestUrl = "https://graph.facebook.com/me?fields=email,id,name&access_token=" + facebookToken;
+
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            Request.Method = "GET";
+            Request.KeepAlive = true;
+            HttpWebResponse response = (HttpWebResponse)Request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream responseStream = response.GetResponseStream();
+                string strStatus = ((HttpWebResponse)response).StatusDescription;
+                StreamReader streamReader = new StreamReader(responseStream);
+                string result = streamReader.ReadToEnd();
+                FacebookAuthModel resultModel = JsonConvert.DeserializeObject<FacebookAuthModel>(result);
+                request.EmailOrPhone = resultModel.email;
+                request.Password = resultModel.id;
+                request.Name = resultModel.name;
+                return LoginFacebook(request);
+            }
+            else
+            {
+                return new CommonResult(false, "Google token is not valid!");
+            }
+        }
         public CommonResult GetLoginUser(LoginUserModel request)
         {
-            CommonResult result = new CommonResult();
+            return LoginWeb(request);
+        }
 
+        public CommonResult LoginFacebook(LoginUserModel request)
+        {
+            CommonResult result = new CommonResult();
+            var existUser = _uow.UserRepository.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone));
+
+            if (existUser == null)
+            {
+                RegisterNewUserModel registerFacebook = new RegisterNewUserModel();
+                registerFacebook.Email = request.EmailOrPhone;
+                registerFacebook.Password = request.Password;
+                registerFacebook.PasswordAgain = request.Password;
+                registerFacebook.RegisterType = (int)UserTypes.Customer;
+                registerFacebook.PhotoUrl = request.ProfilePhoto;
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+
+                    if (request.Name.Contains(" "))
+                    {
+                        string[] name = request.Name.Split(" ");
+
+                        for (int i = 0; i < name.Count(); i++)
+                        {
+                            if (i == 0)
+                                registerFacebook.FirstName = name[i].ToString();
+                            else
+                                registerFacebook.LastName += name[i].ToString() + " ";
+
+                        }
+                    }
+                    else
+                    {
+                        registerFacebook.FirstName = request.Name;
+                    }
+                }
+
+                var registerFacebookResult = _userService.RegisterFacebookUser(registerFacebook);
+
+                if (!registerFacebookResult.IsSuccess)
+                    return registerFacebookResult;
+
+                result.IsSuccess = true;
+                result.Data = registerFacebookResult.Data;
+                result.ActionCode = registerFacebookResult.ActionCode;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = existUser;
+            return result;
+        }
+        public CommonResult LoginGoogle(LoginUserModel request)
+        {
+            CommonResult result = new CommonResult();
+            var existUser = _uow.UserRepository.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone));
+
+            if (existUser == null)
+            {
+                RegisterNewUserModel registerGoogle = new RegisterNewUserModel();
+                registerGoogle.Email = request.EmailOrPhone;
+                registerGoogle.Password = request.Password;
+                registerGoogle.PasswordAgain = request.Password;
+                registerGoogle.RegisterType = (int)UserTypes.Customer;
+                registerGoogle.PhotoUrl = request.ProfilePhoto;
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+
+                    if (request.Name.Contains(" "))
+                    {
+                        string[] name = request.Name.Split(" ");
+
+                        for (int i = 0; i < name.Count(); i++)
+                        {
+                            if (i == 0)
+                                registerGoogle.FirstName = name[i].ToString();
+                            else
+                                registerGoogle.LastName += name[i].ToString() + " ";
+                        }
+                    }
+                    else
+                    {
+                        registerGoogle.FirstName = request.Name;
+                    }
+                }
+
+                var registerGoogleResult = _userService.RegisterGoogleUser(registerGoogle);
+
+                if (!registerGoogleResult.IsSuccess)
+                    return registerGoogleResult;
+
+                result.IsSuccess = true;
+                result.Data = registerGoogleResult.Data;
+                result.ActionCode = registerGoogleResult.ActionCode;
+                return result;
+            }
+
+            result.IsSuccess = true;
+            result.Data = existUser;
+            return result;
+        }
+        public CommonResult LoginWeb(LoginUserModel request)
+        {
+            CommonResult result = new CommonResult();
             var existUser = _uow.UserRepository.Get(x => (x.Email == request.EmailOrPhone || x.Phone == request.EmailOrPhone) && x.Password == request.Password);
 
             if (existUser == null)
@@ -51,7 +217,6 @@ namespace Business.Service
                 return result;
             }
 
-
             if (request.RequestModel != null)
             {
                 if (!string.IsNullOrWhiteSpace(request.RequestModel.Description) && request.RequestModel.CategoryId > 0)
@@ -63,8 +228,9 @@ namespace Business.Service
                 }
             }
 
-
-            return new CommonResult { Data = existUser, IsSuccess = true };
+            result.IsSuccess = true;
+            result.Data = existUser;
+            return result;
         }
 
         public CurrentUserModel GetCurrentUser()
@@ -72,7 +238,7 @@ namespace Business.Service
 
             if (_contextAcc.HttpContext.User != null)
             {
-                var  claimId = _contextAcc.HttpContext.User.Claims.Where(x=> x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
+                var claimId = _contextAcc.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
 
                 if (claimId == null)
                     return null;

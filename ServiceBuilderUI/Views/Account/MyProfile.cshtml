@@ -29,12 +29,8 @@
                                     <div class="form-group col-xl-12">
                                         <div class="media align-items-center mb-3">
 
-                                            @{
-                                                string fileTransform = Model.GetPhotoName;
-                                                string url = "https://res.cloudinary.com/servicebuilder/image/upload/w_300,h_300/" + fileTransform;
-                                            }
 
-                                            <img class="user-image" src="@url" alt="">
+                                            <img class="user-image" src="@Model.PhotoUrl" alt="">
                                             <div class="media-body">
                                                 <h5 class="mb-0">@Model.FirstName @Model.LastName</h5>
                                                 <p>@lexiconHelper.GetTextValue("max_file_size_is", 14) 5MB</p>
@@ -60,7 +56,17 @@
                                     </div>
                                     <div class="form-group col-xl-6">
                                         <label class="mr-sm-2">Mobile Number</label>
-                                        <input class="form-control no_only" type="text" readonly value="@Model.Phone" name="Phone" id="Phone" />
+
+                                        @if (Model.IsMobileActivated)
+                                        {
+                                            <input class="form-control no_only" type="text" readonly value="@Model.Phone" name="Phone" id="Phone" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control no_only" type="text"  value="@Model.Phone" name="Phone" id="Phone" />
+                                            <span style="cursor:pointer;color:burlywood"  onclick="approvePhone()">@lexiconHelper.GetTextValue("_you_will_approve_phone_number", 14)</span>
+                                        }
+
                                     </div>
                                     <div class="form-group col-xl-12">
                                         <button name="form_submit" id="form_submit" class="btn btn-primary pl-5 pr-5" type="submit">@lexiconHelper.GetTextValue("_save", 99)</button>

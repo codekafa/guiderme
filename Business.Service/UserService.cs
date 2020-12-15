@@ -204,9 +204,17 @@ namespace Business.Service
         public bool IsExistMobileNumber(CheckUserModel checkModel)
         {
             int count = _queryRepo.GetSingle<int>(@"select COUNT(*) from users
-                                                         where IsActive = 1  and ID != @ID
-                                                        and ((@Email is null or Email = @Email)
-                                                        OR (@Mobile is null or Phone = @Mobile))", checkModel);
+                                                         where IsActive = 1  and ID != @ID and
+                                                         Phone = @Mobile", checkModel);
+
+            return count > 0;
+        }
+
+        public bool IsExistEmailNumber(CheckUserModel checkModel)
+        {
+            int count = _queryRepo.GetSingle<int>(@"select COUNT(*) from users
+                                                         where IsActive = 1  and ID != @ID 
+                                                        and  Email = @Email", checkModel);
 
             return count > 0;
         }
@@ -225,7 +233,7 @@ namespace Business.Service
                 {
                     try
                     {
-                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password });
+                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password, ProfilePhoto = newUser.PhotoUrl });
 
                         _uow.SaveChanges();
 
@@ -259,6 +267,101 @@ namespace Business.Service
 
             return result;
         }
+
+        public CommonResult RegisterFacebookUser(RegisterNewUserModel newUser)
+        {
+            CommonResult result = new CommonResult();
+            result = RegisterUserValidate(newUser);
+
+            if (!result.IsSuccess)
+                return result;
+
+            var strategy = _uow.CreateExecuteStrategy();
+            strategy.Execute(() =>
+            {
+                using (var ts = _uow.BeginTransaction())
+                {
+                    try
+                    {
+                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = true, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password, FirstName = newUser.FirstName, LastName = newUser.LastName, ProfilePhoto = newUser.PhotoUrl });
+
+                        _uow.SaveChanges();
+
+                        if (newUser.RequestModel != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
+                            {
+                                newUser.RequestModel.IsPublish = true;
+                                newUser.RequestModel.UserId = addUser.ID;
+                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
+                                result.ActionCode = "2";
+                            }
+                        }
+
+                        result.IsSuccess = true;
+                        result.Data = addUser;
+                        _uow.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _uow.Rollback();
+                        result.IsSuccess = false;
+                        result.Data = ex;
+                    }
+
+                }
+
+            });
+
+            return result;
+        }
+        public CommonResult RegisterGoogleUser(RegisterNewUserModel newUser)
+        {
+            CommonResult result = new CommonResult();
+            result = RegisterUserValidate(newUser);
+
+            if (!result.IsSuccess)
+                return result;
+
+            var strategy = _uow.CreateExecuteStrategy();
+            strategy.Execute(() =>
+            {
+                using (var ts = _uow.BeginTransaction())
+                {
+                    try
+                    {
+                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = true, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password, FirstName = newUser.FirstName, LastName = newUser.LastName, ProfilePhoto = newUser.PhotoUrl });
+
+                        _uow.SaveChanges();
+
+                        if (newUser.RequestModel != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
+                            {
+                                newUser.RequestModel.IsPublish = true;
+                                newUser.RequestModel.UserId = addUser.ID;
+                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
+                                result.ActionCode = "2";
+                            }
+                        }
+
+                        result.IsSuccess = true;
+                        result.Data = addUser;
+                        _uow.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _uow.Rollback();
+                        result.IsSuccess = false;
+                        result.Data = ex;
+                    }
+
+                }
+
+            });
+
+            return result;
+        }
         public CommonResult RegisterUserValidate(RegisterNewUserModel newUser)
         {
             CommonResult result = new CommonResult();
@@ -269,12 +372,12 @@ namespace Business.Service
                 result.Message = _lexService.GetAlertSring("_email_is_reqired", newUser.CultureCode);
                 return result;
             }
-            if (string.IsNullOrWhiteSpace(newUser.Phone))
-            {
-                result.IsSuccess = false;
-                result.Message = _lexService.GetAlertSring("_mobile_phone_is_reqired", newUser.CultureCode);
-                return result;
-            }
+            //if (string.IsNullOrWhiteSpace(newUser.Phone))
+            //{
+            //    result.IsSuccess = false;
+            //    result.Message = _lexService.GetAlertSring("_mobile_phone_is_reqired", newUser.CultureCode);
+            //    return result;
+            //}
             if (string.IsNullOrWhiteSpace(newUser.Password))
             {
                 result.IsSuccess = false;
@@ -289,13 +392,26 @@ namespace Business.Service
                 return result;
             }
 
-            bool check = IsExistMobileNumber(new CheckUserModel { Email = newUser.Email, Mobile = newUser.Phone });
+            bool check = IsExistEmailNumber(new CheckUserModel { Email = newUser.Email});
 
             if (check)
             {
                 result.IsSuccess = false;
                 result.Message = _lexService.GetAlertSring("_already_exist_this_email_or_phone_user", newUser.CultureCode);
                 return result;
+            }
+
+            if (!string.IsNullOrWhiteSpace(newUser.Phone))
+            {
+
+                bool checkMobile = IsExistMobileNumber(new CheckUserModel { Mobile = newUser.Phone });
+
+                if (checkMobile)
+                {
+                    result.IsSuccess = false;
+                    result.Message = _lexService.GetAlertSring("_already_exist_this_email_or_phone_user", newUser.CultureCode);
+                    return result;
+                }
             }
 
 

@@ -11,7 +11,12 @@ namespace Common.Helpers
             Dictionary = 1,
             Alert = 2
         }
-
+        public enum LoginTypes
+        {
+            Web = 1,
+            Google = 2,
+            Facebook = 3
+        }
         public enum UserTypes
         {
             Servicer = 1,

@@ -26,6 +26,8 @@
         "dependencies": {
           "Business.Service": "1.0.0",
           "Business.Service.Infrastructure": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.Facebook": "3.1.10",
+          "Microsoft.AspNetCore.Authentication.Google": "3.1.10",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "3.1.10",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.4",
           "Pomelo.EntityFrameworkCore.MySql": "3.2.4",
@@ -403,6 +405,28 @@
         },
         "compile": {
           "lib/netstandard2.0/K4os.Hash.xxHash.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Facebook/3.1.10": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {
+            "assemblyVersion": "3.1.10.0",
+            "fileVersion": "3.100.1020.52004"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/3.1.10": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "3.1.10.0",
+            "fileVersion": "3.100.1020.52004"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Google.dll": {}
         }
       },
       "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0": {
@@ -4030,6 +4054,20 @@
       "sha512": "sha512-jCfNP0inx1sGcP3KSbpiDEH3km2e1sVBjMfKo+V92jr1dL4ZYgA1uhRMl1wAtdGZcbObXIikKqtVlgx3j/CW6g==",
       "path": "k4os.hash.xxhash/1.0.6",
       "hashPath": "k4os.hash.xxhash.1.0.6.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Facebook/3.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Cm4ajy89/oRCXI5OMbeA+Hq5vMy9p7wKN+d7KS7kMTxyIDlBjuyLhbuF99WAbvOi6P2IKAPxf/k1rhi5l2PU0g==",
+      "path": "microsoft.aspnetcore.authentication.facebook/3.1.10",
+      "hashPath": "microsoft.aspnetcore.authentication.facebook.3.1.10.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Google/3.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-evidhsli1MSvLUMVt+eSJPW/6VIpcngUnuTkZj9QhnjuRcf9G2RrkuVNPSUY/0eKZD9RM+R9AMrJlBqvcF6WOQ==",
+      "path": "microsoft.aspnetcore.authentication.google/3.1.10",
+      "hashPath": "microsoft.aspnetcore.authentication.google.3.1.10.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0": {
       "type": "package",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pA0sUcLCpnNsgeIW9pbmj4ZiEziim1c9+zsPVzDkEo2IGlDddrTAuAY9Yf3U4pafyXNtnp7Ky9q0LOaLvYmaGg==",
+  "dgSpecHash": "eXRtoLedRDxThCbGHzBzvBOGnr4AT1dBIGJZyOSx5wXUZUeG22XDj5o/sAX+ItJoWgm63iuaeJrpyv1ilWm65Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ServiceBuilderUI\\ServiceBuilderUI.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,8 @@
     "C:\\Users\\tayfu\\.nuget\\packages\\k4os.compression.lz4\\1.1.11\\k4os.compression.lz4.1.1.11.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\k4os.compression.lz4.streams\\1.1.11\\k4os.compression.lz4.streams.1.1.11.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\k4os.hash.xxhash\\1.0.6\\k4os.hash.xxhash.1.0.6.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.authentication.facebook\\3.1.10\\microsoft.aspnetcore.authentication.facebook.3.1.10.nupkg.sha512",
+    "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\3.1.10\\microsoft.aspnetcore.authentication.google.3.1.10.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.hosting.server.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

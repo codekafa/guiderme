@@ -1,9 +1,6 @@
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.AssemblyInfo.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csproj.CoreCompileInputs.cache
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.RazorAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.RazorAssemblyInfo.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.TagHelpers.input.cache
@@ -467,3 +464,11 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.genruntimeconfig.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Account\MyNotifications.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Booking\AvaibleRequest.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Security\Logout.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Security\RegisterUser.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Security\RegisterProvider.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cache
