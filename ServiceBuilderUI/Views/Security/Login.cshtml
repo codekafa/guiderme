@@ -27,14 +27,14 @@
                         <span class="or-line"></span>
                         <span class="span-or">or</span>
                     </div>
-                    @*<div class="row form-row social-login">
-                            <div class="col-6">
-                                <a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> @lexiconHelper.GetTextValue("_login_facebook", 2)</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> @lexiconHelper.GetTextValue("_login_google", 2)</a>
-                            </div>
-                        </div>*@
+                    <div class="row form-row social-login">
+                        <div class="col-md-6">
+                            <div class="fb-login-button" data-size="medium" onlogin="checkLoginState();" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width=""></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
+                    </div>
                     <div class="text-center dont-have">
                         @lexiconHelper.GetTextValue("_forgot_you_password_text", 2) <a href="/forgot-password">@lexiconHelper.GetTextValue("_forgot_you_password_link_text", 2)</a>
                     </div>

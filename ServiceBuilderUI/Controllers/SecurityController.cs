@@ -63,6 +63,7 @@ namespace ServiceBuilderUI.Controllers
                 var userIdentity = new ClaimsIdentity(claims, "Bearer");
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
+                loginResult.Data = null;
                 return Json(loginResult);
             }
             else
@@ -89,6 +90,7 @@ namespace ServiceBuilderUI.Controllers
                 var userIdentity = new ClaimsIdentity(claims, "Bearer");
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
+                loginResult.Data = null;
                 return Json(loginResult);
             }
             else
@@ -115,6 +117,7 @@ namespace ServiceBuilderUI.Controllers
                 var userIdentity = new ClaimsIdentity(claims, "Bearer");
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
+                loginResult.Data = null;
                 return Json(loginResult);
             }
             else

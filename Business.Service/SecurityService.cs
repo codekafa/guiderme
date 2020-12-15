@@ -137,6 +137,19 @@ namespace Business.Service
                 result.ActionCode = registerFacebookResult.ActionCode;
                 return result;
             }
+            else
+            {
+                if (request.RequestModel != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(request.RequestModel.Description) && request.RequestModel.CategoryId > 0)
+                    {
+                        request.RequestModel.IsPublish = true;
+                        request.RequestModel.UserId = existUser.ID;
+                        _requestService.AddNewRequestWitoutTransaction(request.RequestModel);
+                        result.ActionCode = "2";
+                    }
+                }
+            }
 
             result.IsSuccess = true;
             result.Data = existUser;
@@ -185,6 +198,19 @@ namespace Business.Service
                 result.Data = registerGoogleResult.Data;
                 result.ActionCode = registerGoogleResult.ActionCode;
                 return result;
+            }
+            else
+            {
+                if (request.RequestModel != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(request.RequestModel.Description) && request.RequestModel.CategoryId > 0)
+                    {
+                        request.RequestModel.IsPublish = true;
+                        request.RequestModel.UserId = existUser.ID;
+                        _requestService.AddNewRequestWitoutTransaction(request.RequestModel);
+                        result.ActionCode = "2";
+                    }
+                }
             }
 
             result.IsSuccess = true;

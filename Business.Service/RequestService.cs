@@ -74,6 +74,7 @@ namespace Business.Service
                               prop.Value = item.Value;
                               _uow.RequestPropertyRepository.Add(prop);
                           }
+                          _uow.SaveChanges();
                       }
 
                       var user = _uow.UserRepository.Get(x => x.ID == sReq.UserID);
@@ -83,7 +84,7 @@ namespace Business.Service
                           user.UserType = (int)UserTypes.ServicerEndEmployer;
                           _uow.UserRepository.Update(user);
                       }
-
+                      _uow.SaveChanges();
                       if (sReq.IsPublish)
                       {
                           var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == sReq.ServiceCategoryID);
