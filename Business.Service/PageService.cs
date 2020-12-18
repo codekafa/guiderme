@@ -12,11 +12,20 @@ namespace Business.Service
     public class PageService : IPageService
     {
 
-        IPageRepository _pageRepo;
         IUnitOfWork _uow;
         public PageService(IUnitOfWork unitOfWork)
         {
             _uow = unitOfWork;
+        }
+
+
+        public CommonResult GetPages()
+        {
+            CommonResult result = new CommonResult();
+            result.IsSuccess = true;
+            var pages = _uow.PageRepository.GetList(x => x.IsActive == true);
+            result.Data = pages;
+            return result;
         }
 
         public CommonResult GetPage(long page_id)

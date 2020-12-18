@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceBuilderPanel.Models;
 using ViewModel.Views.Security;
+using static Common.Helpers.Enum;
 
 namespace ServiceBuilderPanel.Controllers
 {
@@ -43,6 +44,12 @@ namespace ServiceBuilderPanel.Controllers
             if (loginResult.IsSuccess)
             {
                 var userModel = loginResult.Data as User;
+
+                if (userModel.UserType != (int)UserTypes.Admin)
+                {
+                    return View();
+                }
+
                 var claims = new List<Claim>
                                     {
                                         new Claim(ClaimTypes.Name, userModel.Email),

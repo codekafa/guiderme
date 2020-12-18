@@ -1,0 +1,77 @@
+﻿@model ViewModel.Views.CommonResult;
+
+
+@{
+    var lexiconList = Model.Data as List<ViewModel.Views.Content.LexiconListModel>;
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lexicon  List - Total : @Model.DataCount</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Key</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (lexiconList != null && lexiconList.Count > 0)
+                {
+                    @foreach (var item in lexiconList)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.KeyValue</td>
+                            <td>
+                                <input type="text" value="@item.TextValue" class="form-control" id="lexicon_@item.ID" name="lexicon_@item.ID" />
+                            </td>
+                            <td>
+
+                                @if (item.Type == 1)
+                                {
+                                    <span>Page</span>
+                                }
+                                else
+                                {
+                                    <span>Alert</span>
+                                }
+
+                            </td>
+                            <td><button class="btn btn-primary btn-xs" onclick="editLexicon(@item.ID)"><i class="fa fa-edit"></i></button></td>
+                        </tr>
+                    }
+
+                }
+                else
+                {
+                    <tr col="9">Data not found!</tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            @for (int i = 1; i < Model.PageCount.Value + 1; i++)
+            {
+                if (Model.SelectedPage == (i - 1))
+                {
+                    <li class="active page-item" onclick="filterLexicons(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i)</a></li>
+                }
+                else
+                {
+                    <li class=" page-item" onclick="filterLexicons(@(i-1))" id="page_id_@(i-1)"><a class="page-link" href="#">@(i )</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+

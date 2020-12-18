@@ -24,7 +24,7 @@ namespace Business.Service.Infrastructure
         CommonResult GetCategoryPropertyList(long category_id);
 
         CommonResult AddCategoryProperty(ServiceCategoryProperty item);
-
+        CommonResult GetLexiconList(LexiconSearchModel search);
         CommonResult UpdateCategoryProperty(ServiceCategoryProperty item);
 
         CommonResult RemoveCategoryProperty(long item_id);

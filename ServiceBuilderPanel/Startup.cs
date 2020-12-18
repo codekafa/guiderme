@@ -28,8 +28,6 @@ namespace ServiceBuilderPanel
 
         public IConfiguration Configuration { get; }
 
-
-
         public void ConfigureServices(IServiceCollection services)
         {
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -48,17 +46,15 @@ namespace ServiceBuilderPanel
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
 
-
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                                                              .AddCookie(options =>
                                                              {
                                                                  options.LoginPath = "/Account/Login/";
                                                              });
 
-
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
             services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
@@ -71,7 +67,8 @@ namespace ServiceBuilderPanel
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IDocumentService, DocumentService>();
-
+            services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -85,6 +82,12 @@ namespace ServiceBuilderPanel
             services.AddScoped<IPageRepository, PageRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IRequestPropertyRepository, RequestPropertyRepository>();
+            services.AddScoped<IRequestRepository, RequestRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
+            services.AddScoped<IGalleryRepository, GalleryRepository>();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

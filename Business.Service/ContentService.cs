@@ -268,7 +268,55 @@ namespace Business.Service
             return result;
         }
 
+        public CommonResult GetLexiconList(LexiconSearchModel search)
+        {
+            CommonResult result = new CommonResult();
+
+            string query = @"select * from lexicons where IsActive = 1 and PageCode = @PageCode ";
+
+            if (!string.IsNullOrWhiteSpace(search.SearchKey))
+            {
+                string like = "%" + search.SearchKey + "%";
+                search.SearchKey = like;
+                query += " and (KeyValue like @SearchKey or  TextValue like @SearchKey)";
+            }
+
+            query += " LIMIT " + search.PageIndex * 20 + ",20";
 
 
+            var list = _queryRepo.GetList<LexiconListModel>(query, search);
+
+
+            result.IsSuccess = true;
+            result.Data = list;
+            result.DataCount = GetLexiconListCount(search);
+            result.SelectedPage = search.PageIndex;
+
+            long k = result.DataCount.Value % 10;
+
+            if (k > 0)
+                result.PageCount = (result.DataCount / 20) + 1;
+            else
+                result.PageCount = result.DataCount;
+
+            return result;
+
+        }
+
+        public long GetLexiconListCount(LexiconSearchModel search)
+        {
+            string query = @"select COUNT(*) from lexicons where IsActive = 1 and PageCode = @PageCode ";
+
+            if (!string.IsNullOrWhiteSpace(search.SearchKey))
+            {
+                string like = "%" + search.SearchKey + "%";
+                search.SearchKey = like;
+                query += " and (KeyValue like @SearchKey or  TextValue like @SearchKey)";
+            }
+
+            var count = _queryRepo.GetSingle<long>(query, search);
+
+            return count;
+        }
     }
 }

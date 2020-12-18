@@ -1,0 +1,96 @@
+﻿@inject Business.Service.Infrastructure.IPageService _pageService;
+
+@model ViewModel.Views.Content.LexiconSearchModel
+@{
+    ViewData["Title"] = "Lexicon List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Filter</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="hidden" id="PageIndex" name="PageIndex" value="0" />
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search..." id="SearchKey" name="SearchKey" value="@Model.SearchKey">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <select class="form-control" id="PageCode" name="PageCode">
+
+                        @{
+
+                            var pages = _pageService.GetPages().Data as List<DataModel.BaseEntities.Page>;
+
+                            foreach (var item in pages)
+                            {
+                                if (item.PageCode == Model.PageCode)
+                                {
+                                    <option selected value="@item.PageCode">@item.PageName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.PageCode">@item.PageName</option>
+                                }
+                            }
+                        }
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <button type="button" onclick="filterLexicons()" class="btn btn-primary btn-sm">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="tableContent"></div>
+
+@section scripts{
+
+    <script>
+
+
+        $(document).ready(function () {
+            filterLexicons();
+        });
+
+        function filterLexicons(id) {
+
+            if (id != null || id != undefined) {
+                $('#PageIndex').val(id);
+            }
+
+            var search = new Object();
+            search.PageIndex = $('#PageIndex').val();
+            search.PageCode = $('#PageCode').val();
+            search.SearchKey = $('#SearchKey').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Lexicon/GetLexiconList",
+                data: search,
+                success: function (e) {
+                    $('#tableContent').html(e);
+                }
+            });
+        }
+
+    </script>
+
+
+
+}
+

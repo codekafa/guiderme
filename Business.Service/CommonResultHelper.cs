@@ -14,7 +14,7 @@ namespace Business.Service
 
         public CommonResult GetAlertResult(bool isSuccess, string key, string culture)
         {
-            var item = _lexRepo.Get(x => x.Key == key && x.LaunguageCode == culture);
+            var item = _lexRepo.Get(x => x.KeyValue == key && x.LaunguageCode == culture);
 
             return new CommonResult { IsSuccess = isSuccess, Message = key };
 

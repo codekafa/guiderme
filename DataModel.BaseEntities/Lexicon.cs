@@ -8,8 +8,8 @@ namespace DataModel.BaseEntities
     public class Lexicon : BaseEntity
     {
 
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public string KeyValue { get; set; }
+        public string TextValue { get; set; }
         public string LaunguageCode { get; set; }
         public int Type { get; set; }
 

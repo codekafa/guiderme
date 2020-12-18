@@ -1,12 +1,3 @@
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.exe
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.deps.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.runtimeconfig.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.runtimeconfig.dev.json
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.dll
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\ServiceBuilderApi.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\bin\Debug\netcoreapp3.1\Dapper.dll
@@ -90,8 +81,5 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreap
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.RazorTargetAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.csproj.CopyComplete
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\staticwebassets\ServiceBuilderApi.StaticWebAssets.Manifest.cache
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\staticwebassets\ServiceBuilderApi.StaticWebAssets.xml
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.pdb
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderApi\obj\Debug\netcoreapp3.1\ServiceBuilderApi.genruntimeconfig.cache

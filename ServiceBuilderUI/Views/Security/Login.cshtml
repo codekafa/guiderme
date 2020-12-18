@@ -27,14 +27,6 @@
                         <span class="or-line"></span>
                         <span class="span-or">or</span>
                     </div>
-                    <div class="row form-row social-login">
-                        <div class="col-md-6">
-                            <div class="fb-login-button" data-size="medium" onlogin="checkLoginState();" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width=""></div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                        </div>
-                    </div>
                     <div class="text-center dont-have">
                         @lexiconHelper.GetTextValue("_forgot_you_password_text", 2) <a href="/forgot-password">@lexiconHelper.GetTextValue("_forgot_you_password_link_text", 2)</a>
                     </div>
@@ -42,7 +34,6 @@
                         @lexiconHelper.GetTextValue("_dont_have_an_account", 2) <a href="#">@lexiconHelper.GetTextValue("_register", 2)</a>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -109,6 +100,6 @@
             }
 
             });
-        });
+           });
     </script>
 }

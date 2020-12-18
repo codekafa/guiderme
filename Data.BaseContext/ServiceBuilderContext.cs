@@ -29,6 +29,8 @@ namespace Data.BaseContext
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestProperty> RequestProperties { get; set; }
         public DbSet<ServiceRequestRelation> ServiceRequestRelations { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
+        
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));

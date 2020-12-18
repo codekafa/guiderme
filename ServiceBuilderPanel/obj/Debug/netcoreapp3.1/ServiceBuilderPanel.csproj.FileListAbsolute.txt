@@ -431,6 +431,7 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Definition\CategoryDetail.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Definition\CategoryProperties.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Lexicon\List.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Page\GetPage.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\GetServiceList.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\List.cshtml.g.cs
@@ -452,3 +453,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\ServiceBuilderPanel.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\ServiceBuilderPanel.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\ServiceBuilderPanel.genruntimeconfig.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Lexicon\GetLexiconList.cshtml.g.cs
