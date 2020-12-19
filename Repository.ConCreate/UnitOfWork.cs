@@ -33,8 +33,9 @@ namespace Repository.ConCreate
             ServicePhotoRepository = new ServicePhotoRepository(_serviceBuilderContext);
             UserRepository = new UserRepository(_serviceBuilderContext);
             ServiceRequestRelationRepository = new ServiceRequestRelationRepository(_serviceBuilderContext);
-        }
+            GalleryRepository = new GalleryRepository(_serviceBuilderContext);
 
+        }
         public ICityRepository CityRepository { get; set; }
         public ICountryRepository CountryRepository { get; set; }
         public ILexiconRepository LexiconRepository { get; set; }
@@ -49,6 +50,8 @@ namespace Repository.ConCreate
         public IServicePhotoRepository ServicePhotoRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IServiceRepository ServiceRepository { get; set; }
+
+        public IGalleryRepository GalleryRepository { get; set; }
         public IServiceRequestRelationRepository ServiceRequestRelationRepository { get; set; }
         public IDbContextTransaction BeginTransaction()
         {

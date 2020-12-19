@@ -8,5 +8,6 @@ namespace DataModel.BaseEntities
     public class Gallery : BaseEntity
     {
         public string PhotoUrl { get; set; }
+        public string ContentType { get; set; }
     }
 }

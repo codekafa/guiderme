@@ -1,8 +1,25 @@
-﻿
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+@inject Business.Service.Infrastructure.IPageService pageService;
+
 @{
-    ViewData["Title"] = "TermsOfUse";
+    ViewBag.Title = lexiconHelper.GetTextValue("_terms_of_use_page_title", 7);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>TermsOfUse</h1>
+@{
+    var page = pageService.GetPageByCode(4).Data as DataModel.BaseEntities.Page;
+}
 
+<section class="faq-card">
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="about-blk-content">
+                        @Html.Raw(page.Content)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -37,6 +37,15 @@ namespace Business.Service
             return result;
         }
 
+        public CommonResult GetPageByCode(long page_code)
+        {
+            CommonResult result = new CommonResult();
+            result.IsSuccess = true;
+            var page = _uow.PageRepository.Get(x => x.PageCode == page_code);
+            result.Data = page;
+            return result;
+        }
+
         public CommonResult UpdatePage(Page pageModel)
         {
             CommonResult result = new CommonResult();

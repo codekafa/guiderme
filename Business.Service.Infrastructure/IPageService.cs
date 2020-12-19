@@ -12,6 +12,7 @@ namespace Business.Service.Infrastructure
         CommonResult GetPages();
         CommonResult GetPage(long page_id);
 
+        CommonResult GetPageByCode(long page_code);
         CommonResult UpdatePage(Page pageModel);
 
     }
