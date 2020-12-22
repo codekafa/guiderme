@@ -9,5 +9,7 @@ namespace DataModel.BaseEntities
     {
         public string PhotoUrl { get; set; }
         public string ContentType { get; set; }
+
+        public string PhotoName { get; set; }
     }
 }

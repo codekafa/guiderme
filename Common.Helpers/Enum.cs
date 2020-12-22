@@ -36,7 +36,8 @@ namespace Common.Helpers
         {
             ServiceCategoryFiles = 1,
             ProfileFiles = 2,
-            ServiceFiles =3
+            ServiceFiles =3,
+            Gallery = 4
         }
 
         public enum OtpTypes

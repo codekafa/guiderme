@@ -454,3 +454,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\ServiceBuilderPanel.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\ServiceBuilderPanel.genruntimeconfig.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Lexicon\GetLexiconList.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Gallery\List.cshtml.g.cs

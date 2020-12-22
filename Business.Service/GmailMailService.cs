@@ -10,9 +10,11 @@ namespace Business.Service
     public class GodadyMailService : IMailService
     {
         AppSettings _appSettings;
-        public GodadyMailService(IOptions<AppSettings> appSettings)
+        ILexiconService _lexiconService;
+        public GodadyMailService(IOptions<AppSettings> appSettings, ILexiconService lexiconService)
         {
             _appSettings = appSettings.Value;
+            _lexiconService = lexiconService;
         }
         public CommonResult Send(SendEmailModel emailModel)
         {
@@ -49,6 +51,7 @@ namespace Business.Service
                 smtp.Send(mailMsg);
 
                 result.IsSuccess = true;
+                result.Message = _lexiconService.GetTextValue("_email_sended_successfuly", 99);
             }
             catch (Exception ex)
             {

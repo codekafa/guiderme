@@ -7,6 +7,8 @@ using Business.Service.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServiceBuilderUI.Models;
+using ViewModel.Views;
+using ViewModel.Views.Contact;
 using ViewModel.Views.Content.ServiceCategory;
 using ViewModel.Views.Service;
 
@@ -16,10 +18,14 @@ namespace ServiceBuilderUI.Controllers
     {
         IContentService _contentService;
         IServiceService _serviceService;
-        public HomeController(IContentService contentService, IServiceService serviceService)
+        IMailService _mailService;
+        ILexiconService _lexiconService;
+        public HomeController(IContentService contentService, IServiceService serviceService, IMailService mailService, ILexiconService lexiconService)
         {
             _contentService = contentService;
             _serviceService = serviceService;
+            _mailService = mailService;
+            _lexiconService = lexiconService;
         }
 
         public IActionResult Index()
@@ -63,6 +69,21 @@ namespace ServiceBuilderUI.Controllers
         {
             return View();
         }
+
+
+        public CommonResult SendContact(NewContactModel contact)
+        {
+            string body = "<br>";
+            body += "First Name: " + contact.FirstName + "</br></br>";
+            body += "Last Name: " + contact.LastName + "</br></br>";
+            body += "Email: " + contact.Email + "</br></br>";
+            body += "Phone: " + contact.Phone + "</br></br>";
+            body += "Message: " + contact.Message + "</br></br>";
+            var model = new ViewModel.Views.Mail.SendEmailModel { Body = body, IsHtml = true, Subject = "New Contact Form" };
+            model.To.Add(_lexiconService.GetTextValue("_email_address", 5));
+           return  _mailService.Send(model);
+        }
+
         [Route("faq")]
         public IActionResult FAQ()
         {

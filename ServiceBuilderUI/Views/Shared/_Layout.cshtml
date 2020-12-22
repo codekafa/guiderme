@@ -70,8 +70,8 @@
                             <a href="/main-page">@lexiconHelper.GetTextValue("_main_page", 1)</a>
                         </li>
                         @*<li class="@ViewBag.CategoriesSelect">
-                            <a href="/categories">@lexiconHelper.GetTextValue("_categories", 1)</a>
-                        </li>*@
+                                <a href="/categories">@lexiconHelper.GetTextValue("_categories", 1)</a>
+                            </li>*@
                         <li class="@ViewBag.AboutUsSelect">
                             <a href="/about-us">@lexiconHelper.GetTextValue("_about_us", 1)</a>
                         </li>
@@ -309,18 +309,34 @@
                                 <h2 class="footer-title">@lexiconHelper.GetTextValue("_follow_us", 2)</h2>
                                 <div class="social-icon">
                                     <ul>
-                                        <li>
-                                            <a href="" target="_blank"><i class="fab fa-facebook-f"></i> </a>
-                                        </li>
-                                        <li>
-                                            <a href="" target="_blank"><i class="fab fa-twitter"></i> </a>
-                                        </li>
-                                        <li>
-                                            <a href="" target="_blank"><i class="fab fa-youtube"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="" target="_blank"><i class="fab fa-google"></i></a>
-                                        </li>
+
+                                        @if (!string.IsNullOrWhiteSpace(lexiconHelper.GetTextValue("_facebook_link", 2)))
+                                        {
+                                            <li>
+                                                <a href="@lexiconHelper.GetTextValue("_facebook_link", 2)" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+                                            </li>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(lexiconHelper.GetTextValue("_twitter_link", 2)))
+                                        {
+                                            <li>
+                                                <a href="@lexiconHelper.GetTextValue("_twitter_link", 2)" target="_blank"><i class="fab fa-twitter"></i> </a>
+                                            </li>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(lexiconHelper.GetTextValue("_youtube_link", 2)))
+                                        {
+                                            <li>
+                                                <a href="@lexiconHelper.GetTextValue("_youtube_link", 2)" target="_blank"><i class="fab fa-youtube"></i></a>
+                                            </li>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(lexiconHelper.GetTextValue("_google_link", 2)))
+                                        {
+                                            <li>
+                                                <a href="@lexiconHelper.GetTextValue("_google_link", 2)" target="_blank"><i class="fab fa-google"></i></a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </div>
@@ -457,7 +473,7 @@
                 <div class="modal-footer " style="display: block !important;">
                     <div class="row form-row social-login">
                         <div class="col-md-6">
-                            <div class="fb-login-button" data-size="medium" onlogin="checkLoginState();" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false"  data-width=""></div>
+                            <div class="fb-login-button" data-size="medium" onlogin="checkLoginState();" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width=""></div>
                         </div>
                         <div class="col-md-6">
                             <div id="g-signin2"></div>

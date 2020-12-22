@@ -6,5 +6,144 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Contact</h1>
+<section class="contact-us">
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <div class="contact-queries">
+                        <form role="form" id="contactForm"   method="post" >
+                            <h4 class="mb-4">@lexiconHelper.GetTextValue("_contact_form_title", 5)</h4>
+                            <div class="row">
+                                <div class="form-group col-xl-6">
+                                    <label class="mr-sm-2">@lexiconHelper.GetTextValue("_first_name", 5)</label>
+                                    <input class="form-control" type="text" id="FirstName" name="FirstName" />
+                                </div>
+                                <div class="form-group col-xl-6">
+                                    <label class="mr-sm-2">@lexiconHelper.GetTextValue("_last_name", 5)</label>
+                                    <input class="form-control" type="text"  id="LastName" name="LastName" />
+                                </div>
+                                <div class="form-group col-xl-6">
+                                    <label class="mr-sm-2">@lexiconHelper.GetTextValue("_email", 5)</label>
+                                    <input class="form-control" type="email"  id="Email" name="Email" />
+                                </div>
+                                <div class="form-group col-xl-6">
+                                    <label class="mr-sm-2">@lexiconHelper.GetTextValue("_phone", 5)</label>
+                                    <input class="form-control" type="text" id="Phone" name="Phone" />
+                                </div>
+                                <div class="form-group col-xl-12">
+                                    <label class="mr-sm-2">@lexiconHelper.GetTextValue("_message", 5)</label>
+                                    <textarea class="form-control" rows="5"  id="Message" name="Message" ></textarea>
+                                </div>
+                                <div class="col-xl-12 mt-4">
+                                    <button class="btn btn-primary btn-lg pl-5 pr-5" type="submit">@lexiconHelper.GetTextValue("_send", 5)</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="contact-details">
+                        <div class="contact-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-data">
+                                <h4>@lexiconHelper.GetTextValue("_address", 5)</h4>
+                                <p>@lexiconHelper.GetTextValue("_address_text", 5)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="contact-info">
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="contact-data">
+                                <h4>@lexiconHelper.GetTextValue("_phone", 5)</h4>
+                                <p>@lexiconHelper.GetTextValue("_phone_one", 5)</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="contact-info">
+                            <i class="far fa-envelope"></i>
+                            <div class="contact-data">
+                                <h4>@lexiconHelper.GetTextValue("_email", 5)</h4>
+                                <p>@lexiconHelper.GetTextValue("_email_address", 5)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $("#contactForm").validate({
+                rules: {
+                    FirstName: {
+                        required: true
+                    },
+                    LastName: {
+                            required: true
+                        },
+                    Email: {
+                        required: true
+                    },
+                    Message: {
+                        required: true
+                }
+                },
+               messages: {
+                   FirstName: "@lexiconHelper.GetTextValue("_first_name_required",99)",
+                   LastName: "@lexiconHelper.GetTextValue("_last_name_required", 99)",
+                   Email: "@lexiconHelper.GetTextValue("_email_required",99)",
+                   Message: "@lexiconHelper.GetTextValue("_message_required",99)",
+  
+                },
+               submitHandler: function () {
+
+                   var form = $('#contactForm')[0];
+                   var data = new FormData(form);
+
+                       $.ajax({
+                           type: "POST",
+                           url: "/Home/SendContact",
+                           data: data,
+                           processData: false,
+                           contentType: false,
+                            success: function (e) {
+                                if (e.isSuccess == true) {
+                                    toastrSuccess(e.message);
+                                } else {
+                                    toastrDanger(e.message);
+                                }
+                            },
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                }
+                                toastrDanger(msg);
+                            }
+                        });
+            }
+
+            });
+
+    </script>
+
+}

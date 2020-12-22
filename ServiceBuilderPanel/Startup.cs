@@ -69,6 +69,7 @@ namespace ServiceBuilderPanel
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IGalleryService, GalleryService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
