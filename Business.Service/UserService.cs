@@ -129,11 +129,11 @@ namespace Business.Service
             }
 
             existUser.FirstName = user.FirstName;
-            existUser.Email = user.Email;
+            //existUser.Email = user.Email;
             existUser.LastName = user.LastName;
             //existUser.Password = user.Password;
             existUser.Phone = user.Phone;
-            existUser.UserType = user.UserType;
+            //existUser.UserType = user.UserType;
             result = UpdateUser(existUser);
             result.IsSuccess = true;
 

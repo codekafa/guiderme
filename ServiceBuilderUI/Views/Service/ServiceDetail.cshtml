@@ -230,6 +230,8 @@
                 },
                submitHandler: function () {
 
+                   preLoadOpen();
+
                    var form = $('#serviceDetailForm')[0];
                    var data = new FormData(form);
 
@@ -240,7 +242,9 @@
                            data: data,
                            processData: false,
                            contentType: false,
-                            success: function (e) {
+                           success: function (e) {
+
+                               preLoadClose();
                                 if (e.isSuccess == true) {
                                     toastrSuccess(e.message);
                                     setTimeout(function () {
@@ -251,7 +255,8 @@
                                     toastrDanger(e.message);
                                 }
                             },
-                            error: function (jqXHR, exception) {
+                           error: function (jqXHR, exception) {
+                               preLoadClose();
                                 var msg = '';
                                 if (jqXHR.status === 0) {
                                     msg = 'Not connect.\n Verify Network.';
