@@ -8,11 +8,9 @@ namespace Data.BaseContext
 {
     public class ServiceBuilderContext : DbContext
     {
-
         public ServiceBuilderContext(DbContextOptions options) : base(options)
         {
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<OtpTransaction> OtpTransactions { get; set; }
@@ -30,7 +28,10 @@ namespace Data.BaseContext
         public DbSet<RequestProperty> RequestProperties { get; set; }
         public DbSet<ServiceRequestRelation> ServiceRequestRelations { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
-        
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+
+        public DbSet<OrderPaymentRequest> OrderPaymentRequests { get; set; }
+
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));

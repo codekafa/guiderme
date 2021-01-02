@@ -926,7 +926,7 @@ ul li {
 	display: -webkit-inline-box;
 	display: -ms-inline-flexbox;
 	display: inline-flex;
-    padding-right: 15px;
+/*    padding-right: 15px;*/
 	justify-content: center;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;

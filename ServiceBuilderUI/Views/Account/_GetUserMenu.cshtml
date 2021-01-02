@@ -43,7 +43,7 @@
 
             <li class="nav-item current">
                 <a href="/my-services" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "service" ? "active":""  )">
-                    <i class="far fa-calendar-check"></i>
+                    <i class="far fa-address-book"></i>
                     <span>@lexiconHelper.GetTextValue("_my_services", 17)</span>
                 </a>
             </li>
@@ -52,19 +52,19 @@
             {
                 <li class="nav-item">
                     <a href="/avaible-bookings/0" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "avaible" ? "active":""  )">
-                        <i class="fas fa-hashtag"></i>
+                        <i class="far fa-calendar-check"></i>
                         <span>@lexiconHelper.GetTextValue("_avaible_bookings", 17)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/my-bids" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "payment" ? "active":""  )">
-                        <i class="fas fa-hashtag"></i>
+                    <a href="/my-bids" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "bid" ? "active":""  )">
+                        <i class="far fa-calendar-alt"></i>
                         <span>@lexiconHelper.GetTextValue("_my_bids", 17)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/payment" class="nav-link @(ViewData["menu"] != null && ViewData["menu"].ToString() == "payment" ? "active":""  )">
-                        <i class="fas fa-hashtag"></i>
+                        <i class="far fa-money-bill-alt"></i>
                         <span>@lexiconHelper.GetTextValue("_payment", 17)</span>
                     </a>
                 </li>
