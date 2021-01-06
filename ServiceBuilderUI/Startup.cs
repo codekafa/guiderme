@@ -70,7 +70,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
-
+            services.AddScoped<ICacheService, CacheService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -90,7 +90,7 @@ namespace ServiceBuilderUI
             services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
             services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
             services.AddScoped<IOrderPaymentRequestRepository, OrderPaymentRequestRepository>();
-            
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

@@ -12,8 +12,7 @@ namespace DataModel.BaseEntities
         public string TextValue { get; set; }
         public string LaunguageCode { get; set; }
         public int Type { get; set; }
-
-        public int PageCode { get; set; }
+        public int? PageCode { get; set; }
 
     }
 }
