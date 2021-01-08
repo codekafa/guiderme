@@ -72,12 +72,12 @@
                         @*<li class="@ViewBag.CategoriesSelect">
                                 <a href="/categories">@lexiconHelper.GetTextValue("_categories", 1)</a>
                             </li>*@
-                        <li class="@ViewBag.AboutUsSelect">
+                        @*<li class="@ViewBag.AboutUsSelect">
                             <a href="/about-us">@lexiconHelper.GetTextValue("_about_us", 1)</a>
                         </li>
                         <li class="@ViewBag.ContactSelect">
                             <a href="/contact-us">@lexiconHelper.GetTextValue("_contact", 1)</a>
-                        </li>
+                        </li>*@
 
                         @if (securtyService.GetCurrentUser() == null)
                         {
@@ -97,7 +97,6 @@
 
 
                 @{var currentUser = securtyService.GetCurrentUser();
-
 
                     if (currentUser != null)
                     {
@@ -548,6 +547,7 @@
                         },
 		        submitHandler: function () {
 
+                    preLoadOpen();
                     var loginUser = new Object();
                     loginUser.EmailOrPhone = $('#EmailOrPhone').val();
                     loginUser.Password = $('#Password').val();
@@ -557,7 +557,8 @@
 				        type: "POST",
 				        url: "/security/login",
                         data: loginUser,
-				        success: function (e) {
+                        success: function (e) {
+                            preLoadClose();
                             if (e.isSuccess == true) {
                                 if (e.actionCode == "2" || e.actionCode == 2) {
                                     toastrSuccess("Successfuly login!");
@@ -570,7 +571,8 @@
 						        toastrDanger(e.message)
 					        }
 				        },
-				        error: function (jqXHR, exception) {
+                        error: function (jqXHR, exception) {
+                            preLoadClose();
 					        var msg = '';
 					        if (jqXHR.status === 0) {
 						        msg = 'Not connect.\n Verify Network.';
@@ -612,7 +614,7 @@
 			        UserPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
                         },
 		        submitHandler: function () {
-
+                    preLoadOpen();
 			        var newUser = new Object();
 			        newUser.Email = $('#UserEmail').val();
 			        newUser.Phone = $('#UserMobile').val();
@@ -626,14 +628,16 @@
 				        type: "POST",
 				        url: "/security/RegisterUser",
 				        data: newUser,
-				        success: function (e) {
+                        success: function (e) {
+                            preLoadClose();
 					        if (e.isSuccess == true) {
 						        location.href = "email-approve";
 					        } else {
                                 toastrDanger(e.message)
 					        }
 				        },
-				        error: function (jqXHR, exception) {
+                        error: function (jqXHR, exception) {
+                            preLoadClose();
 					        var msg = '';
 					        if (jqXHR.status === 0) {
 						        msg = 'Not connect.\n Verify Network.';
@@ -674,7 +678,7 @@
 			        ProviderPassword: "@lexiconHelper.GetTextValue("_password_required",99)"
                         },
 		        submitHandler: function () {
-
+                    preLoadOpen();
 			        var newUser = new Object();
 			        newUser.Email = $('#ProviderEmail').val();
 			        newUser.Phone = $('#ProviderMobile').val();
@@ -686,7 +690,8 @@
 				        type: "POST",
 				        url: "/security/RegisterUser",
 				        data: newUser,
-				        success: function (e) {
+                        success: function (e) {
+                            preLoadClose();
 					        if (e.isSuccess == true) {
 						        location.href = "email-approve";
 					        } else {
@@ -710,7 +715,7 @@
 					        } else {
 						        msg = 'Uncaught Error.\n' + jqXHR.responseText;
                             }
-
+                            preLoadClose();
                             toastrDanger(msg)
 				        }
 			        });

@@ -11,10 +11,12 @@ namespace Business.Service
     {
         AppSettings _appSettings;
         ILexiconService _lexiconService;
-        public GodadyMailService(IOptions<AppSettings> appSettings, ILexiconService lexiconService)
+        IExceptionManager _exceptionManager;
+        public GodadyMailService(IOptions<AppSettings> appSettings, ILexiconService lexiconService, IExceptionManager exceptionManager)
         {
             _appSettings = appSettings.Value;
             _lexiconService = lexiconService;
+            _exceptionManager = exceptionManager;
         }
         public CommonResult Send(SendEmailModel emailModel)
         {
@@ -57,6 +59,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
             }
 
             return result;

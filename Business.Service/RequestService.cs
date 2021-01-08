@@ -23,12 +23,14 @@ namespace Business.Service
         IUnitOfWork _uow;
         ILexiconService _lexService;
         INotificationService _notifyService;
-        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService, INotificationService notifyService)
+        IExceptionManager _exceptionManager;
+        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService, INotificationService notifyService, IExceptionManager exceptionManager)
         {
             _queryRepo = querableRepository;
             _uow = unitOfWork;
             _lexService = lexiconService;
             _notifyService = notifyService;
+            _exceptionManager = exceptionManager;
         }
         public CommonResult AddNewRequest(NewRequestModel request)
         {
@@ -113,6 +115,7 @@ namespace Business.Service
                   {
                       _uow.Rollback();
                       result.IsSuccess = false;
+                      _exceptionManager.HandleException(ex);
                       result.Message = ex.Message;
                   }
               }
@@ -195,6 +198,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
             }
 
             return result;
@@ -277,7 +281,7 @@ namespace Business.Service
                                     sr.ID,
                                     co.Name as CountryName,
                                     ci.Name  as CityName,
-                                    (select COUNT(rb.ID) from RequestBids rb where rb.ServiceRequestID = sr.ID) as BidCount
+                                    (select COUNT(rb.ID) from requestbids rb where rb.ServiceRequestID = sr.ID) as BidCount
                                      from requests sr
                                     inner join servicecategories sc on sc.Id = sr.ServiceCategoryID
                                     inner join users u on u.Id = sr.UserID 
@@ -404,6 +408,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
                 return result;
             }
         }
@@ -495,6 +500,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
             }
             return result;
         }

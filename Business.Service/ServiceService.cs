@@ -17,12 +17,14 @@ namespace Business.Service
         ILexiconService _lexService;
         IFileService _fileService;
         IUnitOfWork _uow;
-        public ServiceService(IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService , IUnitOfWork unitOfWork)
+        IExceptionManager _exceptionManager;
+        public ServiceService(IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService , IUnitOfWork unitOfWork,IExceptionManager exceptionManager)
         {
             _queryRepo = queryRepo;
             _lexService = lexiconService;
             _fileService = fileService;
             _uow = unitOfWork;
+            _exceptionManager = exceptionManager;
         }
         public CommonResult AddOrEditService(AddOrEditServiceModel request)
         {
@@ -99,6 +101,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
                 return result;
             }
 
@@ -352,6 +355,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
                 return result;
             }
         }

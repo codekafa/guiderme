@@ -1,0 +1,3 @@
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Handlers\obj\Debug\netcoreapp3.1\Business.Service.Handlers.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Handlers\obj\Debug\netcoreapp3.1\Business.Service.Handlers.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\Business.Service.Handlers\obj\Debug\netcoreapp3.1\Business.Service.Handlers.csproj.CoreCompileInputs.cache

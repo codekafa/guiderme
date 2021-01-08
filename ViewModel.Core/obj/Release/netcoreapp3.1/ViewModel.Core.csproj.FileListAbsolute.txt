@@ -1,0 +1,9 @@
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\bin\Release\netcoreapp3.1\ViewModel.Core.deps.json
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\bin\Release\netcoreapp3.1\ViewModel.Core.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\bin\Release\netcoreapp3.1\ViewModel.Core.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Release\netcoreapp3.1\ViewModel.Core.pdb

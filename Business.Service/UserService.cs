@@ -24,7 +24,8 @@ namespace Business.Service
         IRequestService _requestService;
         INotificationService _notifyService;
         IUnitOfWork _uow;
-        public UserService(IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce, IRequestService requestService, INotificationService notificationService, IUnitOfWork unitOfWork)
+        IExceptionManager _exceptionManager;
+        public UserService(IQuerableRepository queryRepo, IFileService fileService, ILexiconService lexService, IOtpService otpServicce, IRequestService requestService, INotificationService notificationService, IUnitOfWork unitOfWork, IExceptionManager exceptionManager)
         {
             _requestService = requestService;
             _queryRepo = queryRepo;
@@ -33,6 +34,7 @@ namespace Business.Service
             _otpService = otpServicce;
             _notifyService = notificationService;
             _uow = unitOfWork;
+            _exceptionManager = exceptionManager;
         }
 
         public AddOrEditUserModel GetUserViewModel(long user_id)
@@ -259,6 +261,7 @@ namespace Business.Service
                         _uow.Rollback();
                         result.IsSuccess = false;
                         result.Data = ex;
+                        _exceptionManager.HandleException(ex);
                     }
 
                 }
@@ -307,6 +310,7 @@ namespace Business.Service
                         _uow.Rollback();
                         result.IsSuccess = false;
                         result.Data = ex;
+                        _exceptionManager.HandleException(ex);
                     }
 
                 }
@@ -354,6 +358,7 @@ namespace Business.Service
                         _uow.Rollback();
                         result.IsSuccess = false;
                         result.Data = ex;
+                        _exceptionManager.HandleException(ex);
                     }
 
                 }
@@ -504,6 +509,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
                 return result;
             }
         }

@@ -20,12 +20,14 @@ namespace ServiceBuilderUI.Controllers
         IServiceService _serviceService;
         IMailService _mailService;
         ILexiconService _lexiconService;
-        public HomeController(IContentService contentService, IServiceService serviceService, IMailService mailService, ILexiconService lexiconService)
+        IExceptionManager _exceptionManager;
+        public HomeController(IContentService contentService, IServiceService serviceService, IMailService mailService, ILexiconService lexiconService, IExceptionManager exceptionManager)
         {
             _contentService = contentService;
             _serviceService = serviceService;
             _mailService = mailService;
             _lexiconService = lexiconService;
+            _exceptionManager = exceptionManager;
         }
 
         public IActionResult Index()
@@ -105,9 +107,10 @@ namespace ServiceBuilderUI.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(long exp_id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var exp = _exceptionManager.GetException(exp_id);
+            return View(exp);
         }
     }
 }

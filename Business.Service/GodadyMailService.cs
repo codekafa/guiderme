@@ -10,9 +10,11 @@ namespace Business.Service
     public class GmailMailService : IMailService
     {
         AppSettings _appSettings;
-        public GmailMailService(IOptions<AppSettings> appSettings)
+        IExceptionManager _exceptionManager;
+        public GmailMailService(IOptions<AppSettings> appSettings, IExceptionManager exceptionManager)
         {
             _appSettings = appSettings.Value;
+            _exceptionManager = exceptionManager;
         }
         public CommonResult Send(SendEmailModel emailModel)
         {
@@ -54,6 +56,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Message = ex.Message;
+                _exceptionManager.HandleException(ex);
             }
 
             return result;

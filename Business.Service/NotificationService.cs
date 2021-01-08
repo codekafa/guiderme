@@ -14,9 +14,11 @@ namespace Business.Service
     {
         IQuerableRepository _queryRepo;
         IUnitOfWork _uow;
-        public NotificationService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork)
+        IExceptionManager _exceptionManager;
+        public NotificationService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, IExceptionManager exceptionManager)
         {
             _queryRepo = querableRepository;
+            _exceptionManager = exceptionManager;
             _uow = unitOfWork;
         }
         public CommonResult AddNotification(NewNotificationModel notify)
@@ -34,6 +36,7 @@ namespace Business.Service
             {
                 result.IsSuccess = false;
                 result.Data = ex.Message;
+                _exceptionManager.HandleException(ex);
                 return result;
             }
 

@@ -70,6 +70,7 @@ namespace ServiceBuilderPanel
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IGalleryService, GalleryService>();
+            services.AddScoped<ICacheService, CacheService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();

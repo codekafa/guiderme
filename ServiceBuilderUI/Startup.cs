@@ -1,4 +1,5 @@
 using Business.Service;
+using Business.Service.Common;
 using Business.Service.Infrastructure;
 using Data.BaseContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -90,7 +91,9 @@ namespace ServiceBuilderUI
             services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
             services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
             services.AddScoped<IOrderPaymentRequestRepository, OrderPaymentRequestRepository>();
+            services.AddScoped<IExceptionManager, ExceptionService>();
 
+            IOC.CurrentProvider = services.BuildServiceProvider();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -103,6 +106,8 @@ namespace ServiceBuilderUI
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseErrorWrappingMiddleware();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

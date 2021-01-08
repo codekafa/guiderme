@@ -30,6 +30,7 @@ namespace Repository.Base
          IServiceRepository ServiceRepository { get;  set; }
          IServiceRequestRelationRepository ServiceRequestRelationRepository { get;  set; }
 
+        IExceptionLogRepository ExceptionLogRepository { get; set; }
         IGalleryRepository GalleryRepository { get; set; }
     }
 }

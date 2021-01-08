@@ -34,8 +34,10 @@ namespace Repository.ConCreate
             UserRepository = new UserRepository(_serviceBuilderContext);
             ServiceRequestRelationRepository = new ServiceRequestRelationRepository(_serviceBuilderContext);
             GalleryRepository = new GalleryRepository(_serviceBuilderContext);
-
+            ExceptionLogRepository = new ExceptionLogRepository(_serviceBuilderContext);
         }
+
+        public IExceptionLogRepository ExceptionLogRepository { get; set; }
         public ICityRepository CityRepository { get; set; }
         public ICountryRepository CountryRepository { get; set; }
         public ILexiconRepository LexiconRepository { get; set; }
