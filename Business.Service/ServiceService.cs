@@ -1,10 +1,12 @@
 ﻿using Business.Service.Infrastructure;
+using DataModel.BaseEntities;
 using Repository.Base;
 using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using ViewModel.Views;
+using ViewModel.Views.Notification;
 using ViewModel.Views.Service;
 using static Common.Helpers.Enum;
 
@@ -18,13 +20,15 @@ namespace Business.Service
         IFileService _fileService;
         IUnitOfWork _uow;
         IExceptionManager _exceptionManager;
-        public ServiceService(IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService , IUnitOfWork unitOfWork,IExceptionManager exceptionManager)
+        INotificationService _notifyService;
+        public ServiceService(IQuerableRepository queryRepo, ILexiconService lexiconService, IFileService fileService , IUnitOfWork unitOfWork,IExceptionManager exceptionManager, INotificationService notificationService)
         {
             _queryRepo = queryRepo;
             _lexService = lexiconService;
             _fileService = fileService;
             _uow = unitOfWork;
             _exceptionManager = exceptionManager;
+            _notifyService = notificationService;
         }
         public CommonResult AddOrEditService(AddOrEditServiceModel request)
         {
@@ -358,6 +362,24 @@ namespace Business.Service
                 _exceptionManager.HandleException(ex);
                 return result;
             }
+        }
+        public CommonResult AddRelationsAndNotificationsRequestByServices(long serviceCategoryID, long request_id)
+        {
+            CommonResult result = new CommonResult();
+            var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == serviceCategoryID);
+
+            foreach (var service in serviceList)
+            {
+                var request = _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = request_id, Status = (int)ServiceRequestRelationStatus.Waiting });
+                _uow.SaveChanges();
+                string url = "/booking-view?request_id=" + request.ID;
+                string description = _lexService.GetTextValue("_new_service_booking_created", 23);
+                _notifyService.AddNotification(new NewNotificationModel { Description = description, Url = url, UserID = request.ServiceUserID });
+            }
+
+            result.IsSuccess = true;
+            return result;
+
         }
     }
 }

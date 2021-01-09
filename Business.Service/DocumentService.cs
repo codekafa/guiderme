@@ -1,10 +1,15 @@
 ﻿using Business.Service.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
 using System;
 
 namespace Business.Service
 {
     public class DocumentService : IDocumentService
     {
+        public DocumentService(IHostingEnvironment env)
+        {
+        }
+
         public byte[] GetByteDocument(string filePath)
         {
             byte[] bytes = System.IO.File.ReadAllBytes(filePath);

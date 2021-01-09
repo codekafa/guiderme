@@ -15,5 +15,7 @@ namespace Business.Service.Infrastructure
 
         AddOrEditServiceModel GetServiceDetailForEdit(long service_id);
         CommonResult RemoveService(long service_id, long user_id);
+
+        CommonResult AddRelationsAndNotificationsRequestByServices(long serviceCategoryID, long request_id);
     }
 }

@@ -38,12 +38,16 @@ namespace ServiceBuilderUI
                 maxRetryCount: 3,
                 maxRetryDelay: TimeSpan.FromSeconds(3),
                 errorNumbersToAdd: null);
-            }));
+            }), ServiceLifetime.Transient);
             services.AddMvc();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                            );
+
             services.AddHttpContextAccessor();
+
 
 
 

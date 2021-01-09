@@ -24,13 +24,15 @@ namespace Business.Service
         ILexiconService _lexService;
         INotificationService _notifyService;
         IExceptionManager _exceptionManager;
-        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService, INotificationService notifyService, IExceptionManager exceptionManager)
+        IServiceService _serviceService;
+        public RequestService(IQuerableRepository querableRepository, IUnitOfWork unitOfWork, ILexiconService lexiconService, INotificationService notifyService, IExceptionManager exceptionManager, IServiceService serviceService)
         {
             _queryRepo = querableRepository;
             _uow = unitOfWork;
             _lexService = lexiconService;
             _notifyService = notifyService;
             _exceptionManager = exceptionManager;
+            _serviceService = serviceService;
         }
         public CommonResult AddNewRequest(NewRequestModel request)
         {
@@ -89,23 +91,19 @@ namespace Business.Service
                       _uow.SaveChanges();
                       if (sReq.IsPublish)
                       {
-                          var serviceList = _uow.ServiceRepository.GetList(x => x.IsActive == true && x.ServiceCategoryID == sReq.ServiceCategoryID);
+                          result = _serviceService.AddRelationsAndNotificationsRequestByServices(sReq.ServiceCategoryID, sReq.ID);
 
-                          foreach (var service in serviceList)
+                          if (!result.IsSuccess)
                           {
-                              var request = _uow.ServiceRequestRelationRepository.Add(new ServiceRequestRelation { IsActive = true, ServiceCategoryID = service.ServiceCategoryID, ServiceID = service.ID, ServiceUserID = service.UserID, ServiceRequestID = sReq.ID, Status = (int)ServiceRequestRelationStatus.Waiting });
-                              _uow.SaveChanges();
-                              string url = "/booking-view?request_id=" + request.ID;
-                              string description = _lexService.GetTextValue("_new_service_booking_created", 23);
-                              _notifyService.AddNotificationSync(new NewNotificationModel { Description = description, Url = url, UserID = request.ServiceUserID });
+                              throw new Exception(result.Message);
+                             
                           }
+
                       }
 
                       string urlB = "/booking-detail?booking_id=" + sReq.ID;
                       string descriptionB = _lexService.GetTextValue("_your_booking_created_successfuly", 23);
-
-                      _notifyService.AddNotificationSync(new NewNotificationModel { Description = descriptionB, Url = urlB, UserID = user.ID });
-
+                      _notifyService.AddNotification(new NewNotificationModel { Description = descriptionB, Url = urlB, UserID = user.ID });
                       _uow.SaveChanges();
                       _uow.Commit();
                       result.IsSuccess = true;

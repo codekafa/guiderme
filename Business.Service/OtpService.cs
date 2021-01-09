@@ -60,7 +60,7 @@ namespace Business.Service
         {
             string otp = "";
 
-            var lastOtp = _queryRepo.GetSingle<OtpTransaction>("SELECT * FROM OtpTransactions   order by ID desc LIMIT 1", null);
+            var lastOtp = _queryRepo.GetSingle<OtpTransaction>("SELECT * FROM otptransactions   order by ID desc LIMIT 1", null);
 
             if (lastOtp == null)
             {
@@ -76,7 +76,84 @@ namespace Business.Service
         }
         CommonResult CreateChangeEmailOtp(CreateOtpModel request)
         {
-            string htmlText = _documentService.GetStringDocument(@"Views\Template\ChangePasswordMail.cshtml");
+
+            string htmlText = @"
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name='viewport' content='width=device-width' />
+</head>
+<body>
+    <div>
+        <table style='width: 900px; margin: 0px auto;background:#fff;' bgcolor='#ffffff' class='voucher-templates'>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td height='34 ' width='50' valign='center' align='center' class='center' cellspacing='0' cellpadding='0' border='0'>
+                    <img style='height: 70px;' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606401917/logo2.png' />
+                </td>
+            </tr>
+            <tr>
+
+                <td style='padding:0 15px;'>
+                    <br />
+                    <span style='font-family:Calibri;font-size: 20px'>$$user_dear_text$$</span><span style='font-family:Calibri;font-size: 20px'>$$user_dear$$</span>&nbsp;
+                    <span>
+                        <br />
+                        <br />
+                        <span style='font-family:Calibri;font-size: 18px;'>$$user_description$$</span> <strong><a href='$$change_link$$'>$$change_link_text$$</a></strong><br />
+                    </span>
+                </td>
+
+            </tr>
+            <tr>
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+                <td class='font_fix' style='font-size:15px; color:#5a5a5a;text-align:center; font-weight:bold; font-family: Arial, Helvetica, sans-serif;' align='left'>$$follow_us$$</td>
+            </tr>
+            <tr>
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+                <td height='34 ' width='50' valign='center' align='center' class='center' cellspacing='0' cellpadding='0' border='0'>
+                    <a style='text-decoration: none; border:0;border-radius: 100px; color:#fff;' href='$$facebook$$'>
+                        <img style='border-radius: 100px' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606402096/static/facebook_v4jxap.png' width='50' height='50' alt='facebook' />
+                    </a>
+                    <a style='text-decoration: none; border:0;border-radius: 100px;color:#fff;' href='$$instagram$$ '>
+                        <img style='border-radius: 100px' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606402097/static/instagram_g5tngt.png' width='50' height='50' alt='instagram' />
+                    </a>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+
+                <td class='font_fix' style='font-family: Arial, Helvetica, sans-serif; font-size:28px;mso-line-height-rule:exactly; line-height:28px; font-weight:bold; color:#5a5a5a;text-decoration:none !important; ' align='center'>&nbsp;$$contact_phone$$</td>
+
+
+            </tr>
+            <tr>
+
+                <td class='font_fix' style='font-size:12px; font-family: Arial, Helvetica, sans-serif; line-height:14px; color:#5a5a5a; font-weight:bold; padding-top:5px' align='center'><a href='#' style='color:#5a5a5a;text-decoration:none !important;'>$$contact_email$$</a> - <a href='#' style='color:#5a5a5a;text-decoration:none !important; '>$$domain_name$$</a></td>
+            </tr>
+            <tr>
+                <td align='center' valign='middle' style='font-family: Arial, Helvetica, sans-serif;font-size:11px; font-weight:normal; color:#bbb; padding-top:10px; padding-bottom:10px'>
+                    <strong>&#169; Copyright $$service_here$$</strong><br />
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
+";
+
+            //string htmlText = _documentService.GetStringDocument(AppDomain.CurrentDomain.BaseDirectory +  @"\Views\Template\ChangePasswordMail.cshtml");
             htmlText = htmlText.Replace("$$user_dear_text$$", _lexService.GetTextValue("change_password_dear_text", 12));
             htmlText = htmlText.Replace("$$user_dear$$", request.EmailOrPhone);
             htmlText = htmlText.Replace("$$user_description$$", _lexService.GetTextValue("_change_password_description", 12));
@@ -95,7 +172,88 @@ namespace Business.Service
         }
         CommonResult CreateEmailOtp(CreateOtpModel request)
         {
-            string htmlText = _documentService.GetStringDocument(@"Views\Template\EmailOtp.cshtml");
+            string htmlText = @"
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name='viewport' content='width=device-width' />
+</head>
+<body>
+    <div>
+        <table style='width: 900px; margin: 0px auto;background:#fff;' bgcolor='#ffffff' class='voucher-templates'>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td height='34 ' width='50' valign='center' align='center' class='center' cellspacing='0' cellpadding='0' border='0'>
+                    <img style='height: 70px;' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606401917/logo2.png' />
+                </td>
+            </tr>
+            <tr>
+
+                <td style='padding:0 15px;'>
+                    <br />
+                    <span style='font-family:Calibri;font-size: 20px'>$$register_dear_text$$</span><span style='font-family:Calibri;font-size: 20px'>$$register_dear$$</span>&nbsp;
+                    <span>
+                        <br />
+                        <br />
+                        <span style='font-family:Calibri;font-size: 18px;'>$$register_description$$</span>
+                        <br />
+                        <h1>$$otp_ode$$</h1>
+                    </span>
+                </td>
+
+            </tr>
+            <tr>
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+
+                <td class='font_fix' style='font-size:15px; color:#5a5a5a;text-align:center; font-weight:bold; font-family: Arial, Helvetica, sans-serif;' align='left'>$$follow_us$$</td>
+
+
+            </tr>
+            <tr>
+
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+                <td height='34 ' width='50' valign='center' align='center' class='center' cellspacing='0' cellpadding='0' border='0'>
+                    <a style='text-decoration: none; border:0;border-radius: 100px; color:#fff;' href='$$facebook$$'>
+                        <img style='border-radius: 100px' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606402096/static/facebook_v4jxap.png' width='50' height='50' alt='facebook' />
+                    </a>
+                    <a style='text-decoration: none; border:0;border-radius: 100px;color:#fff;' href='$$instagram$$ '>
+                        <img style='border-radius: 100px' src='https://res.cloudinary.com/servicebuilder/image/upload/v1606402097/static/instagram_g5tngt.png' width='50' height='50' alt='instagram' />
+                    </a>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td height='15'>&nbsp;</td>
+            </tr>
+            <tr>
+
+                <td class='font_fix' style='font-family: Arial, Helvetica, sans-serif; font-size:28px;mso-line-height-rule:exactly; line-height:28px; font-weight:bold; color:#5a5a5a;text-decoration:none !important; ' align='center'>&nbsp;$$contact_phone$$</td>
+
+
+            </tr>
+            <tr>
+
+                <td class='font_fix' style='font-size:12px; font-family: Arial, Helvetica, sans-serif; line-height:14px; color:#5a5a5a; font-weight:bold; padding-top:5px' align='center'><a href='#' style='color:#5a5a5a;text-decoration:none !important;'>$$contact_email$$</a> - <a href='#' style='color:#5a5a5a;text-decoration:none !important; '>$$domain_name$$</a></td>
+            </tr>
+            <tr>
+                <td align='center' valign='middle' style='font-family: Arial, Helvetica, sans-serif;font-size:11px; font-weight:normal; color:#bbb; padding-top:10px; padding-bottom:10px'>
+                    <strong>&#169; Copyright $$service_here$$</strong><br />
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
+";
+            //string htmlText = _documentService.GetStringDocument(AppDomain.CurrentDomain.BaseDirectory + @"\Views\Template\EmailOtp.cshtml");
             htmlText = htmlText.Replace("$$register_dear_text$$", _lexService.GetTextValue("_otp_register_dear_text", 12));         
             htmlText = htmlText.Replace("$$otp_ode$$", request.OtpCode);
             htmlText = htmlText.Replace("$$register_dear$$", request.EmailOrPhone);

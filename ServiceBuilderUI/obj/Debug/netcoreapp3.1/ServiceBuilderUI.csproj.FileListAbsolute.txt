@@ -142,9 +142,6 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.AssemblyInfo.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csproj.CoreCompileInputs.cache
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.RazorAssemblyInfo.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.RazorAssemblyInfo.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.TagHelpers.input.cache
@@ -487,3 +484,9 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cache
