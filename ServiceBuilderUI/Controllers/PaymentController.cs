@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Business.Service.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBuilderUI.Models;
+using ViewModel.Views.Payment;
 
 namespace ServiceBuilderUI.Controllers
 {
-    public class PaymentController : Controller
+    [AuthorizeCustom]
+    public class PaymentController : BaseController
     {
+
+        IPaymentService _paymentService;
+        public PaymentController(IPaymentService paymentService)
+        {
+            _paymentService = paymentService;
+        }
 
         [Route("payment")]
         public IActionResult Payment()
@@ -32,6 +38,16 @@ namespace ServiceBuilderUI.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult AddNewOrderPaymentRequest(AddNewOrderPaymentRequestModel requestModel)
+        {
+            requestModel.UserID = CurrentUserId.Value;
+            var result = _paymentService.AddNewOrderPaymentRequest(requestModel);
+            return Json(result);
+        }
+
+
     }
 
 

@@ -29,7 +29,8 @@ namespace Repository.Base
          IUserRepository UserRepository { get;  set; }
          IServiceRepository ServiceRepository { get;  set; }
          IServiceRequestRelationRepository ServiceRequestRelationRepository { get;  set; }
-
+        IOrderPaymentRequestRepository OrderPaymentRequestRepository { get; set; }
+        IPaymentTransactionRepository PaymentTransactionRepository { get; set; }
         IExceptionLogRepository ExceptionLogRepository { get; set; }
         IGalleryRepository GalleryRepository { get; set; }
     }

@@ -16,49 +16,37 @@
                                     { @"menu", @"payment" }
                                 })
             <div class="col-xl-9 col-md-8">
+
+                <ul class="nav nav-tabs menu-tabs">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/order-payment">@lexiconHelper.GetTextValue("_add_new_order_payment_page_title", 26)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my-payment-transactions">@lexiconHelper.GetTextValue("_payment_history", 26) </a>
+                    </li>
+                </ul>
+
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Wallet</h4>
-                                <div class="wallet-details">
-                                    <span>Wallet Balance</span>
-                                    <h3>$3885</h3>
-                                    <div class="d-flex justify-content-between my-4">
-                                        <div>
-                                            <p class="mb-1">Total Credit</p>
-                                            <h4>$5314</h4>
-                                        </div>
-                                        <div>
-                                            <p class="mb-1">Total Debit</p>
-                                            <h4>$1431</h4>
-                                        </div>
-                                    </div>
-                                    <div class="wallet-progress-chart">
-                                        <div class="d-flex justify-content-between">
-                                            <span>$1431</span>
-                                            <span>$5,314.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">@lexiconHelper.GetTextValue("_order_document_file", 26)</h4>
-                                <form action="#">
+                                <form action="post" id="order_request_payment_form">
+                                    <div class="form-group">
+                                        <label class="mr-sm-2">@lexiconHelper.GetTextValue("_order_request_payment_amount", 26)</label>
+                                        <input type="text" maxlength="4" id="OrderAmount" name="OrderAmount" class="form-control" placeholder="00.00" />
+                                    </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text display-5"></label>
                                             </div>
-                                            <input type="file" maxlength="4" class="form-control" placeholder="00.00">
+                                            <input type="file" id="DocumentPhoto" name="DocumentPhoto" class="form-control" />
                                         </div>
                                     </div>
+                                    <button href="javascript:void(0);" type="submit" class="btn btn-primary btn-block withdraw-btn">@lexiconHelper.GetTextValue("_send_order_request", 26)</button>
                                 </form>
-                                <a href="javascript:void(0);" class="btn btn-primary btn-block withdraw-btn">@lexiconHelper.GetTextValue("_send_order_request", 26)</a>
+                           
                             </div>
                         </div>
                     </div>
@@ -67,6 +55,87 @@
         </div>
     </div>
 </div>
+
+
+
+@section Scripts{
+
+
+    <script>
+
+            $(document).ready(function () {
+                $("#order_request_payment_form").validate({
+		        rules: {
+                        OrderAmount: {
+				        required: true
+			        },
+                        DocumentPhoto: {
+				        required: true
+			        }
+		        },
+		        messages: {
+                    OrderAmount: "@lexiconHelper.GetTextValue("_order_request_amount_reqired",99)",
+                    DocumentPhoto: "@lexiconHelper.GetTextValue("_order_request_document_required",99)"
+                        },
+		        submitHandler: function () {
+
+                    preLoadOpen();
+
+                    var form = $('#order_request_payment_form')[0];
+                    var data = new FormData(form);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/payment/AddNewOrderPaymentRequest",
+                        enctype: 'multipart/form-data',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (e) {
+                            preLoadClose();
+                            if (e.isSuccess == true) {
+                                toastrSuccess(e.message);
+                                setTimeout(function () {
+                                    location.href = "/my-payment-transactions";
+                                }, 2000)
+
+                            } else {
+                                toastrDanger(e.message);
+                            }
+                        },
+                        error: function (jqXHR, exception) {
+                            preLoadClose();
+                            var msg = '';
+                            if (jqXHR.status === 0) {
+                                msg = 'Not connect.\n Verify Network.';
+                            } else if (jqXHR.status == 404) {
+                                msg = 'Requested page not found. [404]';
+                            } else if (jqXHR.status == 500) {
+                                msg = 'Internal Server Error [500].';
+                            } else if (exception === 'parsererror') {
+                                msg = 'Requested JSON parse failed.';
+                            } else if (exception === 'timeout') {
+                                msg = 'Time out error.';
+                            } else if (exception === 'abort') {
+                                msg = 'Ajax request aborted.';
+                            } else {
+                                msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                            }
+                            toastrDanger(msg);
+                        }
+                    });
+		        }
+
+	        });
+           });
+
+
+    </script>
+
+
+}
+
+
 
 
 

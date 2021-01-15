@@ -19,5 +19,7 @@ namespace Business.Service.Infrastructure
         CommonResult GetMyRequestHistoryList(RequestSearchModel search);
         CommonResult AvaibleRequests(BaseParamModel search);
         Task<CommonResult> PublishWaitingRequests(long userId);
+
+        CommonResult GetBookingDetailByRelationID(long booking_id, long currentUserId);
     }
 }

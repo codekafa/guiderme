@@ -29,7 +29,7 @@ namespace ServiceBuilderUI.Models
             {
                 IExceptionManager exceptionManager = IOC.resolve<IExceptionManager>();
                 long exp_id = exceptionManager.HandleException(ex);
-                context.Response.Redirect("Home/Error?exp_id="+ exp_id.ToString());
+                context.Response.Redirect("/Home/Error?exp_id="+ exp_id.ToString());
             }
         }
     }

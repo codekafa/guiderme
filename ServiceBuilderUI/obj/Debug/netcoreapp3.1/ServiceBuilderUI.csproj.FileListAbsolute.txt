@@ -490,3 +490,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Debug\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.csproj.CoreCompileInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\ServiceBuilderUI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Debug\netcoreapp3.1\Razor\Views\Booking\BookingDetail.cshtml.g.cs

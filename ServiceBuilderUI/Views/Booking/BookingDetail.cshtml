@@ -1,0 +1,188 @@
+﻿@inject Business.Service.Infrastructure.ILexiconService lexiconHelper;
+
+@inject Business.Service.Infrastructure.IContentService contentHelper;
+
+@model ViewModel.Views.CommonResult
+
+@{
+    ViewBag.Title = lexiconHelper.GetTextValue("_avabile_booking_detail_page_title", 25);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    var booking = Model.Data as ViewModel.Views.Request.AvaibleBidRequestModel;
+}
+
+
+@if (!Model.IsSuccess)
+{
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="col-lg-12">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="/avaible-bookings/0" class="dash-widget dash-bg-1">
+                                <div class="dash-widget-info">
+                                    <span>    @lexiconHelper.GetTextValue("_avaible_booking_detail_not_found_description", 25)</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="col-lg-12">
+                    <div class="section-header text-center">
+                        <h2>
+                            @lexiconHelper.GetTextValue("_avaible_booking_detail_page_name", 25)
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-md-8 card">
+                    <div class="service-fields mb-3 ">
+                        <h3 class="heading-2"> @lexiconHelper.GetTextValue("_avaible_booking_information", 25)</h3>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong class="">@lexiconHelper.GetTextValue("_booking_create_name", 99) :</strong>
+                                    @if (booking.RequestBidID.HasValue)
+                                    {
+                                        <span>@booking.FirstName  @booking.LastName</span>
+                                    }
+                                    else
+                                    {
+                                        <span>****** *********</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong class="">@lexiconHelper.GetTextValue("_booking_create_phone", 99) :</strong>
+                                    @if (booking.RequestBidID.HasValue)
+                                    {
+                                        <span>@booking.Phone</span>
+                                    }
+                                    else
+                                    {
+                                        <span>************</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong class="">@lexiconHelper.GetTextValue("_booking_create_email", 99) :</strong>
+                                    @if (booking.RequestBidID.HasValue)
+                                    {
+                                        <span>@booking.Email</span>
+                                    }
+                                    else
+                                    {
+                                        <span>***********</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong class="">@lexiconHelper.GetTextValue("_service_category", 99) :</strong>
+                                    @booking.CategoryName
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong> @lexiconHelper.GetTextValue("_country", 99) :</strong>
+                                    @booking.CountryName
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong> @lexiconHelper.GetTextValue("_city", 99) :</strong>
+                                    @booking.CityName
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong> @lexiconHelper.GetTextValue("_description", 99) :</strong>
+                                    @booking.Description
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <strong> @lexiconHelper.GetTextValue("_property_values", 99) : </strong>
+                                    <br>
+                                    @if (booking.Properties != null)
+                                    {
+                                        foreach (var item in booking.Properties)
+                                        {
+                                            <label>@item.Name</label>
+                                            <span>@item.Value</span>
+                                            <br>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 card">
+                    <form id="avaible_booking_bid_form" method="post">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="heading-2">@lexiconHelper.GetTextValue("_avaible_booking_service_amount_form_title", 25)</h2>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label> @lexiconHelper.GetTextValue("_avaible_booking_service_amount", 25)</label>
+                                    <input class="form-control" type="text" value="" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label> @lexiconHelper.GetTextValue("_avaible_booking_description", 25)</label>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn" type="submit">@lexiconHelper.GetTextValue("_avaible_booking_bided_text", 25)</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -30,7 +30,7 @@
                                     <div class="booking-widget">
                                         <div class="booking-det-info">
                                             <h3>
-                                                <a class="" href="/booking-view?request_id=@request.ID">@request.ServiceName</a>
+                                                <a class="" href="/booking-view/@request.ID">@request.ServiceName</a>
                                             </h3>
                                             <ul class="booking-details">
                                                 <li><span>@lexiconHelper.GetTextValue("_location", 99) :</span> @request.CityName, @request.CountryName</li>
@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div class="booking-action">
-                                        <a href="/booking-view?request_id=@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_view_request", 25)</a>
+                                        <a href="/booking-view/@request.ID" class="btn btn-sm bg-info-light"><i class="far fa-eye"></i> @lexiconHelper.GetTextValue("_view_request", 25)</a>
                                     </div>
                                 </div>
                             </div>

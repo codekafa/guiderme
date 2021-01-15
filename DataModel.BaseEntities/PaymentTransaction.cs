@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DataModel.Infrastructure;
+﻿using DataModel.Infrastructure;
 
 namespace DataModel.BaseEntities
 {
@@ -16,5 +13,7 @@ namespace DataModel.BaseEntities
         public long UserID { get; set; }
 
         public int Status { get; set; }
+
+        public int ProcessType { get; set; }
     }
 }

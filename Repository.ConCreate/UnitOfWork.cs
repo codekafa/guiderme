@@ -35,6 +35,8 @@ namespace Repository.ConCreate
             ServiceRequestRelationRepository = new ServiceRequestRelationRepository(_serviceBuilderContext);
             GalleryRepository = new GalleryRepository(_serviceBuilderContext);
             ExceptionLogRepository = new ExceptionLogRepository(_serviceBuilderContext);
+            OrderPaymentRequestRepository = new OrderPaymentRequestRepository(_serviceBuilderContext);
+            PaymentTransactionRepository = new PaymentTransactionRepository(_serviceBuilderContext);
         }
 
         public IExceptionLogRepository ExceptionLogRepository { get; set; }
@@ -55,6 +57,9 @@ namespace Repository.ConCreate
 
         public IGalleryRepository GalleryRepository { get; set; }
         public IServiceRequestRelationRepository ServiceRequestRelationRepository { get; set; }
+
+        public IOrderPaymentRequestRepository OrderPaymentRequestRepository { get; set; }
+        public IPaymentTransactionRepository PaymentTransactionRepository { get; set; }
         public IDbContextTransaction BeginTransaction()
         {
             if (_serviceBuilderContext.Database.CurrentTransaction != null)

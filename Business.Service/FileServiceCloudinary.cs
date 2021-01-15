@@ -39,6 +39,26 @@ namespace Business.Service
                 PublicId = fileName
             };
 
+            switch (fileType)
+            {
+                case FileTypes.ServiceCategoryFiles:
+                    break;
+                case FileTypes.ProfileFiles:
+                    uploadParams.Folder = "profile";
+                    break;
+                case FileTypes.ServiceFiles:
+                    uploadParams.Folder = "service";
+                    break;
+                case FileTypes.Gallery:
+                    uploadParams.Folder = "gallery";
+                    break;
+                case FileTypes.OrderDocument:
+                    uploadParams.Folder = "orderDocument";
+                    break;
+                default:
+                    break;
+            }
+
             var uploadResult = cloudinary.Upload(uploadParams);
 
             if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)

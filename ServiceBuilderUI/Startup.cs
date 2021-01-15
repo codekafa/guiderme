@@ -76,6 +76,8 @@ namespace ServiceBuilderUI
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();

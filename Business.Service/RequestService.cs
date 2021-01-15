@@ -96,7 +96,6 @@ namespace Business.Service
                           if (!result.IsSuccess)
                           {
                               throw new Exception(result.Message);
-                             
                           }
 
                       }
@@ -428,7 +427,7 @@ namespace Business.Service
                         inner join services sc on sc.ServiceCategoryID = sr.ServiceCategoryID
                         inner join servicecategories sca on sca.ID = sc.ServiceCategoryID
                         inner join users ru on ru.ID = r.UserID
-                        where bu.ID = @CurrentUserID and bu.IsActive = 1 and r.FinishDate > NOW() and r.IsPublish = 1 and r.IsActive = 1";
+                        where bu.ID = @CurrentUserID and bu.IsActive = 1  and r.IsPublish = 1 and r.IsActive = 1";
 
             query += " ORDER BY  sr.CreateDate DESC";
 
@@ -500,6 +499,59 @@ namespace Business.Service
                 result.Message = ex.Message;
                 _exceptionManager.HandleException(ex);
             }
+            return result;
+        }
+
+        public CommonResult GetBookingDetailByRelationID(long booking_id, long currentUserId)
+        {
+            CommonResult result = new CommonResult();
+
+            BaseParamModel search = new BaseParamModel();
+
+            search.CurrentUserId = currentUserId;
+            search.p0 = booking_id;
+            string query = @"select 
+                            re.ID as RequestID,
+                            re.Description,
+                            re.CreateDate,
+                            re.FinishDate,
+                            re.StartDate,
+                            srr.Status as RequestStatus,
+                            c.Name as CountryName,
+                            ci.Name as CityName,
+                            sc.Name as CategoryName,
+                            rb.ID as RequestBidID,
+                            u2.FirstName,
+                            u2.LastName,
+                            u2.Phone,
+                            u2.Email
+                             from requests re
+                            inner join servicerequestrelations srr on srr.ServiceRequestID = re.ID
+                            inner join users u on u.ID = re.UserID
+                            inner join servicecategories sc on sc.ID = re.ServiceCategoryID
+                            inner join  countries c on c.ID = re.CountryID
+                            inner join cities ci on ci.ID = re.CityID
+                            left join requestbids rb on rb.ServiceRequestID = re.ID
+                            left join requests re2 on re2.ID = rb.ServiceRequestID
+                            left join users u2 on u2.ID = re2.UserID
+                            where srr.ID = @p0 and srr.ServiceUserID = @CurrentUserId  and re.IsPublish = 1 and re.IsActive = 1;";
+
+            var requestModel = _queryRepo.GetSingle<AvaibleBidRequestModel>(query, search);
+
+            if (requestModel == null)
+            {
+                result.IsSuccess = false;
+                result.Message = _lexService.GetAlertSring("_request_not_found_or_expried", null);
+                return result;
+            }
+
+            string queryProps = @"SELECT srp.ID, srp.Value, scp.name FROM servicebuilder.requestproperties srp
+                                    inner join servicecategoryproperties scp on scp.id = srp.ServiceCategoryPropertyID
+                                    where srp.ServiceRequestID =" + requestModel.RequestID.ToString();
+
+            requestModel.Properties = _queryRepo.GetList<RequestPorpertyModel>(queryProps, search);
+            result.IsSuccess = true;
+            result.Data = requestModel;
             return result;
         }
 

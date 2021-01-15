@@ -29,22 +29,23 @@ namespace Common.Helpers
         public enum OTPTypes
         {
             RegisterOTP = 1,
-            EmailOTP =2
+            EmailOTP = 2
         }
 
         public enum FileTypes
         {
             ServiceCategoryFiles = 1,
             ProfileFiles = 2,
-            ServiceFiles =3,
-            Gallery = 4
+            ServiceFiles = 3,
+            Gallery = 4,
+            OrderDocument = 5
         }
 
         public enum OtpTypes
         {
             Sms = 1,
             Email = 2,
-            ChangePassword =3
+            ChangePassword = 3
         }
 
         public enum ServiceRequestRelationStatus
@@ -54,5 +55,29 @@ namespace Common.Helpers
             Rejected = 3
         }
 
+
+        public enum OrderRequestStatus
+        {
+            Waiting = 1,
+            Rejected = 2,
+            Appleyed = 3
+        }
+
+        public enum PaymentTransactionStatus
+        {
+            Waiting = 1,
+            Rejected = 2,
+            Appleyed = 3
+        }
+        public enum PaymentTransactionTypes
+        {
+            Order = 1,
+            Creadit = 2
+        }
+        public enum PaymentTransactionProcessType
+        {
+            Input = 1,
+            OutPut = 2
+        }
     }
 }

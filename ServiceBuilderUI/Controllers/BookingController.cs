@@ -58,5 +58,15 @@ namespace ServiceBuilderUI.Controllers
             return View(result);
         }
 
+        [Route("booking-view/{booking_id}")]
+        public IActionResult BookingDetail(long booking_id)
+        {
+            var search = new BaseParamModel();
+            search.CurrentUserId = CurrentUserId.Value;
+            search.TakeRow = 10;
+            var result = _requestService.GetBookingDetailByRelationID(booking_id, CurrentUserId.Value);
+            return View(result);
+        }
+
     }
 }
