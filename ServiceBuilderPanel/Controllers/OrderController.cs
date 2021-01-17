@@ -40,5 +40,12 @@ namespace ServiceBuilderPanel.Controllers
         }
 
 
+
+        public JsonResult ApproveOrderPayment(long order_request_id)
+        {
+
+            return Json(true);
+        }
+
     }
 }

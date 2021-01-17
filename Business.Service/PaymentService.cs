@@ -188,5 +188,35 @@ namespace Business.Service
         }
 
 
+
+        public CommonResult ApproveOrderRequest(long order_reqeust_id)
+        {
+            CommonResult result = new CommonResult();
+            var request = _uow.OrderPaymentRequestRepository.Get(x => x.ID == order_reqeust_id);
+            request.Status = (int)OrderRequestStatus.Appleyed;
+            _uow.OrderPaymentRequestRepository.Update(request);
+            _uow.SaveChanges();
+            var transaction = _uow.PaymentTransactionRepository.Get(x => x.ID == request.PaymentTransactionID.Value);
+            transaction.Status = (int)PaymentTransactionStatus.Appleyed;
+            _uow.PaymentTransactionRepository.Update(transaction);
+            _uow.SaveChanges();
+            UpdateUserBalanceWithNofitication(request.UserID, request.RequestPaymentTotal);
+            result.IsSuccess = true;
+            return result;
+        }
+
+
+        public CommonResult UpdateUserBalanceWithNofitication(long user_id, decimal topup)
+        {
+            CommonResult result = new CommonResult();
+            var user = _uow.UserRepository.Get(x => x.ID == user_id);
+            user.Balance = user.Balance + topup;
+            _uow.UserRepository.Update(user);
+            _uow.SaveChanges();
+
+            result.IsSuccess = true;
+            return result;
+        }
+
     }
 }

@@ -11,5 +11,9 @@ namespace Business.Service.Infrastructure
         CommonResult AddNewOrderPaymentRequest(AddNewOrderPaymentRequestModel requestModel);
 
         CommonResult GetOrderRequestList(OrderRequestPaymentSearchModel search);
+
+        CommonResult ApproveOrderRequest(long order_reqeust_id);
+
+        CommonResult UpdateUserBalanceWithNofitication(long user_id, decimal topup);
     }
 }

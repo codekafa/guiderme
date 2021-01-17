@@ -14,6 +14,8 @@ namespace DataModel.BaseEntities
         public string ProfilePhoto { get; set; }
         public bool IsMailActivated { get; set; }
         public bool IsMobileActivated { get; set; }
+
+        public decimal Balance { get; set; }
         public List<UserAddress> UserAddresses { get; set; }
     }
 }

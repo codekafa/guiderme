@@ -6,3 +6,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Debug\netcoreapp3.
 C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Debug\netcoreapp3.1\ViewModel.Core.csproj.CoreCompileInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Debug\netcoreapp3.1\ViewModel.Core.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Debug\netcoreapp3.1\ViewModel.Core.pdb
+C:\Users\tayfu\source\repos\ServiceBuilder\ViewModel.Core\obj\Debug\netcoreapp3.1\ViewModel.Core.csprojAssemblyReference.cache
