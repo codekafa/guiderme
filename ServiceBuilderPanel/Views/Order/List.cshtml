@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewData["Title"] = "Order List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title">Filter</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+           
+            <div class="col-md-4">
+                <input type="hidden" id="PageIndex" name="PageIndex" value="0" />
+                <div class="input-group mb-3">
+                    <select class="form-control" id="Status" name="Status">
+                        <option>All</option>
+                        <option value="1" selected>Waiting</option>
+                        <option value="2">Rejected</option>
+                        <option value="3">Applyed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group mb-3">
+                    <input type="date" id="StartDate" name="StartDate" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group mb-3">
+                    <input type="date" id="FinishDate" name="FinishDate" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <button type="button" onclick="filterOrders()" class="btn btn-primary btn-sm">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="orderContent"></div>
+
+
+
+
+@section scripts{
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            filterOrders();
+        });
+
+        function filterOrders(id) {
+
+            if (id != null || id != undefined) {
+                $('#PageIndex').val(id);
+            }
+
+            var search = new Object();
+            search.PageIndex = $('#PageIndex').val();
+            search.Status = $('#Status').val();
+            search.StartDate = $('#StartDate').val();
+            search.FinishDate = $('#FinishDate').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Order/PartialGetOrders",
+                data: search,
+                success: function (e) {
+                    $('#orderContent').html(e);
+                }
+            });
+        }
+
+    </script>
+
+
+
+}
+
+
+

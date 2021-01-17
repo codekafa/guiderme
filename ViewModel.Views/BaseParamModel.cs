@@ -13,5 +13,7 @@ namespace ViewModel.Views
         public string Token { get; set; }
         public long CurrentUserId { get; set; }
         public object p0 { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? FinishDate { get; set; }
     }
 }

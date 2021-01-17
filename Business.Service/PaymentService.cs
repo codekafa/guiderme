@@ -2,6 +2,7 @@
 using DataModel.BaseEntities;
 using Microsoft.EntityFrameworkCore;
 using Repository.Base;
+using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,12 +18,14 @@ namespace Business.Service
         IFileService _fileService;
         ILexiconService _lexService;
         IExceptionManager _exM;
-        public PaymentService(IUnitOfWork unitOfWork, IFileService fileService, ILexiconService lexiconService, IExceptionManager exceptionManager)
+        IQuerableRepository _queryRepo;
+        public PaymentService(IUnitOfWork unitOfWork, IFileService fileService, ILexiconService lexiconService, IExceptionManager exceptionManager, IQuerableRepository querableRepository)
         {
             _uow = unitOfWork;
             _fileService = fileService;
             _lexService = lexiconService;
             _exM = exceptionManager;
+            _queryRepo = querableRepository;
         }
         public CommonResult AddNewOrderPaymentRequest(AddNewOrderPaymentRequestModel requestModel)
         {
@@ -87,5 +90,103 @@ namespace Business.Service
             return result;
 
         }
+        public CommonResult GetOrderRequestList(OrderRequestPaymentSearchModel search)
+        {
+            CommonResult result = new CommonResult();
+
+            string query = @"SELECT u.FirstName,
+                        u.LastName,
+                        u.ID as UserID,
+                        u.Email,
+                        op.ID as OrderRequestID,
+                        op.CreateDate ,
+                        op.Status,
+                        op.RequestPaymentTotal as Amount,
+                        op.RequestPaymentDiscount as Discount,
+                        op.RequestDocumentUrl as DocumentUrl
+                        FROM orderpaymentrequests op
+                        inner join users u on u.ID = op.UserID
+                        where  op.IsActive = 1 ";
+
+
+            if (search.Status.HasValue)
+            {
+                query += " and op.Status = " + search.Status.ToString();
+            }
+
+            if (search.CurrentUserId > 0)
+            {
+                query += "and op.UserID = " + search.CurrentUserId.ToString();
+            }
+
+            if (search.StartDate.HasValue)
+            {
+                query += " and op.CreateDate > @StartDate";
+            }
+
+            if (search.FinishDate.HasValue)
+            {
+                query += " and op.CreateDate < @FinishDate";
+            }
+
+            if (search.p0 != null)
+            {
+                query += " and op.ID = @p0";
+            }
+
+            query += " ORDER BY  op.CreateDate DESC";
+            query += " LIMIT  " + search.PageIndex * search.TakeRow + "," + search.TakeRow;
+
+
+
+
+            var resultList = _queryRepo.GetList<OrderPaymentRequestListModel>(query, search);
+
+            string queryCount = @"SELECT COUNT(*)
+                        FROM orderpaymentrequests op
+                        inner join users u on u.ID = op.UserID
+                        where  op.IsActive = 1 ";
+
+            if (search.Status.HasValue)
+            {
+                queryCount += " and op.Status = " + search.Status.ToString();
+            }
+
+            if (search.CurrentUserId > 0)
+            {
+                queryCount += "and op.UserID = " + search.CurrentUserId.ToString();
+            }
+
+            if (search.StartDate.HasValue)
+            {
+                queryCount += " and op.CreateDate > @StartDate";
+            }
+
+            if (search.FinishDate.HasValue)
+            {
+                queryCount += " and op.CreateDate < @FinishDate";
+            }
+
+            if (search.p0 != null)
+            {
+                queryCount += " and op.ID = @p0";
+            }
+
+            long count = _queryRepo.GetSingle<long>(queryCount, search);
+
+            result.DataCount = count;
+
+            long k = count % 10;
+
+            if (k > 0)
+                count = (count / 10) + 1;
+            result.IsSuccess = true;
+            result.Data = resultList;
+            result.PageCount = count;
+            result.SelectedPage = search.PageIndex;
+            return result;
+        }
+
+
     }
 }

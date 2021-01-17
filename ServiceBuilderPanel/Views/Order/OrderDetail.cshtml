@@ -1,0 +1,126 @@
+﻿@model ViewModel.Views.CommonResult
+@{
+    ViewData["Title"] = "Order Detail";
+}
+
+
+@{
+    var list = Model.Data as List<ViewModel.Views.Payment.OrderPaymentRequestListModel>;
+    var item = list.FirstOrDefault();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            @if (ViewBag.Result != null)
+            {
+
+                if (ViewBag.Result.IsSuccess == false)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>@ViewBag.Result.Message</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Operation is OK!</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+            }
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Order Form<small></small></h3>
+                </div>
+                <form role="form" id="orderForm" action="OrderDetail" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                    <input type="hidden" id="ID" name="ID" value="@item.OrderRequestID" />
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="FirstName">First Name : @item.FirstName</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="LastName">Last Name : @item.LastName</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="EMail">Email address : @item.Email</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Amount : @item.Amount</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Discount : @item.Discount</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Total : @item.Total</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">
+                                Status :
+                                @switch (item.Status)
+                                {
+                                    case 1:
+                                        <span class="badge bg-warning-light">Waiting</span>
+                                        break;
+                                    case 2:
+                                        <span class="badge bg-error-light">Rejected</span>
+                                        break;
+                                    case 3:
+                                        <span class="badge bg-success-light">Applyed</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-default-light">None</span>
+                                        break;
+                                }
+
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Photo">Document Photo</label>
+                            <img class="img-fluid" src="@item.DocumentUrl"  style="width:500px;height:450px;"  alt="User profile picture">
+                            <a href="@item.DocumentUrl"  target="_blank">Open Full</a>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" onclick="approveOrder()" class="btn btn-primary">Approve</button>
+                        <button type="button" onclick="rejectOrder()" class="btn btn-danger">Reject</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+
+        function approveOrder() {
+
+        }
+
+
+        function rejectOrder() {
+
+        }
+
+    </script>
+
+}

@@ -490,3 +490,4 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Release\netcorea
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\bin\Release\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderUI\obj\Release\netcoreapp3.1\Razor\Views\Booking\BookingDetail.cshtml.g.cs

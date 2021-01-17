@@ -9,5 +9,7 @@ namespace Business.Service.Infrastructure
     public interface IPaymentService
     {
         CommonResult AddNewOrderPaymentRequest(AddNewOrderPaymentRequestModel requestModel);
+
+        CommonResult GetOrderRequestList(OrderRequestPaymentSearchModel search);
     }
 }

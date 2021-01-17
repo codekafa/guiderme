@@ -429,8 +429,6 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Lexicon\List.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Page\GetPage.cshtml.g.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\GetServiceList.cshtml.g.cs
-C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Service\List.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginLayout.cshtml.g.cs
@@ -466,3 +464,8 @@ C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Order\List.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Order\PartialGetOrders.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Service\GetServiceList.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Service\List.cshtml.g.cs
+C:\Users\tayfu\source\repos\ServiceBuilder\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\Razor\Views\Order\OrderDetail.cshtml.g.cs

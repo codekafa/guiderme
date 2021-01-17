@@ -1,0 +1,101 @@
+﻿
+@model ViewModel.Views.CommonResult
+
+@{
+    var list = Model.Data as List<ViewModel.Views.Payment.OrderPaymentRequestListModel>;
+}
+
+
+<h4 class="mb-4">Recent Payment Orders</h4>
+
+<div class="card transaction-table mb-0">
+    <div class="card-header">
+        <h3 class="card-title">Order  List - Total : @Model.DataCount</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-center mb-0">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (list != null && list.Count > 0)
+                    {
+
+                        foreach (var item in list)
+                        {
+                            <tr>
+                                <td>@item.FirstName @item.LastName -  @item.Email</td>
+                                <td>@item.CreateDate</td>
+                                <td>@item.Amount</td>
+                                <td>@item.Discount</td>
+                                <td>@item.Total</td>
+                                <td>
+
+                                    @switch (item.Status)
+                                    {
+                                        case 1:
+                                            <span class="badge bg-warning-light">Waiting</span>
+                                            break;
+                                        case 2:
+                                            <span class="badge bg-error-light">Rejected</span>
+                                            break;
+                                        case 3:
+                                            <span class="badge bg-success-light">Applyed</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-default-light">None</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/Order/OrderDetail?order_id=@item.OrderRequestID" target="_blank" class="btn btn-xs btn-primary">Details</a>
+                                </td>
+                            </tr>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">Data not found!</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

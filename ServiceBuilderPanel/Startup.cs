@@ -1,5 +1,6 @@
 
 using Business.Service;
+using Business.Service.Common;
 using Business.Service.Infrastructure;
 using Data.BaseContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -51,7 +52,6 @@ namespace ServiceBuilderPanel
                                                              {
                                                                  options.LoginPath = "/Account/Login/";
                                                              });
-
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
             services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -69,8 +69,9 @@ namespace ServiceBuilderPanel
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<INotificationService, NotificationService>();
-            services.AddScoped<IGalleryService, GalleryService>();
             services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -88,8 +89,13 @@ namespace ServiceBuilderPanel
             services.AddScoped<IRequestRepository, RequestRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
-            services.AddScoped<IGalleryRepository, GalleryRepository>();
-            
+            services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
+            services.AddScoped<IOrderPaymentRequestRepository, OrderPaymentRequestRepository>();
+            services.AddScoped<IExceptionManager, ExceptionService>();
+
+
+            IOC.CurrentProvider = services.BuildServiceProvider();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
