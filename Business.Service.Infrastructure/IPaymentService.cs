@@ -14,6 +14,8 @@ namespace Business.Service.Infrastructure
 
         CommonResult ApproveOrderRequest(long order_reqeust_id);
 
-        CommonResult UpdateUserBalanceWithNofitication(long user_id, decimal topup);
+        CommonResult UpdateUserBalance(long user_id, decimal topup);
+
+        CommonResult RejectOrderRequest(long order_reqeust_id, string desc);
     }
 }

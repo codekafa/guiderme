@@ -15,5 +15,7 @@ namespace DataModel.BaseEntities
         public int Status { get; set; }
 
         public int ProcessType { get; set; }
+
+        public string RejectDescription { get; set; }
     }
 }

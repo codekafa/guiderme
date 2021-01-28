@@ -103,121 +103,128 @@
                         var notifyResult = notifyService.GetUnReadNotifications(currentUser.ID);
                         var notifyList = notifyResult.Data as List<ViewModel.Views.Notification.NotificationListModel>;
 
-                        <ul class="nav header-navbar-rht">
-                            <li class="nav-item dropdown logged-item">
+                                <ul class="nav header-navbar-rht">
 
-                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-bell"></i>
-                                    @if (notifyResult.DataCount > 0)
-                                    {
-                                        <span class="badge badge-pill bg-yellow" id="notifyCount">@notifyResult.DataCount</span>
-                                    }
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right notifications">
-                                    <div class="topnav-dropdown-header">
-                                        <span class="notification-title">@lexiconHelper.GetTextValue("_notifications", 1)</span>
-                                        <a href="javascript:void(0)" class="clear-noti" onclick="clearNotifications()">@lexiconHelper.GetTextValue("_clear_all", 1)</a>
-                                    </div>
-                                    <div class="noti-content">
-                                        <ul class="notification-list">
-                                            @foreach (var item in notifyList)
+                                    <li class="nav-item desc-list wallet-menu">
+                                        <a href="/payment" class="nav-link header-login">
+                                            <img src="assets/img/wallet.png" alt="" class="mr-2 wallet-img"><span>Wallet:</span> @currentUser.WalletBalance
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item dropdown logged-item">
+
+                                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-bell"></i>
+                                            @if (notifyResult.DataCount > 0)
                                             {
-                                                <li class="notification-message">
-
-                                                    @if (!string.IsNullOrWhiteSpace(item.Url))
+                                                <span class="badge badge-pill bg-yellow" id="notifyCount">@notifyResult.DataCount</span>
+                                            }
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right notifications">
+                                            <div class="topnav-dropdown-header">
+                                                <span class="notification-title">@lexiconHelper.GetTextValue("_notifications", 1)</span>
+                                                <a href="javascript:void(0)" class="clear-noti" onclick="clearNotifications()">@lexiconHelper.GetTextValue("_clear_all", 1)</a>
+                                            </div>
+                                            <div class="noti-content">
+                                                <ul class="notification-list">
+                                                    @foreach (var item in notifyList)
                                                     {
-                                                        <a href="@item.Url">
-                                                            <input type="hidden" id="notifyListId[]" name="notifyListId[]" value="@item.ID" />
-                                                            <div class="media">
-                                                                <div class="media-body">
-                                                                    <p class="noti-details"> <span class="noti-title">@item.Description</span></p>
-                                                                    <p class="noti-time"><span class="notification-time">@item.CreateDate</span></p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
+                                                        <li class="notification-message">
+
+                                                            @if (!string.IsNullOrWhiteSpace(item.Url))
+                                                            {
+                                                                <a href="@item.Url">
+                                                                    <input type="hidden" id="notifyListId[]" name="notifyListId[]" value="@item.ID" />
+                                                                    <div class="media">
+                                                                        <div class="media-body">
+                                                                            <p class="noti-details"> <span class="noti-title">@item.Description</span></p>
+                                                                            <p class="noti-time"><span class="notification-time">@item.CreateDate</span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/my-notifications/0">
+                                                                    <input type="hidden" id="notifyListId[]" name="notifyListId[]" value="@item.ID" />
+                                                                    <div class="media">
+                                                                        <div class="media-body">
+                                                                            <p class="noti-details"> <span class="noti-title">@item.Description</span></p>
+                                                                            <p class="noti-time"><span class="notification-time">@item.CreateDate</span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            }
+
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="topnav-dropdown-footer">
+                                                <a href="/my-notifications/0">@lexiconHelper.GetTextValue("_view_all_notifications", 1)</a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item logged-item">
+                                        <a href="chat.html" class="nav-link">
+                                            <i class="fa fa-comments" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item dropdown has-arrow logged-item">
+                                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="user-img">
+                                                @if (string.IsNullOrWhiteSpace(currentUser.ProfilePhoto))
+                                                {
+                                                    <img class="rounded-circle" src=" https://res.cloudinary.com/servicebuilder/image/upload/v1607867463/static/nonimg_aoxjc3.png" alt="" width="31">
+                                                }
+                                                else
+                                                {
+                                                    <img class="rounded-circle" referrerpolicy="no-referrer" src="@currentUser.ProfilePhoto" alt="" width="31">
+                                                }
+
+
+                                            </span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <div class="user-header">
+                                                <div class="avatar avatar-sm">
+                                                    @if (string.IsNullOrWhiteSpace(currentUser.ProfilePhoto))
+                                                    {
+                                                        <img class="rounded-circle" src=" https://res.cloudinary.com/servicebuilder/image/upload/v1607867463/static/nonimg_aoxjc3.png" alt="" width="31">
                                                     }
                                                     else
                                                     {
-                                                        <a href="/my-notifications/0">
-                                                            <input type="hidden" id="notifyListId[]" name="notifyListId[]" value="@item.ID" />
-                                                            <div class="media">
-                                                                <div class="media-body">
-                                                                    <p class="noti-details"> <span class="noti-title">@item.Description</span></p>
-                                                                    <p class="noti-time"><span class="notification-time">@item.CreateDate</span></p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
+                                                        <img class="avatar-img rounded-circle" referrerpolicy="no-referrer" src="@currentUser.ProfilePhoto" alt="">
                                                     }
 
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                    <div class="topnav-dropdown-footer">
-                                        <a href="/my-notifications/0">@lexiconHelper.GetTextValue("_view_all_notifications", 1)</a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="nav-item logged-item">
-                                <a href="chat.html" class="nav-link">
-                                    <i class="fa fa-comments" aria-hidden="true"></i>
-                                </a>
-                            </li>
-
-                            <li class="nav-item dropdown has-arrow logged-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="user-img">
-                                        @if (string.IsNullOrWhiteSpace(currentUser.ProfilePhoto))
-                                        {
-                                            <img class="rounded-circle" src=" https://res.cloudinary.com/servicebuilder/image/upload/v1607867463/static/nonimg_aoxjc3.png" alt="" width="31">
-                                        }
-                                        else
-                                        {
-                                            <img class="rounded-circle" referrerpolicy="no-referrer" src="@currentUser.ProfilePhoto" alt="" width="31">
-                                        }
+                                                </div>
+                                                <div class="user-text">
+                                                    <h6 class="text-truncate">@(currentUser.FirstName + " " + currentUser.LastName)</h6>
+                                                </div>
+                                            </div>
+                                            <a class="dropdown-item" href="/dashboard">@lexiconHelper.GetTextValue("_dashboard", 1)</a>
+                                            <a class="dropdown-item" href="/my-services">@lexiconHelper.GetTextValue("_services", 1)</a>
+                                            <a class="dropdown-item" href="/my-bookings">@lexiconHelper.GetTextValue("_bookings", 1)</a>
 
 
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="user-header">
-                                        <div class="avatar avatar-sm">
-                                            @if (string.IsNullOrWhiteSpace(currentUser.ProfilePhoto))
+                                            @if (currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.ServicerEndEmployer || currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.Servicer)
                                             {
-                                                <img class="rounded-circle" src=" https://res.cloudinary.com/servicebuilder/image/upload/v1607867463/static/nonimg_aoxjc3.png" alt="" width="31">
+                                                <a class="dropdown-item" href="/avaible-bookings/0">@lexiconHelper.GetTextValue("_avaible_bookings", 1)</a>
+                                                <a class="dropdown-item" href="/my-bids">@lexiconHelper.GetTextValue("_my_bids", 1)</a>
+                                                <a class="dropdown-item" href="/payment">@lexiconHelper.GetTextValue("_my_payments", 1)</a>
                                             }
-                                            else
-                                            {
-                                                <img class="avatar-img rounded-circle" referrerpolicy="no-referrer" src="@currentUser.ProfilePhoto" alt="">
-                                            }
+
+                                            <a class="dropdown-item" href="/chat">@lexiconHelper.GetTextValue("_chat", 1)</a>
+
+                                            <a class="dropdown-item" href="/my-profile">@lexiconHelper.GetTextValue("_profile_settings_page", 1)</a>
+                                            <a class="dropdown-item" href="/change-password">@lexiconHelper.GetTextValue("_change_password", 1)</a>
+                                            <a class="dropdown-item" onclick="signOut()">@lexiconHelper.GetTextValue("_logout", 1)</a>
 
                                         </div>
-                                        <div class="user-text">
-                                            <h6 class="text-truncate">@(currentUser.FirstName + " " + currentUser.LastName)</h6>
-                                        </div>
-                                    </div>
-                                    <a class="dropdown-item" href="/dashboard">@lexiconHelper.GetTextValue("_dashboard", 1)</a>
-                                    <a class="dropdown-item" href="/my-services">@lexiconHelper.GetTextValue("_services", 1)</a>
-                                    <a class="dropdown-item" href="/my-bookings">@lexiconHelper.GetTextValue("_bookings", 1)</a>
-
-
-                                    @if (currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.ServicerEndEmployer || currentUser.UserType == (int)Common.Helpers.Enum.UserTypes.Servicer)
-                                    {
-                                        <a class="dropdown-item" href="/avaible-bookings/0">@lexiconHelper.GetTextValue("_avaible_bookings", 1)</a>
-                                        <a class="dropdown-item" href="/my-bids">@lexiconHelper.GetTextValue("_my_bids", 1)</a>
-                                        <a class="dropdown-item" href="/payment">@lexiconHelper.GetTextValue("_my_payments", 1)</a>
-                                    }
-
-                                    <a class="dropdown-item" href="/chat">@lexiconHelper.GetTextValue("_chat", 1)</a>
-
-                                    <a class="dropdown-item" href="/my-profile">@lexiconHelper.GetTextValue("_profile_settings_page", 1)</a>
-                                    <a class="dropdown-item" href="/change-password">@lexiconHelper.GetTextValue("_change_password", 1)</a>
-                                    <a class="dropdown-item" onclick="signOut()">@lexiconHelper.GetTextValue("_logout", 1)</a>
-
-                                </div>
-                            </li>
-                        </ul>
+                                    </li>
+                                </ul>
                     }
                 }
 

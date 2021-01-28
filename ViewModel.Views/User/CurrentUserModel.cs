@@ -25,7 +25,7 @@ namespace ViewModel.Views.User
             }
         }
 
-
+        public decimal WalletBalance { get; set; }
         public string GetFileNameFromUserPhoto()
         {
             if (!string.IsNullOrWhiteSpace(ProfilePhoto))

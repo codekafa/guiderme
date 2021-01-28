@@ -19,13 +19,15 @@ namespace Business.Service
         ILexiconService _lexService;
         IExceptionManager _exM;
         IQuerableRepository _queryRepo;
-        public PaymentService(IUnitOfWork unitOfWork, IFileService fileService, ILexiconService lexiconService, IExceptionManager exceptionManager, IQuerableRepository querableRepository)
+        INotificationService _notifyService;
+        public PaymentService(IUnitOfWork unitOfWork, IFileService fileService, ILexiconService lexiconService, IExceptionManager exceptionManager, IQuerableRepository querableRepository, INotificationService notificationService)
         {
             _uow = unitOfWork;
             _fileService = fileService;
             _lexService = lexiconService;
             _exM = exceptionManager;
             _queryRepo = querableRepository;
+            _notifyService = notificationService;
         }
         public CommonResult AddNewOrderPaymentRequest(AddNewOrderPaymentRequestModel requestModel)
         {
@@ -52,6 +54,8 @@ namespace Business.Service
                             newPaymentTransaction.ProcessType = (int)PaymentTransactionProcessType.Input;
                             newPaymentTransaction.UserID = requestModel.UserID;
                             newPaymentTransaction = _uow.PaymentTransactionRepository.Add(newPaymentTransaction);
+                            _uow.SaveChanges();
+
                             newOrderRequest.IsActive = true;
                             newOrderRequest.RequestDocumentUrl = imgResult.Data.ToString();
                             newOrderRequest.Status = (int)OrderRequestStatus.Waiting;
@@ -107,7 +111,6 @@ namespace Business.Service
                         FROM orderpaymentrequests op
                         inner join users u on u.ID = op.UserID
                         where  op.IsActive = 1 ";
-
 
             if (search.Status.HasValue)
             {
@@ -186,27 +189,99 @@ namespace Business.Service
             result.SelectedPage = search.PageIndex;
             return result;
         }
-
-
-
         public CommonResult ApproveOrderRequest(long order_reqeust_id)
         {
             CommonResult result = new CommonResult();
-            var request = _uow.OrderPaymentRequestRepository.Get(x => x.ID == order_reqeust_id);
-            request.Status = (int)OrderRequestStatus.Appleyed;
-            _uow.OrderPaymentRequestRepository.Update(request);
-            _uow.SaveChanges();
-            var transaction = _uow.PaymentTransactionRepository.Get(x => x.ID == request.PaymentTransactionID.Value);
-            transaction.Status = (int)PaymentTransactionStatus.Appleyed;
-            _uow.PaymentTransactionRepository.Update(transaction);
-            _uow.SaveChanges();
-            UpdateUserBalanceWithNofitication(request.UserID, request.RequestPaymentTotal);
-            result.IsSuccess = true;
+
+            var strategy = _uow.CreateExecuteStrategy();
+
+            strategy.Execute(() =>
+            {
+                using (var ts = _uow.BeginTransaction())
+                {
+                    try
+                    {
+                        
+                        var request = _uow.OrderPaymentRequestRepository.Get(x => x.ID == order_reqeust_id);
+                        request.Status = (int)OrderRequestStatus.Appleyed;
+                        _uow.OrderPaymentRequestRepository.Update(request);
+                        _uow.SaveChanges();
+                        var transaction = _uow.PaymentTransactionRepository.Get(x => x.ID == request.PaymentTransactionID.Value);
+                        transaction.Status = (int)PaymentTransactionStatus.Appleyed;
+                        _uow.PaymentTransactionRepository.Update(transaction);
+                        _uow.SaveChanges();
+
+                        decimal totalValue = 0;
+
+                        if (request.RequestPaymentDiscount.HasValue)
+                        {
+                            totalValue = (request.RequestPaymentDiscount.Value / 100) + request.RequestPaymentTotal;
+                        }
+                        else
+                        {
+                            totalValue = request.RequestPaymentTotal;
+                        }
+
+                        UpdateUserBalance(request.UserID, totalValue);
+                        result.IsSuccess = true;
+
+                        string description = _lexService.GetTextValue("_you_order_payment_request_approved", 23);
+                        _notifyService.AddNotification(new ViewModel.Views.Notification.NewNotificationModel { Description = description, UserID = request.UserID });
+
+                        _uow.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _uow.Rollback();
+                        _exM.HandleException(ex);
+                        result.IsSuccess = false;
+                        result.Message = ex.Message;
+                    }
+                }
+            });
+
             return result;
         }
+        public CommonResult RejectOrderRequest(long order_reqeust_id,string desc)
+        {
+            CommonResult result = new CommonResult();
 
+            var strategy = _uow.CreateExecuteStrategy();
 
-        public CommonResult UpdateUserBalanceWithNofitication(long user_id, decimal topup)
+            strategy.Execute(() =>
+            {
+                using (var ts = _uow.BeginTransaction())
+                {
+                    try
+                    {
+                        var request = _uow.OrderPaymentRequestRepository.Get(x => x.ID == order_reqeust_id);
+                        request.Status = (int)OrderRequestStatus.Rejected;
+                        _uow.OrderPaymentRequestRepository.Update(request);
+                        _uow.SaveChanges();
+                        var transaction = _uow.PaymentTransactionRepository.Get(x => x.ID == request.PaymentTransactionID.Value);
+                        transaction.Status = (int)PaymentTransactionStatus.Rejected;
+                        transaction.RejectDescription = desc;
+                        _uow.PaymentTransactionRepository.Update(transaction);
+                        _uow.SaveChanges();
+
+                        string description = _lexService.GetTextValue("_you_order_payment_request_rejected", 23);
+                        _notifyService.AddNotification(new ViewModel.Views.Notification.NewNotificationModel { Description = description, UserID = request.UserID });
+                        _uow.Commit();
+                        result.IsSuccess = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _uow.Rollback();
+                        _exM.HandleException(ex);
+                        result.IsSuccess = false;
+                        result.Message = ex.Message;
+                    }
+                }
+            });
+
+            return result;
+        }
+        public CommonResult UpdateUserBalance(long user_id, decimal topup)
         {
             CommonResult result = new CommonResult();
             var user = _uow.UserRepository.Get(x => x.ID == user_id);

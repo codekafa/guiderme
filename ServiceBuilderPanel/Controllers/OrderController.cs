@@ -43,8 +43,14 @@ namespace ServiceBuilderPanel.Controllers
 
         public JsonResult ApproveOrderPayment(long order_request_id)
         {
+            var result = _paymentService.ApproveOrderRequest(order_request_id);
+            return Json(result);
+        }
 
-            return Json(true);
+        public JsonResult RejectOrderPayment(long order_request_id,string description)
+        {
+            var result = _paymentService.RejectOrderRequest(order_request_id, description);
+            return Json(result);
         }
 
     }

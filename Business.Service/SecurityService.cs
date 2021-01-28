@@ -271,7 +271,7 @@ namespace Business.Service
 
                 long userId = Convert.ToInt64(claimId.Value);
                 var user = _uow.UserRepository.Get(x => x.IsActive == true && x.ID == userId);
-                return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType };
+                return new CurrentUserModel { FirstName = user.FirstName, ID = user.ID, IsMailActivation = user.IsMailActivated, LastName = user.LastName, ProfilePhoto = user.ProfilePhoto, IsMobileActivation = user.IsMobileActivated, UserType = user.UserType , WalletBalance = user.Balance};
             }
             else
             {
