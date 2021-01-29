@@ -6432,11 +6432,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Base\\Repository.Base.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Base\\Repository.Base.csproj",
       "projectName": "Repository.Base",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Base\\Repository.Base.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Base\\Repository.Base.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Base\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Base\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -6457,8 +6457,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Infrastructure\\Repository.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Infrastructure\\Repository.Infrastructure.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Infrastructure\\Repository.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Infrastructure\\Repository.Infrastructure.csproj"
             }
           }
         }

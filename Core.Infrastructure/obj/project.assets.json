@@ -34,11 +34,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\Core.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\Core.Infrastructure.csproj",
       "projectName": "Core.Infrastructure",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\Core.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\Core.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -59,8 +59,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Core\\ViewModel.Core.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Core\\ViewModel.Core.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Core\\ViewModel.Core.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Core\\ViewModel.Core.csproj"
             }
           }
         }

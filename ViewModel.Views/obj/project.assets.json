@@ -117,11 +117,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Views\\ViewModel.Views.csproj",
       "projectName": "ViewModel.Views",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Views\\ViewModel.Views.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Views\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",

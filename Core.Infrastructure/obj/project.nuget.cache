@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Gz7tFO3tuqBG2xXp5Kk6eVni1LX2llIVf4+CNlx06BdZL+9jyat2xKwpA2a+KgqSW/XctmFBK5GHVre2R7sVLA==",
+  "dgSpecHash": "MHzHiR35rQb8ilJN+tjBP9QhyoCzR5nJzUTEsMDpqNftCn+As8+S6rRuP+6WPy8D+QtF+2phSkVv3iIn0gIh8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\Core.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\Core.Infrastructure.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "40VTOso1/onOpPNnxVpW8G5SesMZLmFiVTWRLD0Nnuiy6HEGMRBJvDAskM5VdFqNKq93TQrUYxvKjbc+uPTX7A==",
+  "dgSpecHash": "St1cGQ7DXV6Z/mfOhRZwu0k0MXe58iekANMAxKlG/+EWNXHjoNGxpt1caK/WO0dT9Zgz9Fij8YXpmJ/xuEdXHw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ServiceBuilderApi\\ServiceBuilderApi.csproj",
+  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ServiceBuilderApi\\GuiderMeApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tayfu\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\cloudinarydotnet\\1.14.0\\cloudinarydotnet.1.14.0.nupkg.sha512",

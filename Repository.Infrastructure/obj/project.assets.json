@@ -6414,11 +6414,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Infrastructure\\Repository.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Infrastructure\\Repository.Infrastructure.csproj",
       "projectName": "Repository.Infrastructure",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Infrastructure\\Repository.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Infrastructure\\Repository.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -6439,14 +6439,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Data.BaseContext\\Data.BaseContext.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Data.BaseContext\\Data.BaseContext.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Data.BaseContext\\Data.BaseContext.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Data.BaseContext\\Data.BaseContext.csproj"
             },
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj"
             },
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Views\\ViewModel.Views.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Views\\ViewModel.Views.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Views\\ViewModel.Views.csproj"
             }
           }
         }

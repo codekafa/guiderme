@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4T1Bp0Zzf4hZzAsIltSroQ9qpUZXhY1plDQHcTBftK5UhA4mdVB4kBcbNa2hYzNikUAgO9MK0vAPmx8reB3a5Q==",
+  "dgSpecHash": "prAvZ8luHNUgTYxlFn1SZCsmZd4YSbTI+/wL8y9qDPL/ddBNm33UA5y8XU6hU45o7OiB5bSauU/zbaYJfoGu/w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Repository.ConCreate\\Repository.ConCreate.csproj",
+  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Repository.ConCreate\\Repository.ConCreate.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tayfu\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\tayfu\\.nuget\\packages\\dapper\\2.0.35\\dapper.2.0.35.nupkg.sha512",

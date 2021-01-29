@@ -52,11 +52,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Locator\\Core.Locator.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Locator\\Core.Locator.csproj",
       "projectName": "Core.Locator",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Locator\\Core.Locator.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Locator\\Core.Locator.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Locator\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Locator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -77,8 +77,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\Core.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Infrastructure\\Core.Infrastructure.csproj"
+            "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\Core.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Infrastructure\\Core.Infrastructure.csproj"
             }
           }
         }

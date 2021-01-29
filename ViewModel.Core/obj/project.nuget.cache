@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hlHmKADoJXkRcHRoZkEXromczOOxJloNSY0RpbXKACphdzy+QUTUsj+5uSiP3JSi0I1yJFNRB8WxAkL8YOLzFA==",
+  "dgSpecHash": "vi/GspH/foolEy/EN+2rPJ9NHlkwxep5akssaSeLMmS212mI4qLEO2r067R8qvHNCS8irfxSvEHcmxdlg1+lFQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\ViewModel.Core\\ViewModel.Core.csproj",
+  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\ViewModel.Core\\ViewModel.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

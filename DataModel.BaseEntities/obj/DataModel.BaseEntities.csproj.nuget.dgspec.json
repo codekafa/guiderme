@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj": {}
+    "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj": {
+    "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj",
+        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj",
         "projectName": "DataModel.BaseEntities",
-        "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj",
+        "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.BaseEntities\\DataModel.BaseEntities.csproj",
         "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.BaseEntities\\obj\\",
+        "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.BaseEntities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -32,8 +32,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj"
+              "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj"
               }
             }
           }
@@ -65,14 +65,14 @@
         }
       }
     },
-    "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
+    "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
         "projectName": "DataModel.Infrastructure",
-        "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",

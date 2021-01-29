@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
       "projectName": "DataModel.Infrastructure",
-      "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\DataModel.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\DataModel.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\DataModel.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",

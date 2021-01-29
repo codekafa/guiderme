@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "asplioDhwrhu97kDbLILHBTVZkFgdqjk4pkDlctQE99DOo5YIMu1/PPlp235af7ntjmeHNqn0hqmDOYBc+QFyw==",
+  "dgSpecHash": "i9CdWDAB1hbzWN7GcANL2dAukWqke4xw0oPUo4Ey8Rg6oTkDeKB1RpQwAjqDe27+HeQWjN8kvsLtI3FZCI+0UA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Core.Locator\\Core.Locator.csproj",
+  "projectFilePath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Core.Locator\\Core.Locator.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

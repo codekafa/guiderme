@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj": {}
+    "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Common.Helpers\\Common.Helpers.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj": {
+    "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Common.Helpers\\Common.Helpers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj",
+        "projectUniqueName": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Common.Helpers\\Common.Helpers.csproj",
         "projectName": "Common.Helpers",
-        "projectPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\Common.Helpers.csproj",
+        "projectPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Common.Helpers\\Common.Helpers.csproj",
         "packagesPath": "C:\\Users\\tayfu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tayfu\\source\\repos\\ServiceBuilder\\Common.Helpers\\obj\\",
+        "outputPath": "C:\\Users\\tayfu\\source\\repos\\guiderme\\guiderme\\Common.Helpers\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
