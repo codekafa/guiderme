@@ -7,3 +7,12 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Common.Helpers\obj\Release\netcoreapp
 C:\Users\tayfu\source\repos\ServiceBuilder\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.csproj.CoreCompileInputs.cache
 C:\Users\tayfu\source\repos\ServiceBuilder\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\bin\Release\netcoreapp3.1\Common.Helpers.deps.json
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\bin\Release\netcoreapp3.1\Common.Helpers.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\bin\Release\netcoreapp3.1\Common.Helpers.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Common.Helpers\obj\Release\netcoreapp3.1\Common.Helpers.pdb
