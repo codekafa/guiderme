@@ -15,22 +15,23 @@ namespace GuiderMeApi.Attrubutes.BaseAttr
 
             if (context != null && context.HttpContext.Request.Headers["Authorization"].Count <= 0)
             {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                context.HttpContext.Response.StatusCode = 401;
             }
+            else
+            {
+                var webContext = IOC.resolve<IWebContext>();
 
-            var webContext = IOC.resolve<IWebContext>();
+                var tokenEngine = IOC.resolve<ITokenEngine>();
 
-            var tokenEngine = IOC.resolve<ITokenEngine>();
+                var tokenModel = tokenEngine.DecryptToken(context.HttpContext.Request.Headers["Authorization"].ToString());
 
-            var tokenModel = tokenEngine.DecryptToken(context.HttpContext.Request.Headers["Authorization"].ToString());
+                var viewContext = tokenModel.Data as WebContext;
 
-            var viewContext = tokenModel.Data as WebContext;
+                var scopeContext = IOC.resolve<IWebContext>();
 
-            var scopeContext = IOC.resolve<IWebContext>();
-
-            scopeContext = viewContext;
-
-            var result = await next();
+                scopeContext = viewContext;
+                var result = await next();
+            }
         }
     }
 }
