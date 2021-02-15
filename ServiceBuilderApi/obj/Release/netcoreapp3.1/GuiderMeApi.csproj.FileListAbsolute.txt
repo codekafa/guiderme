@@ -100,9 +100,6 @@ C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\bin\Release\netc
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.csprojAssemblyReference.cache
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.AssemblyInfoInputs.cache
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.AssemblyInfo.cs
-C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.csproj.CoreCompileInputs.cache
-C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.RazorTargetAssemblyInfo.cache
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.csproj.CopyComplete
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\staticwebassets\GuiderMeApi.StaticWebAssets.Manifest.cache
@@ -110,3 +107,9 @@ C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netc
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.dll
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.pdb
 C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.genruntimeconfig.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\obj\Release\netcoreapp3.1\GuiderMeApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\bin\Release\netcoreapp3.1\System.Net.Http.Formatting.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\bin\Release\netcoreapp3.1\System.Web.Http.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderApi\bin\Release\netcoreapp3.1\Newtonsoft.Json.Bson.dll

@@ -243,17 +243,6 @@ namespace Business.Service
                 return result;
             }
 
-            if (request.RequestModel != null)
-            {
-                if (!string.IsNullOrWhiteSpace(request.RequestModel.Description) && request.RequestModel.CategoryId > 0)
-                {
-                    request.RequestModel.IsPublish = true;
-                    request.RequestModel.UserId = existUser.ID;
-                    _requestService.AddNewRequest(request.RequestModel);
-                    result.ActionCode = "2";
-                }
-            }
-
             result.IsSuccess = true;
             result.Data = existUser;
             return result;

@@ -17,7 +17,7 @@ using ServiceBuilderUI.Models;
 using System;
 using ViewModel.Views;
 
-namespace ServiceBuilderUI
+namespace GuiderMeUI
 {
     public class Startup
     {

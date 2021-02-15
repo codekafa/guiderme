@@ -1,8 +1,10 @@
 
 
 using Business.Service;
+using Business.Service.Common;
 using Business.Service.Infrastructure;
 using Data.BaseContext;
+using GuiderMeApi.Attrubutes.BaseAttr;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,12 +18,12 @@ using Repository.Base;
 using Repository.ConCreate;
 using Repository.Infrastructure;
 using Repository.Infrastructure.Interface;
-using ServiceBuilderApi.Helper;
 using System;
 using System.Text;
+using ViewModel.Core;
 using ViewModel.Views;
 
-namespace ServiceBuilderApi
+namespace GuiderMeApi
 {
     public class Startup
     {
@@ -51,24 +53,26 @@ namespace ServiceBuilderApi
             services.AddControllers();
             services.AddCors();
 
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+            //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            //services.AddAuthentication(x =>
+            //{
+            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(x =>
+            //{
+            //    x.RequireHttpsMetadata = false;
+            //    x.SaveToken = true;
+            //    x.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false
+            //    };
+            //});
+
+            services.AddHttpContextAccessor();
 
             services.AddSwaggerGen(c =>
             {
@@ -82,7 +86,16 @@ namespace ServiceBuilderApi
                     In = ParameterLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme."
                 });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { new OpenApiSecurityScheme
+                    {
+                         In = ParameterLocation.Header,
+                         Name = "Authorization",
+                         Type = SecuritySchemeType.ApiKey,
 
+                    },new string[] {}
+                }});
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -96,23 +109,31 @@ namespace ServiceBuilderApi
                             },
                             new string[] {}
 
-                    }
+                    },
                 });
             });
 
 
             services.AddTransient(typeof(IEntityRepository<>), typeof(EFEntityRepositoryBase<>));
-            services.AddTransient<ITokenEngine, TokenEngine>();
             services.AddScoped<IQuerableRepository, QuerableRepositoryBase>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileService, FileServiceCloudinary>();
             services.AddScoped<ILexiconService, LexiconService>();
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<IMailService, GmailMailService>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
@@ -123,10 +144,22 @@ namespace ServiceBuilderApi
             services.AddScoped<IExceptionLogRepository, ExceptionLogRepository>();
             services.AddScoped<IOtpTransactionRepository, OtpTransactionRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IPageRepository, PageRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IRequestPropertyRepository, RequestPropertyRepository>();
+            services.AddScoped<IRequestRepository, RequestRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IServiceRequestRelationRepository, ServiceRequestRelationRepository>();
+            services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
+            services.AddScoped<IOrderPaymentRequestRepository, OrderPaymentRequestRepository>();
+            services.AddScoped<IExceptionManager, ExceptionService>();
 
 
-
-   
+            services.AddScoped<IWebContext,WebContext>();
+            services.AddScoped<ServiceMethodAuth>();
+            services.AddScoped<ITokenEngine, TokenService>();
+            IOC.CurrentProvider = services.BuildServiceProvider();
 
         }
 

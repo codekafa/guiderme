@@ -38,15 +38,21 @@ namespace Business.Service.Common
 
             var tokenModel = TokenModel;
             string guidId = Guid.NewGuid().ToString();
-            tokenModel.Replace("ID@value@ID", $"ID@{guidId}@ID");
-            tokenModel.Replace("UID@value@UID", $"UID@{userEntity.ID}@UID");
-            tokenModel.Replace("AID@value@AID", $"AID@{userEntity.IsMobileActivated}@AID");
-            tokenModel.Replace("ROLS@value@ROLS", $"ROLS@{1}@ROLS");
+            tokenModel  = tokenModel.Replace("ID@value@ID", $"ID@{guidId}@ID");
+            tokenModel = tokenModel.Replace("UID@value@UID", $"UID@{userEntity.ID}@UID");
+            tokenModel = tokenModel.Replace("AID@value@AID", $"AID@{userEntity.IsMobileActivated}@AID");
+            tokenModel = tokenModel.Replace("ROLS@value@ROLS", $"ROLS@{1}@ROLS");
 
             var accessToken = new TokenResponseModel();
             accessToken.Token = TokenEncryt(tokenModel);
             accessToken.ExpireDate = DateTime.Now.AddDays(1);
-            return new CommonResult { IsSuccess = true, Data = tokenModel };
+
+            var context =  IOC.resolve<IWebContext>();
+            context.IsActivedUser = userEntity.IsMobileActivated.ToString();
+            context.UserID = userEntity.ID.ToString();
+            context.UserRoles = "1";
+
+            return new CommonResult { IsSuccess = true, Data = accessToken };
         }
 
         public string TokenEncryt(string token)
@@ -84,9 +90,9 @@ namespace Business.Service.Common
             string tokenResult = TokenDecrypt(token);
 
             WebContext result = new WebContext();
-            result.UserID = getBetween(token, "UID@", "@UID");
-            result.ChannelID = getBetween(token, "CID@", "@CID");
-            result.IsActivedUser = getBetween(token, "AID@", "@AID");
+            result.UserID = getBetween(tokenResult, "UID@", "@UID");
+            result.ChannelID = getBetween(tokenResult, "CID@", "@CID");
+            result.IsActivedUser = getBetween(tokenResult, "AID@", "@AID");
 
             return new CommonResult { IsSuccess = false, Data = result };
         }

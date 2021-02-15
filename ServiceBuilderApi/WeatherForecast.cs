@@ -1,6 +1,6 @@
 using System;
 
-namespace ServiceBuilderApi
+namespace GuiderMeApi
 {
     public class WeatherForecast
     {

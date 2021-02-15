@@ -11,6 +11,6 @@ namespace Business.Service.Infrastructure
 
         //string TokenDecrypt(string token);
 
-        //CommonResult DecryptToken(string token);
+        CommonResult DecryptToken(string token);
     }
 }

@@ -1,16 +1,15 @@
-﻿using Business.Service.Infrastructure;
+﻿using Business.Service.Common;
+using Business.Service.Infrastructure;
+using GuiderMeApi.Attrubutes.BaseAttr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Security.Claims;
+using ViewModel.Core;
 using ViewModel.Views;
 using ViewModel.Views.Otp;
 using ViewModel.Views.Security;
 
-namespace ServiceBuilderApi.Controllers
+namespace GuiderMeApi.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/user")]
     public class UserController : BaseController
@@ -70,14 +69,12 @@ namespace ServiceBuilderApi.Controllers
 
         [HttpGet]
         [Route("getuserinfo")]
+        [ServiceFilter(typeof(ServiceMethodAuth))]
         public CommonResult GetUserInfo()
         {
             CommonResult result = new CommonResult();
-            var existUserId = Request.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault();
-
-            long user_id = Convert.ToInt64(existUserId.Value);
-            result.Data = _userService.GetUserViewModel(user_id);
-
+            var ctx = IOC.resolve<IWebContext>();
+            result.Data = ctx;
             return result;
         }
 

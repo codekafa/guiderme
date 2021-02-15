@@ -18,7 +18,7 @@ using System;
 using System.Text;
 using ViewModel.Views;
 
-namespace ServiceBuilderPanel
+namespace GuiderMePanel
 {
     public class Startup
     {

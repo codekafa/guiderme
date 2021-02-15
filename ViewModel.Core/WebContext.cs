@@ -2,12 +2,12 @@
 
 namespace ViewModel.Core
 {
-    public class WebContext
+    public class WebContext : IWebContext
     {
         public string UserID { get; set; }
         public string ChannelID { get; set; }
         public string IsActivedUser { get; set; }
-        public List<int> UserRoles { get; set; }
+        public string UserRoles { get; set; }
 
     }
 }
