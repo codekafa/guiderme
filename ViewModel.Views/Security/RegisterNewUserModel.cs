@@ -18,6 +18,5 @@ namespace ViewModel.Views.Security
 
         public string PasswordAgain { get; set; }
 
-        public NewRequestModel RequestModel { get; set; }
     }
 }

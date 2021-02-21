@@ -14,15 +14,12 @@ namespace GuiderMeApi.Controllers
     [Route("api/user")]
     public class UserController : BaseController
     {
-
-        private readonly ISecurityService _securityService;
         private readonly IUserService _userService;
         private readonly ITokenEngine _tokenEngine;
         public UserController(IUserService userService, ITokenEngine tokenEngine, ISecurityService securityService)
         {
             _userService = userService;
             _tokenEngine = tokenEngine;
-            _securityService = securityService;
         }
 
         [HttpPost]
@@ -33,8 +30,6 @@ namespace GuiderMeApi.Controllers
             var result = _tokenEngine.GetToken(new LoginUserModel { EmailOrPhone = user.EmailOrPhone, Password = user.Password });
             return result;
         }
-
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -66,6 +61,24 @@ namespace GuiderMeApi.Controllers
             return result;
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("forgotpassword")]
+        public CommonResult ForgotPassword(ForgatPasswordModel request)
+        {
+            var result = _userService.SendForgotPasswordMail(request);
+            return result;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("changepassword")]
+        public CommonResult ChangePassword(ChangePasswordModel request)
+        {
+            var result = _userService.ChangePasswordWithOtp(request);
+            return result;
+        }
 
         [HttpGet]
         [Route("getuserinfo")]

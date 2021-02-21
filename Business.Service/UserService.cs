@@ -1,10 +1,12 @@
-﻿using Business.Service.Infrastructure;
+﻿using Business.Service.Common;
+using Business.Service.Infrastructure;
 using DataModel.BaseEntities;
 using Microsoft.EntityFrameworkCore;
 using Repository.Base;
 using Repository.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
+using ViewModel.Core;
 using ViewModel.Views;
 using ViewModel.Views.Notification;
 using ViewModel.Views.Otp;
@@ -39,6 +41,29 @@ namespace Business.Service
 
         public AddOrEditUserModel GetUserViewModel(long user_id)
         {
+            AddOrEditUserModel result = new AddOrEditUserModel();
+            var existUser = _uow.UserRepository.Get(x => x.ID == user_id);
+            result.FirstName = existUser.FirstName;
+            result.Email = existUser.Email;
+            result.ID = existUser.ID;
+            result.IsMailActivated = existUser.IsMailActivated;
+            result.IsMobileActivated = existUser.IsMobileActivated;
+            result.LastName = existUser.LastName;
+            result.Password = existUser.Password;
+            result.Phone = existUser.Phone;
+            result.PhotoUrl = existUser.ProfilePhoto;
+            result.UserType = existUser.UserType;
+            return result;
+
+        }
+
+        public AddOrEditUserModel GetCurrentUserViewModel()
+        {
+
+            var ctx = IOC.resolve<IWebContext>();
+
+            long user_id = Convert.ToInt64(ctx.UserID);
+
             AddOrEditUserModel result = new AddOrEditUserModel();
             var existUser = _uow.UserRepository.Get(x => x.ID == user_id);
             result.FirstName = existUser.FirstName;
@@ -235,22 +260,11 @@ namespace Business.Service
                 {
                     try
                     {
-                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password, ProfilePhoto = newUser.PhotoUrl });
+                        var addUser = _uow.UserRepository.Add(new User { Email = newUser.Email, FirstName = newUser.FirstName, LastName = newUser.LastName, IsActive = true, IsMailActivated = false, IsMobileActivated = false, Phone = newUser.Phone, UserType = newUser.RegisterType, Password = newUser.Password, ProfilePhoto = newUser.PhotoUrl });
 
                         _uow.SaveChanges();
 
                         var otpResult = _otpService.CreateNewOtp(new CreateOtpModel { CurrentUserId = addUser.ID, EmailOrPhone = addUser.Email, OtpType = (int)OtpTypes.Email });
-
-                        if (newUser.RequestModel != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
-                            {
-                                newUser.RequestModel.IsPublish = true;
-                                newUser.RequestModel.UserId = addUser.ID;
-                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
-                                result.ActionCode = "2";
-                            }
-                        }
 
                         result.IsSuccess = true;
                         result.Data = otpResult.Data.ToString();
@@ -290,17 +304,6 @@ namespace Business.Service
 
                         _uow.SaveChanges();
 
-                        if (newUser.RequestModel != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
-                            {
-                                newUser.RequestModel.IsPublish = true;
-                                newUser.RequestModel.UserId = addUser.ID;
-                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
-                                result.ActionCode = "2";
-                            }
-                        }
-
                         result.IsSuccess = true;
                         result.Data = addUser;
                         _uow.Commit();
@@ -338,16 +341,6 @@ namespace Business.Service
 
                         _uow.SaveChanges();
 
-                        if (newUser.RequestModel != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(newUser.RequestModel.Description) && newUser.RequestModel.CategoryId > 0)
-                            {
-                                newUser.RequestModel.IsPublish = true;
-                                newUser.RequestModel.UserId = addUser.ID;
-                                _requestService.AddNewRequestWitoutTransaction(newUser.RequestModel);
-                                result.ActionCode = "2";
-                            }
-                        }
 
                         result.IsSuccess = true;
                         result.Data = addUser;

@@ -12,6 +12,7 @@ namespace Business.Service.Infrastructure
     {
         CommonResult GetUserList(UserSearchModel search);
 
+        AddOrEditUserModel GetCurrentUserViewModel();
         long GetUserListCount(UserSearchModel search);
         CommonResult AddOrEditUserForAdmin(AddOrEditUserModel user);
 

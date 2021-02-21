@@ -12,3 +12,17 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Core.Locator\obj\Debug\netcoreapp3.1\
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.csproj.CopyComplete
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\Core.Locator.deps.json
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\Core.Locator.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\Core.Locator.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\Core.Infrastructure.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\ViewModel.Core.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\Core.Infrastructure.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\bin\Debug\netcoreapp3.1\ViewModel.Core.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.csproj.CopyComplete
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Locator\obj\Debug\netcoreapp3.1\Core.Locator.pdb

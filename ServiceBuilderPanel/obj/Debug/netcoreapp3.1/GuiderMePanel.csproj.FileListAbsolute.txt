@@ -1,0 +1,8 @@
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.RazorAssemblyInfo.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\ServiceBuilderPanel\obj\Debug\netcoreapp3.1\GuiderMePanel.RazorAssemblyInfo.cs

@@ -10,3 +10,15 @@ C:\Users\tayfu\source\repos\ServiceBuilder\Core.Infrastructure\obj\Debug\netcore
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.dll
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.pdb
 C:\Users\tayfu\source\repos\ServiceBuilder\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\bin\Debug\netcoreapp3.1\Core.Infrastructure.deps.json
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\bin\Debug\netcoreapp3.1\Core.Infrastructure.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\bin\Debug\netcoreapp3.1\Core.Infrastructure.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Core.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\bin\Debug\netcoreapp3.1\ViewModel.Core.pdb
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.csprojAssemblyReference.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.AssemblyInfo.cs
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.csproj.CopyComplete
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.dll
+C:\Users\tayfu\source\repos\guiderme\guiderme\Core.Infrastructure\obj\Debug\netcoreapp3.1\Core.Infrastructure.pdb
